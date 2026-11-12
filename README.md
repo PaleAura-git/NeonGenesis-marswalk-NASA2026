@@ -1,0 +1,66 @@
+# Marswalk
+
+NASA Space Apps hackathon foundation: plan a science expedition in Jezero Crater, compare routes, then rehearse a blockage. Marswalk is a working title. This step contains a runnable frontend shell and a reserved backend workspace, not a routing or terrain engine.
+
+## Setup
+
+Use Node **22.12+ on the 22.x line, or 24+** and npm. Verified with Node 22.18.0 / npm 10.9.3; `frontend/.nvmrc` records the tested version. Vite's [Node requirements](https://vite.dev/guide/) were checked before installation. Use the checked-in `package-lock.json` with `npm ci` for reproducible installs.
+
+Windows PowerShell, from this folder:
+
+```powershell
+cd frontend
+npm ci
+Copy-Item .env.example .env.local
+npm run dev
+```
+
+macOS, from this folder:
+
+```sh
+cd frontend
+npm ci
+cp .env.example .env.local
+npm run dev
+```
+
+Open the Local URL printed by Vite. Plan is the initial stage; Compare and Rehearse show their upcoming functionality.
+
+```sh
+npm run typecheck
+npm run lint
+npm run build
+npm run preview
+```
+
+## Data modes
+
+Set `VITE_DATA_MODE=mock` in `frontend/.env.local` to load the single `shared/examples/mission.json` fixture. It is dynamically imported and bundled for production; TypeScript includes the JSON and Vite permits the parent workspace for development. No duplicate fixture is maintained. Copying `.env.example` explicitly selects mock mode. Missing or unsupported mode is a visible configuration error.
+
+Set `VITE_DATA_MODE=api` and `VITE_API_BASE_URL=/api` to call `GET /api/mission`. The development proxy forwards `/api` to `http://127.0.0.1:8000`. Run your teammate's server there when available, or change `vite.config.ts`. For deployed builds, provide a same-origin `/api` reverse proxy or a public API URL with appropriate CORS. Vite's development proxy is not included in production or preview. Restart Vite after changing environment values; rebuild production assets for changes to take effect. Frontend environment values are public and must contain no secrets.
+
+HTTP, network, invalid JSON, and schema failures show an error with Try again; API mode never silently substitutes demo data. The current contract deliberately accepts only synthetic schema 1.0; extend the validator and shared types together when real resources arrive.
+
+## Ownership and structure
+
+```text
+frontend/                 Frontend owner: React, TypeScript, Vite, plain CSS
+  public/images/          Future terrain imagery
+  src/
+    app/                  State and application shell
+    components/layout/    Stage navigation
+    components/ui/        Shared error UI
+    features/             map, mission, science, routes, rehearsal
+    services/api/         Native fetch client and runtime validation
+    types/                Shared frontend mission types
+    styles/               Design tokens and responsive CSS
+backend/                  Backend owner: Python API, terrain, routing, ML
+  app/ data/raw/ data/processed/ figures/ scripts/ models/
+shared/                   Joint ownership: align API fields before integration
+  api.md                  Draft mission/planning endpoint contract
+  examples/mission.json   Single synthetic sample data source
+```
+
+Backend scripts, dependency declarations, real terrain files, and models will come from the backend developer. See `backend/README.md` for per-developer environments and running scripts from `backend/`. Raw/processed datasets, local environments, and common model binaries are ignored; small shared fixtures remain eligible for version control.
+
+All positions and observation durations are synthetic UI examples. The user-provided 18.4446° N, 77.4509° E base reference is an **unverified placeholder**. Exact placement, the production coordinate frame, and imagery mapping remain pending. There is no geographic map, route computation, science-card implementation, time bar, elevation chart, or rehearsal simulation yet.

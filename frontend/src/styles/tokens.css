@@ -1,0 +1,18 @@
+:root {
+  color-scheme: dark;
+  --color-bg: #181310;
+  --color-panel: #2b211b;
+  --color-panel-raised: #35271f;
+  --color-text: #f8eddb;
+  --color-muted: #c0ac9b;
+  --color-accent: #b84922;
+  --color-accent-hover: #cb542b;
+  --color-highlight: #f0a174;
+  --color-border: #594236;
+  --color-focus: #ffbe86;
+  --radius-panel: 20px;
+  --radius-control: 10px;
+  --shadow-panel: 0 16px 45px #08050330;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+  --font-mono: Consolas, 'Courier New', monospace;
+}
