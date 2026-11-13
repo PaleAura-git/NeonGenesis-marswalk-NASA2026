@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "datasetId": "jezero-synthetic-v1",
   "dataMode": "synthetic",
   "notice": "Demo data. All local positions and observation durations are synthetic UI examples, not mission-ready science or navigation data. Exact geographic placement is pending.",
@@ -17,6 +17,10 @@
     "notice": "User-provided base reference, 18.4446 degrees N, 77.4509 degrees E. Datum and exact placement pending; not a transform for local coordinates."
   },
   "base": { "id": "three-forks-base", "name": "Three Forks Base", "position": { "xMeters": 0, "yMeters": 0 } },
+  "bounds": {
+    "min": { "xMeters": -100, "yMeters": -220 },
+    "max": { "xMeters": 620, "yMeters": 390 }
+  },
   "stops": [
     { "id": "cape-nukshak", "name": "Cape Nukshak", "position": { "xMeters": 160, "yMeters": 220 }, "observationObjective": "Document visible rock textures and layering.", "observationDurationSeconds": 600 },
     { "id": "hawksbill-gap", "name": "Hawksbill Gap", "position": { "xMeters": 380, "yMeters": 310 }, "observationObjective": "Compare exposed sedimentary layers.", "observationDurationSeconds": 900 },

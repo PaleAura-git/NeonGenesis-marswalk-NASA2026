@@ -1,0 +1,39 @@
+.mission-map { position: absolute; inset: 0; z-index: 0; }
+.base-select { background: transparent; border: 0; padding: 0; color: inherit; font: inherit; text-align: left; }
+.base-select .icon { color: var(--color-highlight); margin-right: 6px; }
+.base-select[aria-pressed=true] { color: var(--color-highlight); }
+.leaflet-workspace { width: 100%; height: 100%; background: #32251c; font-family: var(--font-sans); }
+.leaflet-workspace:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -4px; }
+.left-slot, .right-slot, .information-dock, .data-notice { position: relative; z-index: 1; }
+.map-tools { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 500; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: max-content; max-width: calc(100% - 690px); }
+.map-buttons { display: flex; gap: 4px; }
+.map-buttons .button { padding: 8px 12px; min-width: 36px; white-space: nowrap; }
+.layer-menu { position: relative; }
+.layer-menu summary { padding: 8px 14px; cursor: pointer; }
+.layer-options { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 245px; padding: 14px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-panel); box-shadow: var(--shadow-panel); }
+.layer-options fieldset { border: 0; padding: 6px 0; margin: 0; }
+.layer-options legend { font-weight: 600; font-size: .85rem; }
+.layer-options label { display: block; color: var(--color-muted); font-size: .75rem; }
+.layer-options input { accent-color: var(--color-accent); margin-right: 8px; }
+.layer-attribution { display: block; margin: 4px 0 0 24px; font-size: .65rem; }
+.map-status { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 500; width: max-content; max-width: 90%; padding: 3px 9px; background: #20170fee; border-radius: 6px; color: var(--color-muted); font-size: .65rem; text-align: center; pointer-events: none; }
+.map-status [role=alert] { color: var(--color-highlight); }
+.mission-marker { background: none; border: 0; }
+.marker-dot { width: 22px; height: 22px; display: block; margin: 5px; background: #d85816; border: 3px solid var(--color-text); border-radius: 50%; box-shadow: 0 2px 8px #160b08aa; }
+.marker-home { border-radius: 7px; width: 32px; height: 32px; margin: 0; background: #422b1b; border-width: 2px; color: var(--color-text); padding: 4px; }
+.marker-home svg { width: 100%; height: 100%; }
+.mission-marker.is-selected .marker-dot { outline: 3px solid #ff9a48; outline-offset: 5px; box-shadow: 0 0 0 10px #d8581633; }
+.mission-marker.is-excluded .marker-dot { background: #625345; border-style: dashed; }
+.mission-label.is-excluded { border-style: dashed; }
+.mission-label.is-excluded::after { content: ' (excluded)'; color: var(--color-muted); }
+.mission-marker:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 9px; border-radius: 50%; }
+.mission-label.leaflet-tooltip { background: #291b12f5; color: var(--color-text); border: 1px solid var(--color-border); border-radius: 6px; box-shadow: 0 3px 10px #160c0866; font-family: var(--font-sans); font-size: .85rem; font-weight: 600; padding: 3px 8px; }
+.mission-label.leaflet-tooltip::before { display: none; }
+.leaflet-container .leaflet-control-attribution { color: var(--color-muted); background: #291b12ee; font-size: .6rem; }
+@media (min-width: 1600px) { .map-tools { max-width: calc(100% - 760px); } }
+@media (max-width: 1100px) { .map-tools { left: 290px; right: 20px; width: auto; max-width: none; transform: none; } }
+@media (max-width: 600px) {
+  .mission-map { position: relative; inset: auto; order: 1; height: 400px; flex: none; border: 1px solid var(--color-border); border-radius: var(--radius-panel); overflow: hidden; }
+  .map-tools { top: 12px; left: 12px; right: 12px; }
+  .mission-label.leaflet-tooltip { white-space: normal; max-width: 115px; }
+}

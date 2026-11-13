@@ -1,11 +1,21 @@
 export interface Position { xMeters: number; yMeters: number }
+export interface MapBounds { min: Position; max: Position }
+export interface MapLayer {
+  id: string
+  kind: 'imagery' | 'slope' | 'terrain-classification'
+  url: string
+  bounds: MapBounds
+  coordinateSystemId: string
+  attribution: string
+  illustrative: boolean
+}
 export interface MissionLocation { id: string; name: string; position: Position }
 export interface ScienceStop extends MissionLocation {
   observationObjective: string
   observationDurationSeconds: number
 }
 export interface Mission {
-  schemaVersion: '1.0'
+  schemaVersion: '1.0' | '1.1'
   datasetId: string
   dataMode: 'synthetic'
   notice: string
@@ -19,7 +29,8 @@ export interface Mission {
   }
   base: MissionLocation
   stops: ScienceStop[]
-  // Resource schemas will be agreed before schemaVersion is extended.
-  layers: never[]
+  // Optional for older schema 1.0 responses, which derive bounds from positions.
+  bounds?: MapBounds
+  layers: MapLayer[]
   sources: never[]
 }

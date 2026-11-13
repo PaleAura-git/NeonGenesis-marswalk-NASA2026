@@ -1,0 +1,4 @@
+import type { Stage } from './StageNav'
+export function InformationDock({ stage }: { stage: Stage }) {
+  return <section className="panel information-dock" aria-label={`${stage} information dock`}><div><p className="eyebrow">{stage === 'Rehearse' ? 'Mission progress' : 'Route comparison'}</p><h2>{stage === 'Plan' ? 'A plan opens up the possibilities.' : stage === 'Compare' ? 'Route options will appear here.' : 'Ready when your route is.'}</h2><p>{stage === 'Rehearse' ? 'Playback and blockage simulation require a selected route.' : 'Distances and travel times will come from the planning service.'}</p></div><div className="dock-slot"><h3>Mission time</h3><p>Awaiting a calculated plan</p><div className="empty-track" aria-hidden="true" /></div><div className="dock-slot"><h3>Route elevation</h3><p>Awaiting route samples & vertical reference</p><div className="elevation-baseline" aria-hidden="true" /></div></section>
+}

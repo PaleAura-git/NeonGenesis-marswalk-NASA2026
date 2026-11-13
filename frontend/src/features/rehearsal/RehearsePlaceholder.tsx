@@ -1,3 +1,4 @@
-export function RehearsePlaceholder() {
-  return <section className="panel state-panel"><p className="eyebrow">03 / Rehearse</p><h2>Prepare for a change of plan.</h2><p>Rehearse an expedition, simulate a blockage, and request a revised route here.</p><p className="muted">Rehearsal controls will follow the route integration.</p></section>
+import { EmptyState } from '../../components/ui/EmptyState'
+export function RehearsePlaceholder({ onPlan }: { onPlan: () => void }) {
+  return <EmptyState title="Select a route before rehearsing" description="Generate a plan, then select a route in Compare. Playback and mission progress will appear here once a route is selected." onPlan={onPlan} />
 }
