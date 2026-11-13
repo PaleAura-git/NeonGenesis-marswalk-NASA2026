@@ -1,10 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '../../components/ui/Button'
 import { Icon } from '../../components/ui/Icon'
 import { MarsGlobe } from './MarsGlobe'
+import { WebGLGlobe } from './WebGLGlobe'
 import { useParallax } from './useParallax'
 import { useReducedMotion } from './useReducedMotion'
 import './home.css'
+
+type GlobeRendererOption = 'webgl' | 'css'
+/**
+ * Which globe the home screen draws.
+ * 'webgl': shaded sphere with drag and tilt. Falls back to the CSS globe automatically if WebGL,
+ *          the shader or the texture fails, or the context is lost.
+ * 'css':   the v1 scrolling-texture globe.
+ */
+const GLOBE_RENDERER = 'webgl' as GlobeRendererOption
 
 // Matches the leaving transition in home.css.
 const TRANSITION_MS = 800
@@ -19,7 +29,14 @@ export function HomeScreen({ onEnter, focusAction }: { onEnter: () => void; focu
   const rootRef = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
   const [leaving, setLeaving] = useState(false)
+  const [webglFailed, setWebglFailed] = useState(false)
   useParallax(rootRef, !reducedMotion && !leaving)
+
+  const fallBackToCss = useCallback((reason: string) => {
+    console.warn(`Home globe: showing the CSS globe because ${reason}.`)
+    setWebglFailed(true)
+  }, [])
+  const showWebGL = GLOBE_RENDERER === 'webgl' && !webglFailed
 
   useEffect(() => {
     if (focusAction) rootRef.current?.querySelector<HTMLButtonElement>('.home-cta')?.focus()
@@ -40,9 +57,13 @@ export function HomeScreen({ onEnter, focusAction }: { onEnter: () => void; focu
     <section ref={rootRef} className={leaving ? 'home is-leaving' : 'home'} aria-labelledby="home-title">
       <div className="home-stars home-stars--far" data-parallax="3" aria-hidden="true" />
       <div className="home-stars home-stars--near" data-parallax="7" aria-hidden="true" />
-      <MarsGlobe leaving={leaving} reducedMotion={reducedMotion} />
+      <div className="home-globe-layer" data-parallax="14" aria-hidden="true">
+        {showWebGL
+          ? <WebGLGlobe leaving={leaving} reducedMotion={reducedMotion} onFail={fallBackToCss} />
+          : <MarsGlobe leaving={leaving} reducedMotion={reducedMotion} />}
+      </div>
       <div className="home-content">
-        <div className="home-copy" data-parallax="-5">
+        <div className="home-copy">
           <p className="home-eyebrow">MARSWALK · JEZERO CRATER EXPEDITION PLANNER</p>
           <h1 id="home-title" className="home-title">Your next steps on Mars.</h1>
           <p className="home-subline">Plan a science expedition across Jezero Crater. Compare routes and rehearse the unexpected.</p>

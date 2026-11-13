@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { lockSelection } from './dragSelection'
 
 const TEXTURE_URL = `${import.meta.env.BASE_URL}images/mars-texture.jpg`
 const SPIN_MS = 120_000
@@ -45,7 +46,7 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
   useEffect(() => {
     const globe = globeRef.current
     if (!globe) return
-    let drag: { id: number; spins: Animation[]; width: number; startX: number; startTime: number; lastX: number; lastAt: number; velocity: number } | null = null
+    let drag: { id: number; spins: Animation[]; width: number; startX: number; startTime: number; lastX: number; lastAt: number; velocity: number; unlock: () => void } | null = null
     let easeFrame = 0
 
     const onVisibility = () => {
@@ -64,7 +65,7 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
       spins.forEach(animation => { animation.pause(); animation.playbackRate = 1 })
       modeRef.current = 'drag'
       globe.classList.add('is-dragging')
-      drag = { id: event.pointerId, spins, width: globe.offsetWidth, startX: event.clientX, startTime: timeOf(spins[0]), lastX: event.clientX, lastAt: event.timeStamp, velocity: 0 }
+      drag = { id: event.pointerId, spins, width: globe.offsetWidth, startX: event.clientX, startTime: timeOf(spins[0]), lastX: event.clientX, lastAt: event.timeStamp, velocity: 0, unlock: lockSelection(globe) }
     }
     const move = (event: PointerEvent) => {
       if (!drag || event.pointerId !== drag.id || modeRef.current !== 'drag') return
@@ -78,8 +79,9 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
     }
     const release = (event: PointerEvent) => {
       if (!drag || event.pointerId !== drag.id) return
-      const { spins, width, velocity, lastAt } = drag
+      const { spins, width, velocity, lastAt, unlock } = drag
       drag = null
+      unlock()
       globe.classList.remove('is-dragging')
       if (globe.hasPointerCapture(event.pointerId)) globe.releasePointerCapture(event.pointerId)
       if (modeRef.current !== 'drag') return
@@ -109,6 +111,7 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
     globe.addEventListener('lostpointercapture', release)
     return () => {
       cancelAnimationFrame(easeFrame)
+      drag?.unlock()
       document.removeEventListener('visibilitychange', onVisibility)
       globe.removeEventListener('pointerdown', down)
       globe.removeEventListener('pointermove', move)
@@ -142,22 +145,21 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
   }, [leaving])
 
   const stripStyle = { ...spinTiming, transform: restingTransform, backgroundImage: texture === 'ready' ? `url(${TEXTURE_URL})` : undefined }
+  // HomeScreen supplies the parallax layer around this element.
   return (
-    <div className="home-globe-layer" data-parallax="14" aria-hidden="true">
-      <div ref={globeRef} className={texture === 'ready' ? 'globe has-texture' : 'globe'}
-        style={{ transformOrigin: `${focusX * 100}% ${markerV * 100}%` }}>
-        <div className="globe-base" />
-        <div className="globe-surface">
-          <div className="globe-strip" style={stripStyle}>
-            <span className="globe-marker" style={{ ...spinTiming, left: `${markerU * 50}%`, top: `${markerV * 100}%` }}>
-              <span className="globe-marker-dot" />
-              <span className="globe-marker-label">Jezero Crater</span>
-            </span>
-          </div>
+    <div ref={globeRef} className={texture === 'ready' ? 'globe has-texture' : 'globe'}
+      style={{ transformOrigin: `${focusX * 100}% ${markerV * 100}%` }}>
+      <div className="globe-base" />
+      <div className="globe-surface">
+        <div className="globe-strip" style={stripStyle}>
+          <span className="globe-marker" style={{ ...spinTiming, left: `${markerU * 50}%`, top: `${markerV * 100}%` }}>
+            <span className="globe-marker-dot" />
+            <span className="globe-marker-label">Jezero Crater</span>
+          </span>
         </div>
-        <div className="globe-shade" />
-        <div className="globe-rim" />
       </div>
+      <div className="globe-shade" />
+      <div className="globe-rim" />
     </div>
   )
 }

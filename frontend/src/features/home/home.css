@@ -1,6 +1,6 @@
 /* Home screen. Animations use transform, translate, scale and opacity only. */
 .home {
-  --globe: min(106vh, 72vw);
+  --globe: min(97vh, 66vw);
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -16,6 +16,8 @@
 .home.is-leaving { pointer-events: none; opacity: 0; transition: opacity 420ms ease-in 380ms; }
 .home.is-leaving .home-content,
 .home.is-leaving .home-footer { opacity: 0; transition: opacity 280ms ease; }
+/* No text selection anywhere on the home screen while the globe is being dragged. */
+.home.is-dragging-globe { user-select: none; -webkit-user-select: none; cursor: grabbing; }
 
 /* Starfield: two offset scales of one locally generated tile. */
 .home-stars { position: absolute; inset: -40px; z-index: -2; background: url('/images/stars.png') repeat; background-size: 512px; opacity: .75; will-change: translate; }
@@ -32,6 +34,9 @@
   left: calc(100% - var(--globe) * .9);
   margin-top: calc(var(--globe) / -2);
   will-change: translate;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   animation: home-globe-in 1.6s cubic-bezier(.2, .7, .2, 1) both;
 }
 .globe {
@@ -48,6 +53,16 @@
 .home.is-leaving .globe { transform: scale(2.8); transition: transform 800ms cubic-bezier(.55, .05, .75, .3); }
 /* Fallback sphere, visible while the texture loads or if it fails. */
 .globe-base { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 66% 36%, #d9814f 0, #b0522b 30%, #7a3519 56%, #3a190c 82%); }
+
+/* WebGL globe: sunlight from the upper left, so the glow and loading sphere mirror the CSS globe. */
+.globe--webgl { box-shadow: calc(var(--globe) * -.012) calc(var(--globe) * -.01) calc(var(--globe) * .09) #cb542b30; }
+.globe--webgl .globe-base { background: radial-gradient(circle at 34% 34%, #d9814f 0, #b0522b 30%, #7a3519 56%, #3a190c 82%); transition: opacity .9s ease; }
+.globe--webgl.is-ready .globe-base { opacity: 0; }
+.globe-canvas-host, .globe-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.globe-canvas { display: block; opacity: 0; transition: opacity .9s ease; }
+.globe-canvas.is-ready { opacity: 1; }
+/* Positioned every frame from the projected crater position. */
+.globe-marker--projected { left: 0; top: 0; opacity: 0; visibility: hidden; animation: none; pointer-events: none; will-change: transform, opacity; }
 .globe-surface { position: absolute; inset: 0; clip-path: circle(50%); opacity: 0; transition: opacity .9s ease; }
 .globe.has-texture .globe-surface { opacity: 1; }
 .globe-strip {
@@ -110,7 +125,7 @@
 
 /* Copy */
 .home-content { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; max-width: min(42rem, 60vw); }
-.home-copy { will-change: translate; animation: home-rise .9s cubic-bezier(.2, .7, .2, 1) .1s both; }
+.home-copy { animation: home-rise .9s cubic-bezier(.2, .7, .2, 1) .1s both; }
 .home-eyebrow { font-size: clamp(.7rem, 1vw, .82rem); font-weight: 600; letter-spacing: .2em; color: var(--color-highlight); }
 .home-title {
   margin: clamp(10px, 2vh, 20px) 0 clamp(14px, 2.6vh, 24px);
@@ -135,7 +150,7 @@
 
 /* Portrait tablets and phones: globe to the upper right, copy below it. */
 @media (max-aspect-ratio: 4/5) {
-  .home { --globe: min(100vw, 62vh); }
+  .home { --globe: min(92vw, 57vh); }
   .home-globe-layer { top: calc(var(--globe) * -.14); left: calc(100% - var(--globe) * .86); margin-top: 0; }
   .home-content { justify-content: flex-end; max-width: 36rem; padding-bottom: clamp(12px, 3vh, 32px); }
   .home-title { font-size: clamp(2.5rem, 10.5vw, 5.5rem); }
