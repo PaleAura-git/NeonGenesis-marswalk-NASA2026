@@ -1,0 +1,154 @@
+/* Home screen. Animations use transform, translate, scale and opacity only. */
+.home {
+  --globe: min(106vh, 72vw);
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 5vh, 56px) clamp(24px, 6vw, 104px) clamp(14px, 3vh, 28px);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  background: radial-gradient(ellipse 90% 80% at 74% 50%, #00000040 0, #000000d0 70%, #000000f2 100%), var(--color-bg);
+}
+.home.is-leaving { pointer-events: none; opacity: 0; transition: opacity 420ms ease-in 380ms; }
+.home.is-leaving .home-content,
+.home.is-leaving .home-footer { opacity: 0; transition: opacity 280ms ease; }
+
+/* Starfield: two offset scales of one locally generated tile. */
+.home-stars { position: absolute; inset: -40px; z-index: -2; background: url('/images/stars.png') repeat; background-size: 512px; opacity: .75; will-change: translate; }
+.home-stars--near { background-size: 820px; background-position: 211px 377px; opacity: .45; }
+.home.is-leaving .home-stars { scale: 1.06; transition: scale 800ms ease-in; }
+
+/* Globe */
+.home-globe-layer {
+  position: absolute;
+  z-index: -1;
+  width: var(--globe);
+  aspect-ratio: 1;
+  top: 50%;
+  left: calc(100% - var(--globe) * .9);
+  margin-top: calc(var(--globe) / -2);
+  will-change: translate;
+  animation: home-globe-in 1.6s cubic-bezier(.2, .7, .2, 1) both;
+}
+.globe {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: calc(var(--globe) * .012) calc(var(--globe) * -.01) calc(var(--globe) * .09) #cb542b30;
+}
+.globe.is-dragging { cursor: grabbing; }
+.home.is-leaving .globe { transform: scale(2.8); transition: transform 800ms cubic-bezier(.55, .05, .75, .3); }
+/* Fallback sphere, visible while the texture loads or if it fails. */
+.globe-base { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 66% 36%, #d9814f 0, #b0522b 30%, #7a3519 56%, #3a190c 82%); }
+.globe-surface { position: absolute; inset: 0; clip-path: circle(50%); opacity: 0; transition: opacity .9s ease; }
+.globe.has-texture .globe-surface { opacity: 1; }
+.globe-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 100%;
+  background-repeat: repeat-x;
+  background-size: 50% 100%;
+  will-change: transform;
+  animation-name: globe-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+/* Terminator and limb darkening; sunlight from the upper right. */
+.globe-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 34%, transparent 0 28%, #0c070499 48%, #070403e6 64%, #050302 80%),
+    radial-gradient(closest-side, transparent 70%, #1208046b 100%);
+}
+/* Thin warm atmosphere on the lit limb. */
+.globe-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow:
+    inset calc(var(--globe) * -.012) calc(var(--globe) * .01) calc(var(--globe) * .03) calc(var(--globe) * -.008) #ffb486b0,
+    0 0 0 1px #f0a17426,
+    0 0 calc(var(--globe) * .02) #e0703e33;
+}
+
+/* Jezero marker, carried by the strip so it moves with the surface. */
+.globe-marker {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  translate: -6px -50%;
+  animation-name: globe-marker-window;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.globe-marker-dot { position: relative; width: 12px; height: 12px; border-radius: 50%; background: var(--color-highlight); box-shadow: 0 0 0 2px #2a120a99, 0 0 14px #f0a174; }
+.globe-marker-dot::after { content: ''; position: absolute; inset: -1px; border-radius: 50%; border: 2px solid var(--color-highlight); animation: globe-pulse 2.4s ease-out infinite; }
+.globe-marker-label { padding: 3px 9px; font-size: .78rem; font-weight: 600; letter-spacing: .04em; white-space: nowrap; background: #1b100bbf; border: 1px solid #f0a17455; border-radius: 999px; }
+
+@keyframes globe-spin { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+/* Rotation phase p puts Jezero 2 * (p - 1 + 0.7155) across the disc.
+   45%-72% keeps it between 33% and 87% across: the lit side. */
+@keyframes globe-marker-window { 0%, 41% { opacity: 0; } 45%, 72% { opacity: 1; } 76%, 100% { opacity: 0; } }
+@keyframes globe-pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
+@keyframes home-globe-in { from { opacity: 0; scale: .96; } to { opacity: 1; scale: 1; } }
+@keyframes home-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Copy */
+.home-content { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; max-width: min(42rem, 60vw); }
+.home-copy { will-change: translate; animation: home-rise .9s cubic-bezier(.2, .7, .2, 1) .1s both; }
+.home-eyebrow { font-size: clamp(.7rem, 1vw, .82rem); font-weight: 600; letter-spacing: .2em; color: var(--color-highlight); }
+.home-title {
+  margin: clamp(10px, 2vh, 20px) 0 clamp(14px, 2.6vh, 24px);
+  font-size: clamp(2.5rem, min(6.4vw, 10.5vh), 6.25rem);
+  font-weight: 700;
+  line-height: .98;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+  text-shadow: 0 2px 32px #000000b0;
+}
+.home-subline { max-width: 30rem; font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.5; opacity: .84; text-shadow: 0 1px 16px #000000c0; }
+.home-cta { margin-top: clamp(20px, 4.5vh, 40px); padding: 15px 26px; font-size: 1.1rem; box-shadow: 0 12px 32px #b8492250; animation: home-rise .9s cubic-bezier(.2, .7, .2, 1) .25s both; }
+.home-cta .icon { transition: transform .2s ease; }
+.home-cta:hover .icon { transform: translateX(3px); }
+.home-facts { margin-top: clamp(24px, 6vh, 64px); animation: home-rise .9s cubic-bezier(.2, .7, .2, 1) .4s both; }
+.home-stats { display: flex; flex-wrap: wrap; gap: 14px clamp(20px, 3vw, 40px); margin: 0; }
+.home-stats > div + div { border-left: 1px solid var(--color-border); padding-left: clamp(20px, 3vw, 40px); }
+.home-stats dt { font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-muted); }
+.home-stats dd { margin-top: 2px; font-size: 1.05rem; font-weight: 600; color: var(--color-text); white-space: nowrap; }
+.home-source { margin-top: 10px; font-size: .68rem; color: var(--color-muted); }
+.home-footer { position: relative; font-size: .72rem; color: var(--color-muted); }
+
+/* Portrait tablets and phones: globe to the upper right, copy below it. */
+@media (max-aspect-ratio: 4/5) {
+  .home { --globe: min(100vw, 62vh); }
+  .home-globe-layer { top: calc(var(--globe) * -.14); left: calc(100% - var(--globe) * .86); margin-top: 0; }
+  .home-content { justify-content: flex-end; max-width: 36rem; padding-bottom: clamp(12px, 3vh, 32px); }
+  .home-title { font-size: clamp(2.5rem, 10.5vw, 5.5rem); }
+}
+@media (max-width: 480px) {
+  .home-stats > div + div { border-left: 0; padding-left: 0; }
+}
+/* Short landscape screens keep the button in view. */
+@media (max-height: 560px) and (min-aspect-ratio: 1/1) {
+  .home-facts { margin-top: 16px; }
+  .home-source { margin-top: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe { cursor: default; }
+}

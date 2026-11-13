@@ -19,7 +19,7 @@ import { SciencePanel } from '../features/science/SciencePanel'
 
 type LoadState = { status: 'loading' } | { status: 'ready'; mission: Mission; settings: MissionSettings } | { status: 'error'; message: string }
 
-export default function App() {
+export default function App({ onHome }: { onHome?: () => void }) {
   const [stage, setStage] = useState<Stage>('Plan')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [inspectionRequest, setInspectionRequest] = useState(0)
@@ -99,7 +99,8 @@ export default function App() {
 
   return <div className="app-shell">
     <a className="skip-link" href="#main">Skip to mission</a>
-    <AppHeader stage={stage} onChange={setStage} synthetic={load.status === 'ready' && load.mission.dataMode === 'synthetic'} />
+    <AppHeader stage={stage} onChange={setStage} synthetic={load.status === 'ready' && load.mission.dataMode === 'synthetic'}
+      onHome={onHome && (() => { setStage('Plan'); onHome() })} />
     <main id="main" className="workspace" tabIndex={-1} aria-label={`${stage} expedition workspace`}>
       {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation} /> : <MapPlaceholder />}
       <div className="left-slot">

@@ -1,0 +1,3 @@
+/* The "Marswalk" wordmark doubles as the return-home control and looks like plain heading text. */
+.wordmark-button { margin: 0; padding: 0; border: 0; border-radius: 4px; background: none; color: inherit; font: inherit; letter-spacing: inherit; }
+.wordmark-button:hover { color: var(--color-highlight); }
