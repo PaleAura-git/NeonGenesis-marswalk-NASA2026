@@ -124,7 +124,7 @@ export default function App({ onHome }: { onHome?: () => void }) {
       onHome={onHome && (() => { setStage('Plan'); onHome() })}
       setupOpen={setupOpen} onToggleSetup={() => setSetupOpen(open => !open)} />
     <main id="main" className="workspace" tabIndex={-1} aria-label={`${stage} expedition workspace`}>
-      {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation} /> : <MapPlaceholder />}
+      {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} layoutKey={`${stage}-${inspectorOpen}-${setupOpen}`} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation} /> : <MapPlaceholder />}
       <div id="setup-drawer" className="ws-left" data-map-edge="left">
         {load.status === 'loading' && <section className="panel state-panel" role="status"><p className="eyebrow">Mission setup</p><h2>Loading mission...</h2><p>Preparing your expedition workspace.</p></section>}
         {load.status === 'error' && <LoadingError message={load.message} onRetry={() => { setLoad({ status: 'loading' }); setAttempt(a => a + 1) }} />}

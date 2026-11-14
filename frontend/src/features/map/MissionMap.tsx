@@ -27,6 +27,8 @@ type Imagery = 'nasa' | 'illustrative'
 type NasaStatus = 'loading' | 'ok' | 'failed'
 
 interface Props {
+  /** Changes whenever the panel layout around the map changes (stage, inspector, setup drawer). */
+  layoutKey: string
   mission: Mission
   stopSettings: Record<string, StopSettings>
   selectedId: string | null
@@ -38,14 +40,9 @@ interface Props {
 function freeArea(container: HTMLElement): FreeArea {
   const rect = container.getBoundingClientRect()
   const area = { left: 0, top: 0, right: rect.width, bottom: rect.height }
+  // The panels actually showing: left panel, inspector or its collapsed tab, top bar, bottom strip or dock,
+  // and the map controls. Hidden drawers are skipped.
   const shell = container.closest<HTMLElement>('.app-shell')
-  if (shell) {
-    // Always leave room for the open inspector and the control stack, so opening or collapsing the panel
-    // never leaves the mission under it.
-    const style = getComputedStyle(shell)
-    const px = (name: string) => parseFloat(style.getPropertyValue(name)) || 0
-    area.right = rect.width - (px('--ws-right-open') + px('--ws-controls-w') + px('--ws-gap') * 3)
-  }
   shell?.querySelectorAll<HTMLElement>('[data-map-edge]').forEach(element => {
     if (getComputedStyle(element).visibility === 'hidden') return
     const panel = element.getBoundingClientRect()
@@ -86,7 +83,7 @@ function missionAreaOutline(widthMeters: number, heightMeters: number): SVGSVGEl
 
 const formatKilometres = (meters: number) => (meters / 1000).toFixed(meters % 100 === 0 ? 1 : 2)
 
-export function MissionMap({ mission, stopSettings, selectedId, inspectionRequest, onSelect }: Props) {
+export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspectionRequest, onSelect }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const scaleHostRef = useRef<HTMLDivElement>(null)
@@ -95,6 +92,9 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
   const markersRef = useRef(new Map<string, L.Marker>())
   const selectedRef = useRef<string | null>(null)
   const resetRef = useRef<() => void>(() => {})
+  // Set once the user pans or zooms; automatic refits stop until Reset view.
+  const userMovedRef = useRef(false)
+  const autoFitRef = useRef<() => void>(() => {})
   const revealRef = useRef<() => void>(() => {})
   const labelsRef = useRef<() => void>(() => {})
   const [enabledLayers, setEnabledLayers] = useState<string[]>([])
@@ -246,17 +246,37 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
     map.on('mouseout', clearPosition)
     map.on('zoomend', trackZoom)
 
-    const reset = () => {
-      map.fitBounds(bounds, { ...viewportPadding(container, [40, 24]), animate: false, maxZoom: 16 })
+    // Moves made by the app itself are not user moves.
+    let programmatic = false
+    const programmaticMove = (move: () => void) => {
+      programmatic = true
+      try { move() } finally { programmatic = false }
     }
+    map.on('movestart zoomstart', () => { if (!programmatic) userMovedRef.current = true })
+
+    // The one framing function for every stage: base, all stops and the mission-area boundary (the bounds
+    // already contain all of them plus a margin), inside the part of the map not covered by panels.
+    // Extra horizontal room keeps stop labels clear of the panels.
+    const fitMission = () => programmaticMove(() => {
+      map.fitBounds(bounds, { ...viewportPadding(container, [40, 24]), animate: false, maxZoom: 16 })
+    })
     const reveal = () => {
       const marker = selectedRef.current ? markers.get(selectedRef.current) : undefined
       if (!marker) return
-      map.panInside(marker.getLatLng(), { ...viewportPadding(container, [90, 30]), animate: false })
+      programmaticMove(() => map.panInside(marker.getLatLng(), { ...viewportPadding(container, [90, 30]), animate: false }))
     }
-    resetRef.current = reset
+    // Refit after layout changes unless the user has taken over the view; then only keep the selection visible.
+    const autoFit = () => {
+      if (userMovedRef.current) reveal()
+      else fitMission()
+    }
+    resetRef.current = () => {
+      userMovedRef.current = false
+      fitMission()
+    }
     revealRef.current = reveal
-    reset()
+    autoFitRef.current = autoFit
+    fitMission()
     trackZoom()
     placeLabels()
 
@@ -264,8 +284,8 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
     const refresh = () => {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
-        map.invalidateSize({ pan: false })
-        reveal()
+        programmaticMove(() => map.invalidateSize({ pan: false }))
+        autoFit()
         // Panels may have moved without the map resizing; layers that depend on the free area listen for this.
         map.fire('ws:layout')
       })
@@ -287,9 +307,15 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       markersRef.current.clear()
       resetRef.current = () => {}
       revealRef.current = () => {}
+      autoFitRef.current = () => {}
       labelsRef.current = () => {}
     }
   }, [mission, onSelect, areaLabel])
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => autoFitRef.current())
+    return () => cancelAnimationFrame(frame)
+  }, [layoutKey])
 
   useEffect(() => {
     selectedRef.current = selectedId
