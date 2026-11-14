@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { lockSelection } from './dragSelection'
+import { lockSelection, startedOnMarker } from './dragSelection'
+import { JezeroMarker, type JezeroMarkerProps } from './JezeroMarker'
 
 const TEXTURE_URL = `${import.meta.env.BASE_URL}images/mars-texture.jpg`
 const SPIN_MS = 120_000
+const TURN_MS = 700
 const SPIN_ANIMATIONS = new Set(['globe-spin', 'globe-marker-window'])
 
 // Jezero Crater on the equirectangular texture: longitude -180° at the left edge, +90° latitude at the top.
@@ -18,7 +20,7 @@ const spinTiming = { animationDuration: `${SPIN_MS}ms`, animationDelay: `${-FOCU
 // Strip offset at FOCUS_PHASE. It shows whenever the spin animation is off (reduced motion).
 const restingTransform = `translateX(${(FOCUS_PHASE - 1) * 50}%)`
 
-type Mode = 'auto' | 'drag' | 'leaving'
+type Mode = 'auto' | 'drag' | 'turning' | 'hold' | 'leaving'
 
 function spinAnimations(element: Element): Animation[] {
   return element.getAnimations({ subtree: true })
@@ -28,10 +30,60 @@ const timeOf = (animation: Animation) => Number(animation.currentTime ?? 0)
 // Keeps scrubbed times inside [one cycle, two cycles) so a backwards fling never runs before the start.
 const wrap = (ms: number) => SPIN_MS + ((ms % SPIN_MS) + SPIN_MS) % SPIN_MS
 const clamp = (value: number, limit: number) => Math.max(-limit, Math.min(limit, value))
+const easeInOut = (t: number) => t < 0.5 ? 4 * t ** 3 : 1 - (2 - 2 * t) ** 3 / 2
 
-export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reducedMotion: boolean }) {
+/** Pauses the spin and scrubs it to the nearest focus phase, where Jezero faces the viewer. Returns a cancel function. */
+function turnToFocus(spins: Animation[], onDone?: () => void): () => void {
+  spins.forEach(animation => { animation.pause(); animation.playbackRate = 1 })
+  const from = timeOf(spins[0])
+  // The animation delay equals FOCUS_PHASE, so whole cycles of currentTime land on the focus phase.
+  const to = Math.round(from / SPIN_MS) * SPIN_MS
+  const startedAt = performance.now()
+  let frame = 0
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - startedAt) / TURN_MS)
+    spins.forEach(animation => { animation.currentTime = from + (to - from) * easeInOut(progress) })
+    if (progress < 1) frame = requestAnimationFrame(step)
+    else onDone?.()
+  }
+  frame = requestAnimationFrame(step)
+  return () => cancelAnimationFrame(frame)
+}
+
+/** Plays the spin from a given rate, easing back to normal speed while stillAuto() holds. Returns a cancel function. */
+function resumeSpin(spins: Animation[], fromRate: number, stillAuto: () => boolean): () => void {
+  const startedAt = performance.now()
+  let frame = 0
+  const ease = (now: number) => {
+    if (!stillAuto()) return
+    const progress = Math.min(1, (now - startedAt) / 1600)
+    const rate = fromRate + (1 - fromRate) * (1 - (1 - progress) ** 3)
+    spins.forEach(animation => { animation.playbackRate = rate })
+    if (progress < 1) frame = requestAnimationFrame(ease)
+  }
+  spins.forEach(animation => {
+    animation.playbackRate = fromRate
+    if (!document.hidden) animation.play()
+  })
+  frame = requestAnimationFrame(ease)
+  return () => cancelAnimationFrame(frame)
+}
+
+interface Props extends JezeroMarkerProps {
+  leaving: boolean
+  reducedMotion: boolean
+  /** While true, turn Jezero to face the viewer and hold it there. */
+  holdJezero: boolean
+  /** Called once Jezero faces the viewer after holdJezero turns true. */
+  onJezeroFacing: () => void
+}
+
+export function MarsGlobe({ leaving, reducedMotion, holdJezero, onJezeroFacing, onJezeroActivate, jezeroExpanded }: Props) {
   const globeRef = useRef<HTMLDivElement>(null)
+  const markerRef = useRef<HTMLButtonElement>(null)
   const modeRef = useRef<Mode>('auto')
+  // Cancels whichever turn or spin ease is running, so only one drives the animations.
+  const cancelMotionRef = useRef<() => void>(() => {})
   const [texture, setTexture] = useState<'loading' | 'ready' | 'failed'>('loading')
 
   useEffect(() => {
@@ -45,9 +97,10 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
   // Pause every globe animation while the tab is hidden; drag to spin with an eased return to auto-rotation.
   useEffect(() => {
     const globe = globeRef.current
-    if (!globe) return
+    const marker = markerRef.current
+    if (!globe || !marker) return
     let drag: { id: number; spins: Animation[]; width: number; startX: number; startTime: number; lastX: number; lastAt: number; velocity: number; unlock: () => void } | null = null
-    let easeFrame = 0
+    const isAuto = () => modeRef.current === 'auto'
 
     const onVisibility = () => {
       const all = globe.getAnimations({ subtree: true })
@@ -55,12 +108,26 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
       const spins = spinAnimations(globe)
       all.forEach(animation => { if (modeRef.current === 'auto' || !spins.includes(animation)) animation.play() })
     }
+    // Keyboard focus on a hidden marker turns Jezero into view, then the spin carries on.
+    const onMarkerFocus = () => {
+      if (reducedMotion || modeRef.current !== 'auto' || !marker.matches(':focus-visible')) return
+      if (Number(getComputedStyle(marker).opacity) >= 0.5) return
+      const spins = spinAnimations(globe)
+      if (spins.length === 0) return
+      cancelMotionRef.current()
+      modeRef.current = 'turning'
+      cancelMotionRef.current = turnToFocus(spins, () => {
+        if (modeRef.current !== 'turning') return
+        modeRef.current = 'auto'
+        cancelMotionRef.current = resumeSpin(spins, 0, isAuto)
+      })
+    }
     const down = (event: PointerEvent) => {
-      if (reducedMotion || drag || modeRef.current !== 'auto' || (event.pointerType === 'mouse' && event.button !== 0)) return
+      if (reducedMotion || drag || modeRef.current !== 'auto' || startedOnMarker(event) || (event.pointerType === 'mouse' && event.button !== 0)) return
       const spins = spinAnimations(globe)
       if (spins.length === 0) return
       event.preventDefault()
-      cancelAnimationFrame(easeFrame)
+      cancelMotionRef.current()
       globe.setPointerCapture(event.pointerId)
       spins.forEach(animation => { animation.pause(); animation.playbackRate = 1 })
       modeRef.current = 'drag'
@@ -88,31 +155,21 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
       modeRef.current = 'auto'
       // Release speed in multiples of the automatic rotation rate, easing back to 1.
       const fling = event.timeStamp - lastAt > 90 ? 0 : clamp(velocity / width * SPIN_MS / 2, 48)
-      const startedAt = performance.now()
-      const ease = (now: number) => {
-        if (modeRef.current !== 'auto') return
-        const progress = Math.min(1, (now - startedAt) / 1600)
-        const rate = fling + (1 - fling) * (1 - (1 - progress) ** 3)
-        spins.forEach(animation => { animation.playbackRate = rate })
-        if (progress < 1) easeFrame = requestAnimationFrame(ease)
-      }
-      spins.forEach(animation => {
-        animation.playbackRate = fling
-        if (!document.hidden) animation.play()
-      })
-      easeFrame = requestAnimationFrame(ease)
+      cancelMotionRef.current = resumeSpin(spins, fling, isAuto)
     }
 
     document.addEventListener('visibilitychange', onVisibility)
+    marker.addEventListener('focus', onMarkerFocus)
     globe.addEventListener('pointerdown', down)
     globe.addEventListener('pointermove', move)
     globe.addEventListener('pointerup', release)
     globe.addEventListener('pointercancel', release)
     globe.addEventListener('lostpointercapture', release)
     return () => {
-      cancelAnimationFrame(easeFrame)
+      cancelMotionRef.current()
       drag?.unlock()
       document.removeEventListener('visibilitychange', onVisibility)
+      marker.removeEventListener('focus', onMarkerFocus)
       globe.removeEventListener('pointerdown', down)
       globe.removeEventListener('pointermove', move)
       globe.removeEventListener('pointerup', release)
@@ -121,6 +178,27 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
     }
   }, [reducedMotion])
 
+  // Card open: turn Jezero to the front and hold; on close, the spin eases back up from rest.
+  useEffect(() => {
+    const globe = globeRef.current
+    if (!holdJezero || leaving || !globe) return
+    const spins = spinAnimations(globe)
+    // Reduced motion (or no spin yet): the strip already rests at the focus phase.
+    if (reducedMotion || spins.length === 0) {
+      onJezeroFacing()
+      return
+    }
+    cancelMotionRef.current()
+    modeRef.current = 'hold'
+    cancelMotionRef.current = turnToFocus(spins, onJezeroFacing)
+    return () => {
+      if (modeRef.current !== 'hold') return
+      cancelMotionRef.current()
+      modeRef.current = 'auto'
+      cancelMotionRef.current = resumeSpin(spins, 0, () => modeRef.current === 'auto')
+    }
+  }, [holdJezero, leaving, reducedMotion, onJezeroFacing])
+
   // On leaving, turn Jezero to the focus point while the stylesheet zooms the globe onto it.
   useEffect(() => {
     const globe = globeRef.current
@@ -128,20 +206,9 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
     modeRef.current = 'leaving'
     const spins = spinAnimations(globe)
     if (spins.length === 0) return
-    spins.forEach(animation => { animation.pause(); animation.playbackRate = 1 })
-    const from = timeOf(spins[0])
-    // The animation delay equals FOCUS_PHASE, so whole cycles of currentTime land on the focus phase.
-    const to = Math.round(from / SPIN_MS) * SPIN_MS
-    const startedAt = performance.now()
-    let frame = 0
-    const step = (now: number) => {
-      const progress = Math.min(1, (now - startedAt) / 700)
-      const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (2 - 2 * progress) ** 3 / 2
-      spins.forEach(animation => { animation.currentTime = from + (to - from) * eased })
-      if (progress < 1) frame = requestAnimationFrame(step)
-    }
-    frame = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(frame)
+    cancelMotionRef.current()
+    const cancel = turnToFocus(spins)
+    return cancel
   }, [leaving])
 
   const stripStyle = { ...spinTiming, transform: restingTransform, backgroundImage: texture === 'ready' ? `url(${TEXTURE_URL})` : undefined }
@@ -149,17 +216,15 @@ export function MarsGlobe({ leaving, reducedMotion }: { leaving: boolean; reduce
   return (
     <div ref={globeRef} className={texture === 'ready' ? 'globe has-texture' : 'globe'}
       style={{ transformOrigin: `${focusX * 100}% ${markerV * 100}%` }}>
-      <div className="globe-base" />
+      <div className="globe-base" aria-hidden="true" />
       <div className="globe-surface">
         <div className="globe-strip" style={stripStyle}>
-          <span className="globe-marker" style={{ ...spinTiming, left: `${markerU * 50}%`, top: `${markerV * 100}%` }}>
-            <span className="globe-marker-dot" />
-            <span className="globe-marker-label">Jezero Crater</span>
-          </span>
+          <JezeroMarker markerRef={markerRef} style={{ ...spinTiming, left: `${markerU * 50}%`, top: `${markerV * 100}%` }}
+            onJezeroActivate={onJezeroActivate} jezeroExpanded={jezeroExpanded} />
         </div>
       </div>
-      <div className="globe-shade" />
-      <div className="globe-rim" />
+      <div className="globe-shade" aria-hidden="true" />
+      <div className="globe-rim" aria-hidden="true" />
     </div>
   )
 }

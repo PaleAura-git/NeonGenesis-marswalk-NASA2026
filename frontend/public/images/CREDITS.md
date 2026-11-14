@@ -9,7 +9,3 @@
 - Licence: public domain (US federal government work), as stated on the Commons file page.
 - Processing: Commons 3840 x 1920 rendition, resized to 2048 x 1024 with Lanczos resampling, saved as progressive JPEG at quality 82 (about 520 KB).
 - Projection: equirectangular, longitude -180 degrees at the left edge to +180 degrees at the right, +90 degrees latitude at the top.
-
-## stars.png
-
-Generated for this project with a seeded script. No third-party imagery.

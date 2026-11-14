@@ -11,3 +11,6 @@ export function lockSelection(element: Element): () => void {
     document.removeEventListener('selectstart', preventSelection)
   }
 }
+
+/** True when a pointer event started on the Jezero marker, which is a button rather than a drag handle. */
+export const startedOnMarker = (event: Event) => event.target instanceof Element && event.target.closest('.globe-marker') !== null

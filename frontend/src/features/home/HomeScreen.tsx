@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '../../components/ui/Button'
 import { Icon } from '../../components/ui/Icon'
+import { JezeroCard } from './JezeroCard'
 import { MarsGlobe } from './MarsGlobe'
+import { MarsTimeReadout } from './MarsTimeReadout'
+import { Starfield } from './Starfield'
 import { WebGLGlobe } from './WebGLGlobe'
+import { useIntro } from './useIntro'
 import { useParallax } from './useParallax'
 import { useReducedMotion } from './useReducedMotion'
 import './home.css'
@@ -25,11 +29,20 @@ const stats = [
   { label: 'Jezero Crater', value: '18.4°N 77.6°E' },
 ]
 
+// Text the Jezero card must not cover. Text blocks are measured by their line boxes, not their full width.
+const TEXT_SELECTORS = '.home-eyebrow, .home-title, .home-subline, .home-mars-time, .home-source'
+const BOX_SELECTORS = '.home-cta, .home-stats > div'
+
+type CardState = 'closed' | 'turning' | 'open'
+
 export function HomeScreen({ onEnter, focusAction }: { onEnter: () => void; focusAction: boolean }) {
   const rootRef = useRef<HTMLElement>(null)
   const reducedMotion = useReducedMotion()
+  const intro = useIntro(reducedMotion)
   const [leaving, setLeaving] = useState(false)
   const [webglFailed, setWebglFailed] = useState(false)
+  const [card, setCard] = useState<CardState>('closed')
+  const [marker, setMarker] = useState<HTMLButtonElement | null>(null)
   useParallax(rootRef, !reducedMotion && !leaving)
 
   const fallBackToCss = useCallback((reason: string) => {
@@ -53,14 +66,48 @@ export function HomeScreen({ onEnter, focusAction }: { onEnter: () => void; focu
     else setLeaving(true)
   }
 
+  // Marker click: turn Jezero to the front, then open the card. A second click closes it.
+  const activateJezero = useCallback((element: HTMLButtonElement) => {
+    setMarker(element)
+    setCard(state => state === 'closed' ? 'turning' : 'closed')
+  }, [])
+  const jezeroFacing = useCallback(() => setCard(state => state === 'turning' ? 'open' : state), [])
+  const closeCard = useCallback(() => {
+    setCard('closed')
+    marker?.focus({ preventScroll: true })
+  }, [marker])
+
+  const textRight = useCallback(() => {
+    const root = rootRef.current
+    if (!root) return 0
+    let right = 0
+    root.querySelectorAll(TEXT_SELECTORS).forEach(element => {
+      const range = document.createRange()
+      range.selectNodeContents(element)
+      right = Math.max(right, range.getBoundingClientRect().right)
+    })
+    root.querySelectorAll(BOX_SELECTORS).forEach(element => { right = Math.max(right, element.getBoundingClientRect().right) })
+    return right
+  }, [])
+
+  const globeProps = {
+    leaving, reducedMotion,
+    holdJezero: card !== 'closed',
+    onJezeroFacing: jezeroFacing,
+    onJezeroActivate: activateJezero,
+    jezeroExpanded: card === 'open',
+  }
+  const className = ['home', leaving && 'is-leaving', intro && 'is-intro'].filter(Boolean).join(' ')
+
   return (
-    <section ref={rootRef} className={leaving ? 'home is-leaving' : 'home'} aria-labelledby="home-title">
-      <div className="home-stars home-stars--far" data-parallax="3" aria-hidden="true" />
-      <div className="home-stars home-stars--near" data-parallax="7" aria-hidden="true" />
-      <div className="home-globe-layer" data-parallax="14" aria-hidden="true">
+    <section ref={rootRef} className={className} aria-labelledby="home-title">
+      <div className="home-backdrop" aria-hidden="true" />
+      <Starfield />
+      <div className="home-vignette" aria-hidden="true" />
+      <div className="home-globe-layer" data-parallax="14">
         {showWebGL
-          ? <WebGLGlobe leaving={leaving} reducedMotion={reducedMotion} onFail={fallBackToCss} />
-          : <MarsGlobe leaving={leaving} reducedMotion={reducedMotion} />}
+          ? <WebGLGlobe {...globeProps} onFail={fallBackToCss} />
+          : <MarsGlobe {...globeProps} />}
       </div>
       <div className="home-content">
         <div className="home-copy">
@@ -73,10 +120,11 @@ export function HomeScreen({ onEnter, focusAction }: { onEnter: () => void; focu
           <dl className="home-stats">
             {stats.map(stat => <div key={stat.label}><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}
           </dl>
+          <MarsTimeReadout />
           <p className="home-source">Source: NASA Mars Fact Sheet</p>
         </div>
       </div>
-      <footer className="home-footer">Imagery NASA / JPL / USGS · Neon Genesis · NASA Space Apps Challenge</footer>
+      {card === 'open' && <JezeroCard anchor={marker} textRight={textRight} onClose={closeCard} onPlan={start} />}
     </section>
   )
 }
