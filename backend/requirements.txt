@@ -1,0 +1,10 @@
+# Python libraries for the Marswalk data pipeline.
+# Install into a venv built from python.org Python 3.14 (not Homebrew).
+rasterio==1.5.2
+numpy==2.5.4
+scipy==1.18.1
+scikit-image==0.26.0
+scikit-learn==1.9.1
+pandas==3.1.1
+geopandas==1.2.0
+matplotlib==3.11.2
