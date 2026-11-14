@@ -1,0 +1,6 @@
+id,name,role,lat_deg,lon_deg,elev_m,position_source,notes
+three-forks-base,Three Forks (sample depot),habitat,18.4529,77.4083,-2545,NASA rover position file (S23) matched to sample dates (S24); agrees with JPL depot zones (S22),Nearly flat: rover tilt 0.2-1.2 deg
+cape-nukshak,Cape Nukshak,stop,18.4507,77.4014,-2526.5,NASA rover position file (S23); Amalik outcrop sol 575 (S24),Rover tilt 4.5 deg
+hawksbill-gap,Hawksbill Gap,stop,18.4588,77.4060,-2522,NASA rover position file (S23); Skinner Ridge / Wildcat Ridge samples sols 490-516 (S24),Rover tilt ~14 deg (near the 15 deg limit)
+kodiak-butte,Kodiak butte,stop,18.4400,77.4097,,Read off a HiRISE map by the team (rover never stopped there),UNVERIFIED: re-read in Mars Trek; top or foot of butte?
+landing-site,Octavia E. Butler Landing,reference,18.4446,77.4509,,Bell et al. 2022 (S19),Source is non-NASA: replace with a NASA landing-site page
