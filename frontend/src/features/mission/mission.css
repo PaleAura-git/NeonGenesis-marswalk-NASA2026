@@ -124,7 +124,18 @@
 .ws-inspector { position: relative; display: flex; flex-direction: column; width: 100%; max-height: 100%; min-height: 0; overflow: hidden; }
 .ws-inspector-hero { position: relative; z-index: 1; flex: none; height: 170px; overflow: hidden; isolation: isolate; background: #1a110c; }
 .ws-hero-image { position: absolute; inset: 0; z-index: -2; background-color: #2a1912; filter: var(--ws-imagery-filter); }
-.ws-hero-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 9, 7, .18) 0%, rgba(26, 17, 12, 0) 35%, rgba(26, 17, 12, .78) 80%, #1a110c 100%); }
+.ws-hero-shade { position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(14, 9, 7, .28) 0%, rgba(26, 17, 12, .05) 30%, rgba(26, 17, 12, .62) 55%, rgba(26, 17, 12, .92) 78%, #1a110c 100%); }
+.ws-hero-photo { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
+.ws-hero-credit { position: absolute; top: 12px; left: 14px; padding: 2px 8px; border-radius: 999px; background: rgba(14, 9, 7, .62); color: rgba(243, 233, 220, .82); font-size: .62rem; letter-spacing: .02em; text-decoration: none; }
+.ws-hero-credit:hover { color: var(--ws-ink); }
+.ws-points { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: .9rem; line-height: 1.4; color: var(--ws-ink); }
+.ws-points li::marker { color: var(--ws-accent); }
+.ws-source { margin-top: 10px; font-size: .74rem; line-height: 1.4; color: var(--ws-ink-3); }
+.ws-source a, .ws-sources a { color: var(--ws-ink-2); text-decoration-color: rgba(243, 233, 220, .3); text-underline-offset: 2px; }
+.ws-source a:hover, .ws-sources a:hover { color: var(--ws-ink); }
+.ws-sources { margin-top: 6px; font-size: .74rem; color: var(--ws-ink-3); }
+.ws-sources summary { cursor: pointer; min-height: 28px; display: flex; align-items: center; }
+.ws-sources ul { margin: 2px 0 0; padding-left: 16px; display: grid; gap: 4px; line-height: 1.4; }
 .ws-hero-pill { position: absolute; top: 14px; left: 16px; }
 .ws-inspector-close { position: absolute; top: 10px; right: 10px; }
 .ws-hero-text { position: absolute; left: 20px; right: 20px; bottom: 12px; }

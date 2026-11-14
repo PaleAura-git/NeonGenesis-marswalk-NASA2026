@@ -1,13 +1,11 @@
 import type { Mission } from '../../types/mission'
 import { toLatLon } from './geoFrame'
 
-/** Body of the inspector when the base is selected. The panel supplies the heading and close control. */
+/** Base position facts for the inspector. The panel supplies the heading, image and site notes. */
 export function BaseDetails({ mission }: { mission: Mission }) {
   const [latitude, longitude] = toLatLon(mission.base.position)
   return (
     <>
-      <p className="eyebrow">Departure & return</p>
-      <p className="objective">Start and end point of the expedition, and the origin of the local metre grid.</p>
       <dl className="stop-facts">
         <div><dt>x / east</dt><dd>{mission.base.position.xMeters} m</dd></div>
         <div><dt>y / north</dt><dd>{mission.base.position.yMeters} m</dd></div>

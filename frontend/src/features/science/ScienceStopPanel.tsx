@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useState, type CSSProperties } from 'react'
 import type { Mission, Position } from '../../types/mission'
 import type { Priority, SettingsErrors, StopSettings } from '../../types/planning'
 import { Icon } from '../../components/ui/Icon'
@@ -10,6 +10,7 @@ import { hiriseTileUrl, tileCoordinates } from '../map/marsTrek'
 import { terrainOverlay } from '../map/terrainOverlay'
 import { observationField } from '../mission/settings'
 import { parseSetting, priorityNames, stopNumber } from '../mission/format'
+import { stopContent, type StopContent } from './stopContent'
 
 interface Props {
   mission: Mission
@@ -65,6 +66,35 @@ function heroImage(position: Position): CSSProperties {
   }
 }
 
+/** The stop's NASA photo; falls back to the HiRISE crop underneath if the image cannot load. */
+function HeroPhoto({ image }: { image: StopContent['image'] }) {
+  const [failed, setFailed] = useState(false)
+  if (failed) return null
+  return <>
+    <img className="ws-hero-photo" src={image.src} alt={image.alt} style={{ objectPosition: image.position }}
+      decoding="async" onError={() => setFailed(true)} />
+    <a className="ws-hero-credit" href={image.page} target="_blank" rel="noreferrer">{image.credit}</a>
+  </>
+}
+
+/** "Why it matters" points and their sources: the first inline, the rest under a disclosure. */
+function ScienceNotes({ content, title }: { content: StopContent; title: string }) {
+  const [first, ...more] = content.sources
+  return (
+    <section className="ws-inspector-section">
+      <h3 className="ws-label">{title}</h3>
+      <ul className="ws-points">{content.points.map(point => <li key={point}>{point}</li>)}</ul>
+      {first && <p className="ws-source">Source: <a href={first.url} target="_blank" rel="noreferrer">{first.label}</a></p>}
+      {more.length > 0 && (
+        <details className="ws-sources">
+          <summary>Sources ({more.length} more)</summary>
+          <ul>{more.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul>
+        </details>
+      )}
+    </section>
+  )
+}
+
 /** Right-hand inspector for the selected stop or base. Collapses to a slim tab on the right edge. */
 export function ScienceStopPanel({ mission, selectedId, open, onOpen, onCollapse, stopSettings, errors, onStopChange, onBlur }: Props) {
   if (!open) {
@@ -102,13 +132,16 @@ export function ScienceStopPanel({ mission, selectedId, open, onOpen, onCollapse
   const kicker = isBase ? 'Base · departure & return'
     : `Stop ${stopNumber(stopIndex)} · ${settings ? priorityNames[settings.priority] ?? 'Unset' : ''} priority`
   const observation = settings ? parseSetting(settings.observationMinutes) : NaN
+  const content: StopContent | undefined = stopContent[location.id]
+  const objective = content?.objective ?? stop?.observationObjective ?? ''
 
   return (
     <aside id="inspector" className="ws-panel ws-inspector" aria-labelledby="inspector-title">
       <div className="ws-inspector-hero">
         <div className="ws-hero-image" style={heroImage(location.position)} aria-hidden="true" />
         <div className="ws-hero-shade" aria-hidden="true" />
-        <span className="ws-pill ws-hero-pill">{isBase ? 'HiRISE context' : 'Perseverance imagery pending'}</span>
+        {content ? <HeroPhoto key={content.image.src} image={content.image} />
+          : <span className="ws-pill ws-hero-pill">HiRISE context</span>}
         {collapse}
         <div className="ws-hero-text">
           <p className="ws-kicker">{kicker}</p>
@@ -117,14 +150,17 @@ export function ScienceStopPanel({ mission, selectedId, open, onOpen, onCollapse
       </div>
 
       <div className="ws-inspector-body">
-        {isBase ? <BaseDetails mission={mission} /> : stop && settings && <>
-          {stop.observationObjective.trim() && (
+        {isBase ? <>
+          {content && <ScienceNotes content={content} title="About the site" />}
+          <BaseDetails mission={mission} />
+        </> : stop && settings && <>
+          {objective.trim() && (
             <section className="ws-inspector-section">
               <h3 className="ws-label">Observation objective</h3>
-              <p className="ws-objective">{stop.observationObjective}</p>
+              <p className="ws-objective">{objective}</p>
             </section>
           )}
-          {/* "Why it matters" appears once stops carry that text; the current data has none. */}
+          {content && content.points.length > 0 && <ScienceNotes content={content} title="Why it matters" />}
 
           <div className="ws-inspector-controls">
             <div className="ws-control-row">
