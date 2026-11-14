@@ -60,8 +60,8 @@ def outline(mask):
     return [[round(float(r), 2), round(float(c), 2)] for r, c in ring]
 
 
-def assess(path, seconds, x_scale, stop_at, home_map, budget_s, walk_s):
-    reserve_s = reserve_seconds(walk_s)
+def assess(path, seconds, x_scale, stop_at, home_map, budget_s, walk_s, reserve_floor_s=0.0):
+    reserve_s = max(reserve_seconds(walk_s), reserve_floor_s)
     elapsed, energy = timeline(path, seconds, x_scale, stop_at)
     rows, cols = zip(*path)
     home_s = home_map[rows, cols]

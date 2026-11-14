@@ -7,6 +7,7 @@ import itertools
 import json
 import math
 import sys
+from dataclasses import dataclass
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,14 +19,42 @@ from walk_cost import DEFAULT_MAX_SLOPE, MAX_SPEED_KMH, OXYGEN_KG_PER_KWH, POWER
 
 MARS_RADIUS_M = 3_396_190
 SNAP_RADIUS_M = 150
-STOP_MINUTES = {"cape-nukshak": 40, "hawksbill-gap": 40, "kodiak-butte": 30}
+STOP_SECONDS = {"cape-nukshak": 2400, "hawksbill-gap": 2400, "kodiak-butte": 1800}
 ROUGHNESS_SCALE_DEG = 5
 
 
-def load_grid(path):
-    with rasterio.open(path) as src:
+@dataclass
+class Context:
+    bands: dict
+    transform: rasterio.Affine
+    cell_m: float
+    x_scale: float
+    sources: dict
+    sites: list
+    base: str
+    stops: list
+    site_cells: dict
+
+
+def lonlat_to_map(lon, lat):
+    return MARS_RADIUS_M * math.radians(lon), MARS_RADIUS_M * math.radians(lat)
+
+
+def load_context(grid_path, sites_path):
+    with rasterio.open(grid_path) as src:
         bands = {name: src.read(i + 1) for i, name in enumerate(src.descriptions)}
-        return bands, src.transform, src.res[0], float(src.tags().get("x_ground_scale", 1))
+        tags = src.tags()
+        transform, cell_m = src.transform, src.res[0]
+    with open(sites_path, newline="") as f:
+        sites = [s for s in csv.DictReader(f) if s["role"] in ("habitat", "stop")]
+    site_cells = {s["id"]: rasterio.transform.rowcol(
+        transform, *lonlat_to_map(float(s["lon_deg"]), float(s["lat_deg"]))) for s in sites}
+    return Context(
+        bands=bands, transform=transform, cell_m=cell_m,
+        x_scale=float(tags.get("x_ground_scale", 1)), sources=json.loads(tags.get("sources", "{}")),
+        sites=sites, base=next(s["id"] for s in sites if s["role"] == "habitat"),
+        stops=[s["id"] for s in sites if s["role"] == "stop"], site_cells=site_cells,
+    )
 
 
 def cost_surfaces(bands, cell_m, speed_kmh, max_slope):
@@ -95,60 +124,51 @@ def path_metrics(path, seconds, bands, cell_m, x_scale):
     }
 
 
-if __name__ == "__main__":
-    grid_path, sites_path = sys.argv[1], sys.argv[2]
-    speed_kmh = float(sys.argv[3]) if len(sys.argv) > 3 else MAX_SPEED_KMH
-    max_slope = float(sys.argv[4]) if len(sys.argv) > 4 else DEFAULT_MAX_SLOPE
-    budget_s = (float(sys.argv[5]) if len(sys.argv) > 5 else DEFAULT_HOURS) * 3600
-
-    bands, transform, cell_m, x_scale = load_grid(grid_path)
-    costs, seconds = cost_surfaces(bands, cell_m, speed_kmh, max_slope)
-    with open(sites_path, newline="") as f:
-        sites = [s for s in csv.DictReader(f) if s["role"] in ("habitat", "stop")]
-    base = next(s["id"] for s in sites if s["role"] == "habitat")
-    stops = [s["id"] for s in sites if s["role"] == "stop"]
-
-    print(f"Speed {speed_kmh} km/h | max slope {max_slope}° | budget {budget_s / 3600:g} h | grid {grid_path}")
-    home_map = None
+def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEFAULT_HOURS * 3600,
+         stop_seconds=None, blocked=None, reserve_floor_s=0.0):
+    """Both route modes for one set of settings. `blocked` = boolean cell mask that may not be entered."""
+    stop_seconds = STOP_SECONDS if stop_seconds is None else stop_seconds
+    costs, seconds = cost_surfaces(ctx.bands, ctx.cell_m, speed_kmh, max_slope)
+    if blocked is not None:
+        seconds = np.where(blocked, np.nan, seconds)
+        costs = {k: np.where(blocked, np.nan, v) for k, v in costs.items()}
+    wanted = [s for s in ctx.stops if s in stop_seconds]
     results = {}
     for mode, cost in costs.items():
-        print(f"\n=== {mode} ===")
-        points, reachable = {}, None
-        for s in sorted(sites, key=lambda s: s["id"] != base):
-            x = MARS_RADIUS_M * math.radians(float(s["lon_deg"]))
-            y = MARS_RADIUS_M * math.radians(float(s["lat_deg"]))
-            row, col = rasterio.transform.rowcol(transform, x, y)
+        log, excluded, points, reachable = [], {}, {}, None
+        for sid in [ctx.base, *wanted]:
             allowed = np.isfinite(cost) if reachable is None else reachable
-            cell, moved = snap_to(allowed, row, col, cell_m, x_scale)
+            cell, moved = snap_to(allowed, *ctx.site_cells[sid], ctx.cell_m, ctx.x_scale)
             if cell is None:
-                print(f"{s['id']}: nothing reachable within {SNAP_RADIUS_M} m, skipped")
+                if sid == ctx.base:
+                    results[mode] = {"error": "The base itself is blocked or not walkable.", "log": log}
+                    break
+                excluded[sid] = f"not reachable on foot within {SNAP_RADIUS_M} m of the mapped position"
+                log.append(f"{sid}: {excluded[sid]}, excluded")
                 continue
-            points[s["id"]] = cell
+            points[sid] = cell
             if reachable is None:
-                reachable = np.isfinite(mcp(cost, x_scale).find_costs([cell])[0])
-                if home_map is None:
-                    home_map = mcp(seconds, x_scale).find_costs([cell])[0]
+                reachable = np.isfinite(mcp(cost, ctx.x_scale).find_costs([cell])[0])
+                home_map = mcp(seconds, ctx.x_scale).find_costs([cell])[0]
             if moved:
-                print(f"{s['id']}: moved {moved:.0f} m to the nearest cell reachable on foot")
-
-        legs = leg_table(cost, points, x_scale)
-        found = best_order(legs, base, [s for s in stops if s in points])
-        if found is None:
-            print("No route reaches every stop and returns to base.")
+                log.append(f"{sid}: moved {moved:.0f} m to the nearest cell reachable on foot")
+        if mode in results:
             continue
-        seq = found[1]
-        path = [legs[seq[0], seq[1]][1][0]]
-        stop_at = {}
+
+        legs = leg_table(cost, points, ctx.x_scale)
+        seq = best_order(legs, ctx.base, [s for s in wanted if s in points])[1]
+        path, stop_at = [legs[seq[0], seq[1]][1][0]], {}
         for a, b in zip(seq, seq[1:]):
             path += legs[a, b][1][1:]
-            if b != base:
-                stop_at[len(path) - 1] = STOP_MINUTES.get(b, 0) * 60
+            if b != ctx.base:
+                stop_at[len(path) - 1] = stop_seconds[b]
 
-        m = path_metrics(path, seconds, bands, cell_m, x_scale)
-        stop_s = sum(STOP_MINUTES.get(s, 0) * 60 for s in seq[1:-1])
+        m = path_metrics(path, seconds, ctx.bands, ctx.cell_m, ctx.x_scale)
+        stop_s = sum(stop_at.values())
         energy_wh = (POWER_W["walking"] * m["walk_s"] + POWER_W["stop"] * stop_s) / 3600
         m |= {
             "order": seq,
+            "excluded": excluded,
             "stop_s": stop_s,
             "total_s": m["walk_s"] + stop_s,
             "energy_wh": energy_wh,
@@ -156,53 +176,78 @@ if __name__ == "__main__":
             "path_rc": [list(map(int, p)) for p in path],
             "approach_rc": {k: list(map(int, v)) for k, v in points.items()},
             "stop_index": {str(i): s for i, s in zip(sorted(stop_at), seq[1:-1])},
+            "safety": assess(path, seconds, ctx.x_scale, stop_at, home_map, budget_s,
+                             m["walk_s"], reserve_floor_s),
+            "log": log,
         }
-        m["safety"] = assess(path, seconds, x_scale, stop_at, home_map, budget_s, m["walk_s"])
         results[mode] = m
-        print("Order:", " -> ".join(seq))
-        print(f"Distance {m['distance_m']:.0f} m | walking {m['walk_s'] / 60:.0f} min | "
-              f"stops {stop_s / 60:.0f} min | total {m['total_s'] / 60:.0f} min")
-        print(f"Energy {energy_wh:.0f} Wh | oxygen {m['oxygen_kg']:.2f} kg | "
-              f"max cell slope {m['max_slope_deg']:.1f}° | cells with steep spots {m['steep_spot_cells']} | "
-              f"mean roughness {m['mean_roughness_deg']:.2f}°")
-        sa = m["safety"]
-        print(f"Reserve {sa['reserve_s'] / 60:.0f} min | spare walk-back time at the tightest point: "
-              + ", ".join(f"{k} {v / 60:.0f} min" for k, v in sa["worst_margin_s"].items()))
-        if sa["feasible"]:
-            print(f"Safe return all the way. Limiting resource: {sa['limiting_resource']}")
-        else:
-            i = sa["first_unsafe_index"]
-            print(f"NO SAFE RETURN: {sa['limiting_resource']} runs short after "
-                  f"{i} of {len(path)} route points; the reserve would be broken. Shorten the plan.")
+    return {"speed_kmh": speed_kmh, "max_slope_deg": max_slope, "budget_s": budget_s, "routes": results}
 
-    with open("data/processed/routes.json", "w") as f:
-        json.dump({"speed_kmh": speed_kmh, "max_slope_deg": max_slope,
-                   "budget_s": budget_s, "routes": results}, f)
-    print("\nSaved data/processed/routes.json")
 
-    rows, cols = bands["slope_mean_deg"].shape
-    extent = [0, cols * cell_m / 1000, rows * cell_m / 1000, 0]
+def describe(mode, m):
+    if "error" in m:
+        return [f"=== {mode} ===", m["error"]]
+    sa = m["safety"]
+    lines = [f"=== {mode} ===", *m["log"], "Order: " + " -> ".join(m["order"]),
+             f"Distance {m['distance_m']:.0f} m | walking {m['walk_s'] / 60:.0f} min | "
+             f"stops {m['stop_s'] / 60:.0f} min | total {m['total_s'] / 60:.0f} min",
+             f"Energy {m['energy_wh']:.0f} Wh | oxygen {m['oxygen_kg']:.2f} kg | "
+             f"max cell slope {m['max_slope_deg']:.1f}° | steep-spot cells {m['steep_spot_cells']} | "
+             f"mean roughness {m['mean_roughness_deg']:.2f}°",
+             f"Reserve {sa['reserve_s'] / 60:.0f} min | spare at the tightest point: "
+             + ", ".join(f"{k} {v / 60:.0f} min" for k, v in sa["worst_margin_s"].items())]
+    if sa["feasible"]:
+        lines.append(f"Safe return all the way. Limiting resource: {sa['limiting_resource']}")
+    else:
+        lines.append(f"NO SAFE RETURN: {sa['limiting_resource']} runs short after {sa['first_unsafe_index']} "
+                     f"of {len(m['path_rc'])} route points. The reserve is not relaxed; shorten the plan.")
+    return lines
+
+
+def draw(ctx, result, title, out_path, blocked=None):
+    rows, cols = ctx.bands["slope_mean_deg"].shape
+    extent = [0, cols * ctx.cell_m / 1000, rows * ctx.cell_m / 1000, 0]
+    seconds, _, _ = cell_costs(ctx.bands["slope_mean_deg"], ctx.cell_m,
+                               result["speed_kmh"], result["max_slope_deg"])
     plt.figure(figsize=(9, 8))
-    plt.imshow(bands["slope_mean_deg"], cmap="Greys", vmin=0, vmax=30, extent=extent)
+    plt.imshow(ctx.bands["slope_mean_deg"], cmap="Greys", vmin=0, vmax=30, extent=extent)
     plt.colorbar(label="Cell mean slope (degrees)")
     plt.imshow(np.ma.masked_where(np.isfinite(seconds), np.ones_like(seconds)),
                cmap="autumn", alpha=0.6, extent=extent)
+    if blocked is not None:
+        plt.imshow(np.ma.masked_where(~blocked, np.ones_like(seconds)), cmap="cool", alpha=0.7, extent=extent)
     for mode, colour in (("fastest", "tab:blue"), ("safest", "tab:green")):
-        if mode in results:
-            r, c = np.array(results[mode]["path_rc"]).T
-            plt.plot((c + 0.5) * cell_m / 1000, (r + 0.5) * cell_m / 1000, colour, lw=2,
-                     label=f"{mode}: {results[mode]['distance_m']:.0f} m, "
-                           f"{results[mode]['total_s'] / 60:.0f} min")
-    for s in sites:
-        x = MARS_RADIUS_M * math.radians(float(s["lon_deg"]))
-        y = MARS_RADIUS_M * math.radians(float(s["lat_deg"]))
-        row, col = rasterio.transform.rowcol(transform, x, y)
-        px, py = (col + 0.5) * cell_m / 1000, (row + 0.5) * cell_m / 1000
+        m = result["routes"].get(mode, {})
+        if "path_rc" in m:
+            r, c = np.array(m["path_rc"]).T
+            plt.plot((c + 0.5) * ctx.cell_m / 1000, (r + 0.5) * ctx.cell_m / 1000, colour, lw=2,
+                     label=f"{mode}: {m['distance_m']:.0f} m, {m['total_s'] / 60:.0f} min")
+    for s in ctx.sites:
+        row, col = ctx.site_cells[s["id"]]
+        px, py = (col + 0.5) * ctx.cell_m / 1000, (row + 0.5) * ctx.cell_m / 1000
         plt.plot(px, py, "m^", markersize=9)
         plt.annotate(s["name"], (px, py), xytext=(5, 5), textcoords="offset points", color="purple")
     plt.legend(loc="lower left")
-    plt.title(f"Marswalk routes at {speed_kmh} km/h, red = over {max_slope:.0f}° (HiRISE, 10 m)")
+    plt.title(title)
     plt.xlabel("km from demo box left edge")
     plt.ylabel("km from demo box top edge")
-    plt.savefig("figures/routes.png", dpi=120)
+    plt.savefig(out_path, dpi=120)
+
+
+if __name__ == "__main__":
+    ctx = load_context(sys.argv[1], sys.argv[2])
+    speed_kmh = float(sys.argv[3]) if len(sys.argv) > 3 else MAX_SPEED_KMH
+    max_slope = float(sys.argv[4]) if len(sys.argv) > 4 else DEFAULT_MAX_SLOPE
+    budget_s = (float(sys.argv[5]) if len(sys.argv) > 5 else DEFAULT_HOURS) * 3600
+
+    result = plan(ctx, speed_kmh, max_slope, budget_s)
+    print(f"Speed {speed_kmh} km/h | max slope {max_slope}° | budget {budget_s / 3600:g} h")
+    for mode, m in result["routes"].items():
+        print("\n" + "\n".join(describe(mode, m)))
+
+    with open("data/processed/routes.json", "w") as f:
+        json.dump(result, f)
+    print("\nSaved data/processed/routes.json")
+    draw(ctx, result, f"Marswalk routes at {speed_kmh} km/h, red = over {max_slope:.0f}° (HiRISE, 10 m)",
+         "figures/routes.png")
     plt.show()

@@ -11,7 +11,7 @@
       "x": "east",
       "y": "north"
     },
-    "origin": "Three Forks sample depot (18.4529 N, 77.4083 E) at (0, 0); Mars equirectangular, R = 3,396,190 m, standard parallel 0."
+    "origin": "Three Forks sample depot (18.4529 N, 77.4083 E) at (0, 0); Mars equirectangular, R = 3,396,190 m, east-west corrected to ground metres."
   },
   "geographicReference": {
     "latitudeDegrees": 18.4529,
