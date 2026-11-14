@@ -1,13 +1,13 @@
 import type { MapBounds } from '../../types/mission'
 
 /**
- * Illustrative terrain shown under the mission map. Swap the image here, for example for a CTX hillshade,
- * by changing the URL and its bounds. Bounds are in the synthetic local metres used by the mission
- * (x east, y north). The image is stretched to these bounds, so keep its aspect ratio close to theirs.
+ * Illustrative terrain: the offline fallback when NASA Mars Trek tiles cannot load, and the
+ * "Illustrative terrain" choice in Layers. Bounds are local metres from Three Forks Base (x east, y north).
+ * The image (1440 × 900) is stretched to these bounds, so keep their ratio close to 1.6 : 1.
+ * They are larger than the stops need so the image fills the default view even on wide screens.
  */
-export const terrainOverlay: { url: string; bounds: MapBounds; label: string } = {
+export const terrainOverlay: { url: string; bounds: MapBounds } = {
   url: `${import.meta.env.BASE_URL}images/terrain-illustrative.jpg`,
-  // About three times the synthetic mission bounds (x −100…620, y −220…390), centred on them.
-  bounds: { min: { xMeters: -900, yMeters: -800 }, max: { xMeters: 1420, yMeters: 970 } },
-  label: 'Illustrative terrain · replace with CTX hillshade',
+  // 8.0 × 5.0 km centred on the stops (x −387…79, y −763…349).
+  bounds: { min: { xMeters: -4154, yMeters: -2707 }, max: { xMeters: 3846, yMeters: 2293 } },
 }

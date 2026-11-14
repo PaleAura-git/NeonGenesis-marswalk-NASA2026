@@ -24,23 +24,25 @@ export function TimeBudgetStrip({ mission, settings }: { mission: Mission; setti
 
   return (
     <section className="ws-budget" aria-labelledby="budget-title">
-      <div className="ws-budget-head">
+      <div className="ws-budget-title">
         <h2 id="budget-title">Mission time budget</h2>
         <p className="ws-panel-note">{formatDuration(total)} total · updates as you edit</p>
-        <p className={over ? 'ws-budget-headline is-over' : 'ws-budget-headline'} aria-live="polite">
-          {!valid ? 'Check mission settings' : over ? `Over budget by ${Math.round(-walking)} min` : `${Math.round(walking)} min available for walking`}
-        </p>
       </div>
       <div className="ws-budget-bar" role="img" aria-label={label}>
         {valid && walking > 0 && <span className="ws-budget-walk" style={share(walking)} />}
         {valid && science > 0 && <span className="ws-budget-science" style={share(science)} />}
         {valid && reserve > 0 && <span className="ws-budget-reserve" style={share(reserve)} />}
       </div>
-      <ul className="ws-budget-legend" aria-hidden="true">
-        <li><span className="ws-swatch ws-budget-walk" />Walking & return <strong className={over ? 'is-over' : undefined}>{over ? `−${Math.round(-walking)} min` : minutes(walking)}</strong></li>
-        <li><span className="ws-swatch ws-budget-science" />Science <strong>{minutes(science)}</strong></li>
-        <li><span className="ws-swatch ws-budget-reserve" />Reserve <strong>{minutes(reserve)}</strong></li>
-      </ul>
+      <div className="ws-budget-values">
+        <ul className="ws-budget-legend" aria-hidden="true">
+          <li><span className="ws-swatch ws-budget-walk" />Walking & return <strong className={over ? 'is-over' : undefined}>{over ? `−${Math.round(-walking)} min` : minutes(walking)}</strong></li>
+          <li><span className="ws-swatch ws-budget-science" />Science <strong>{minutes(science)}</strong></li>
+          <li><span className="ws-swatch ws-budget-reserve" />Reserve <strong>{minutes(reserve)}</strong></li>
+        </ul>
+        <p className={over ? 'ws-budget-headline is-over' : 'ws-budget-headline'} aria-live="polite">
+          {!valid ? 'Check mission settings' : over ? `Over budget by ${Math.round(-walking)} min` : `${Math.round(walking)} min available for walking`}
+        </p>
+      </div>
     </section>
   )
 }

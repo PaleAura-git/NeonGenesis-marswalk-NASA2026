@@ -2,6 +2,10 @@
 .leaflet-workspace { width: 100%; height: 100%; font-family: var(--font-sans); background: radial-gradient(ellipse 70% 60% at 50% 45%, #2b1a12 0, #170e0a 60%, var(--ws-bg) 100%); }
 .leaflet-workspace:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -4px; }
 .ws-terrain { filter: saturate(.92); }
+/* Grayscale NASA imagery, colourised for display. Only the imagery pane is filtered. */
+.leaflet-imagery-pane { filter: var(--ws-imagery-filter); }
+.ws-map-vignette { position: absolute; left: 0; top: 0; pointer-events: none; background: radial-gradient(ellipse 72% 68% at 50% 48%, rgba(14, 9, 7, 0) 45%, rgba(14, 9, 7, .42) 78%, rgba(14, 9, 7, .78) 100%); }
+.ws-grid-canvas { position: absolute; left: 0; top: 0; pointer-events: none; }
 
 /* Mission area outline and label */
 .ws-mission-area { pointer-events: none; overflow: visible; }
@@ -28,6 +32,10 @@
 .mission-label.leaflet-tooltip::before { display: none; }
 .mission-label.is-selected.leaflet-tooltip { background: #f3e9dc; color: var(--ws-on-accent); }
 .mission-label.is-excluded.leaflet-tooltip { opacity: .55 !important; }
+/* Labels that would overlap are hidden (numbered circles stay); hover or focus brings one back. */
+.mission-label.is-collapsed { visibility: hidden; }
+.mission-label.is-collapsed.is-forced { visibility: visible; z-index: 1000; }
+.ws-area-label span.is-collapsed { visibility: hidden; }
 
 /* Map control stack, left of the inspector. */
 .ws-map-controls { position: absolute; z-index: 500; top: calc(var(--ws-top-h) + var(--ws-gap)); right: calc(var(--ws-right-w) + var(--ws-gap) * 2); display: flex; flex-direction: column; gap: 10px; }

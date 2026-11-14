@@ -36,6 +36,8 @@ a { color: inherit; }
   color: var(--ws-ink);
 }
 .app-shell.inspector-closed { --ws-right-w: 44px; }
+/* Plan's bottom strip is a single compact row. */
+.app-shell.stage-plan { --ws-strip-h: 68px; }
 .skip-link { position: fixed; top: -100px; left: 15px; z-index: 50; background: var(--ws-glass-solid); color: var(--ws-ink); padding: 12px; border-radius: 10px; }
 .skip-link:focus { top: 10px; }
 
@@ -142,7 +144,7 @@ dd { margin: 0; color: var(--ws-ink-3); }
 
 /* ── 1024–1279 px: slightly narrower panels. ── */
 @media (max-width: 1279px) {
-  .app-shell { --ws-left-w: 300px; --ws-right-w: 320px; --ws-right-open: 320px; --ws-gap: 16px; }
+  .app-shell { --ws-left-w: 316px; --ws-right-w: 320px; --ws-right-open: 320px; --ws-gap: 16px; }
   .app-shell.inspector-closed { --ws-right-w: 44px; }
   .stage-nav button { padding: 0 14px; }
   .location { font-size: .85rem; }
@@ -152,6 +154,7 @@ dd { margin: 0; color: var(--ws-ink-3); }
 /* ── Below 1024 px or portrait: setup and inspector become drawers over the map; the strip stays. ── */
 @media (max-width: 1023px), (orientation: portrait) {
   .app-shell { --ws-left-w: 0px; --ws-right-open: 0px; --ws-strip-h: 236px; --ws-gap: 14px; }
+  .app-shell.stage-plan { --ws-strip-h: 128px; }
   .location { display: none; }
   .ws-drawer-toggle { display: inline-flex; }
   .workspace { grid-template-columns: minmax(0, 1fr) var(--ws-right-w); }

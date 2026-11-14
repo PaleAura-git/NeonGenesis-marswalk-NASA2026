@@ -3,10 +3,12 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { Mission } from '../../types/mission'
 import type { StopSettings } from '../../types/planning'
-import { CoordinateGrid } from './CoordinateGrid'
-import { createGridLabels, type FreeArea } from './GridLabels'
 import { MapControls } from './MapControls'
-import { missionBounds, toMapPosition } from './coordinates'
+import { createMetreGrid, type FreeArea } from './MetreGrid'
+import { missionAreaMetres, missionBounds, toMapPosition } from './coordinates'
+import { origin, researchBriefPositions, toLatLon, toLocalMetres } from './geoFrame'
+import { layoutLabels, type LabelEntry } from './labelLayout'
+import { MarsCRS, marsTrek } from './marsTrek'
 import { terrainOverlay } from './terrainOverlay'
 import './map.css'
 
@@ -18,6 +20,11 @@ const layerKinds = [
 
 const HOME_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg>'
 const SVG_NS = 'http://www.w3.org/2000/svg'
+// Fall back to the illustrative terrain once this many tiles fail before any loads.
+const TILE_FAILURES_BEFORE_FALLBACK = 3
+
+type Imagery = 'nasa' | 'illustrative'
+type NasaStatus = 'loading' | 'ok' | 'failed'
 
 interface Props {
   mission: Mission
@@ -67,25 +74,13 @@ function missionAreaOutline(widthMeters: number, heightMeters: number): SVGSVGEl
   svg.setAttribute('viewBox', `0 0 ${widthMeters} ${heightMeters}`)
   svg.setAttribute('preserveAspectRatio', 'none')
   const rect = document.createElementNS(SVG_NS, 'rect')
-  const radius = Math.min(widthMeters, heightMeters) * 0.03
+  const radius = Math.min(widthMeters, heightMeters) * 0.04
   rect.setAttribute('x', '0'); rect.setAttribute('y', '0')
   rect.setAttribute('width', String(widthMeters)); rect.setAttribute('height', String(heightMeters))
   rect.setAttribute('rx', String(radius)); rect.setAttribute('ry', String(radius))
   rect.setAttribute('class', 'ws-mission-area-outline')
   rect.setAttribute('vector-effect', 'non-scaling-stroke')
   svg.append(rect)
-  return svg
-}
-
-/** Soft radial darkening over the terrain image, centred on the mission area. */
-function terrainVignette(): SVGSVGElement {
-  const svg = document.createElementNS(SVG_NS, 'svg')
-  svg.setAttribute('viewBox', '0 0 100 100')
-  svg.setAttribute('preserveAspectRatio', 'none')
-  svg.innerHTML = '<defs><radialGradient id="ws-terrain-vignette" cx="50%" cy="50%" r="62%">'
-    + '<stop offset="35%" stop-color="#0e0907" stop-opacity="0"/><stop offset="75%" stop-color="#0e0907" stop-opacity=".45"/>'
-    + '<stop offset="100%" stop-color="#0e0907" stop-opacity=".9"/></radialGradient></defs>'
-    + '<rect width="100" height="100" fill="url(#ws-terrain-vignette)"/>'
   return svg
 }
 
@@ -101,14 +96,18 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
   const selectedRef = useRef<string | null>(null)
   const resetRef = useRef<() => void>(() => {})
   const revealRef = useRef<() => void>(() => {})
+  const labelsRef = useRef<() => void>(() => {})
   const [enabledLayers, setEnabledLayers] = useState<string[]>([])
   const [failedLayers, setFailedLayers] = useState<string[]>([])
-  const [showTerrain, setShowTerrain] = useState(true)
+  const [imagery, setImagery] = useState<Imagery>('nasa')
+  const [nasaStatus, setNasaStatus] = useState<NasaStatus>(() => typeof navigator !== 'undefined' && navigator.onLine === false ? 'failed' : 'loading')
   const [terrainFailed, setTerrainFailed] = useState(false)
   const [showGrid, setShowGrid] = useState(false)
+  const [detailZoom, setDetailZoom] = useState(true)
 
-  const [[minY, minX], [maxY, maxX]] = missionBounds(mission)
-  const areaLabel = `Mission area · ${formatKilometres(maxX - minX)} × ${formatKilometres(maxY - minY)} km`
+  const area = missionAreaMetres(mission)
+  const areaLabel = `Mission area · ${formatKilometres(area.max.xMeters - area.min.xMeters)} × ${formatKilometres(area.max.yMeters - area.min.yMeters)} km`
+  const showNasa = imagery === 'nasa' && nasaStatus !== 'failed'
 
   useEffect(() => {
     const container = containerRef.current
@@ -116,11 +115,23 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
     const readout = readoutRef.current
     if (!container || !scaleHost || !readout) return
 
+    if (import.meta.env.DEV) {
+      [mission.base, ...mission.stops].forEach(location => {
+        const brief = researchBriefPositions[location.id]
+        if (brief && (Math.abs(brief.xMeters - location.position.xMeters) > 1 || Math.abs(brief.yMeters - location.position.yMeters) > 1)) {
+          console.warn(`Mission position for ${location.id} differs from geoFrame.ts researchBriefPositions.`)
+        }
+      })
+    }
+
+    const limit = marsTrek.panLimitMetres
     const map = L.map(container, {
-      crs: L.CRS.Simple,
+      crs: MarsCRS,
       zoomControl: false,
-      minZoom: -6,
-      maxZoom: 3,
+      minZoom: marsTrek.minZoom,
+      maxZoom: marsTrek.maxZoom,
+      maxBounds: L.latLngBounds(toLatLon({ xMeters: -limit, yMeters: -limit }), toLatLon({ xMeters: limit, yMeters: limit })),
+      maxBoundsViscosity: 0.85,
       zoomSnap: 0.25,
       zoomDelta: 0.5,
       keyboard: true,
@@ -131,24 +142,33 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       inertia: false,
     })
     mapRef.current = map
+    map.createPane('imagery').style.zIndex = '200'
     map.createPane('terrain').style.zIndex = '150'
-    map.setView(L.latLngBounds(missionBounds(mission)).getCenter(), 0)
+    map.setView([origin.latitude, origin.longitude], 14)
     map.attributionControl.setPrefix('Leaflet')
-    const bounds = L.latLngBounds(missionBounds(mission))
 
-    // Mission area: dashed rounded outline plus a mono label at its top-left corner.
-    const [[south, west], [north, east]] = missionBounds(mission)
-    L.svgOverlay(missionAreaOutline(east - west, north - south), bounds, { interactive: false, className: 'ws-mission-area' }).addTo(map)
-    const areaMarker = L.marker([north, west], {
-      icon: L.divIcon({ className: 'ws-area-label', html: `<span>${areaLabel}</span>`, iconSize: [0, 0], iconAnchor: [-12, -12] }),
+    // Soft vignette over the imagery and under the markers. It stays fixed to the viewport while the map moves.
+    const vignettePane = map.createPane('vignette')
+    vignettePane.style.zIndex = '390'
+    vignettePane.style.pointerEvents = 'none'
+    const vignette = L.DomUtil.create('div', 'ws-map-vignette', vignettePane)
+    const placeVignette = () => {
+      const size = map.getSize()
+      vignette.style.width = `${size.x}px`
+      vignette.style.height = `${size.y}px`
+      L.DomUtil.setPosition(vignette, map.containerPointToLayerPoint([0, 0]))
+    }
+    map.on('move zoom resize', placeVignette)
+    placeVignette()
+
+    const bounds = L.latLngBounds(missionBounds(mission))
+    const metres = missionAreaMetres(mission)
+    L.svgOverlay(missionAreaOutline(metres.max.xMeters - metres.min.xMeters, metres.max.yMeters - metres.min.yMeters), bounds,
+      { interactive: false, className: 'ws-mission-area' }).addTo(map)
+    const areaMarker = L.marker(toMapPosition({ xMeters: metres.min.xMeters, yMeters: metres.max.yMeters }), {
+      icon: L.divIcon({ className: 'ws-area-label', html: `<span>${areaLabel}</span>`, iconSize: [0, 0], iconAnchor: [-6, 28] }),
       interactive: false, keyboard: false,
     }).addTo(map)
-    // Hide the area label when the area is drawn too small for it to clear the markers.
-    const fitAreaLabel = () => {
-      const width = map.latLngToContainerPoint([north, east]).x - map.latLngToContainerPoint([north, west]).x
-      areaMarker.getElement()?.classList.toggle('is-hidden', width < 300)
-    }
-    map.on('zoomend', fitAreaLabel)
 
     const markers = new Map<string, L.Marker>()
     const locations = [mission.base, ...mission.stops]
@@ -162,7 +182,7 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       else markerContent.textContent = String(stopIndex + 1)
       const marker = L.marker(toMapPosition(location.position), {
         icon: L.divIcon({ className: 'mission-marker', html: markerContent, iconSize: [44, 44], iconAnchor: [22, 22] }),
-        title: `Inspect ${location.name}${isBase ? ', provisional base' : ', synthetic science stop'}`,
+        title: `Inspect ${location.name}${isBase ? ', base' : ', science stop'}. Provisional position.`,
         keyboard: true,
         autoPanOnFocus: false,
         bubblingMouseEvents: false,
@@ -184,24 +204,50 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
           onSelect(location.id)
         }
       })
+      // A label hidden to avoid overlap still shows while its marker is hovered or focused.
+      const force = (on: boolean) => () => marker.getTooltip()?.getElement()?.classList.toggle('is-forced', on)
+      element?.addEventListener('mouseenter', force(true))
+      element?.addEventListener('mouseleave', force(false))
+      element?.addEventListener('focus', force(true))
+      element?.addEventListener('blur', force(false))
       markers.set(location.id, marker)
     })
     markersRef.current = markers
 
-    // Scale bar from Leaflet's own measurement; CRS.Simple distances are the synthetic metres.
+    // Labels: the selected stop first, then the base and stops in list order, then the mission-area label.
+    const placeLabels = () => {
+      const order = [...markers.keys()].sort((a, b) => Number(b === selectedRef.current) - Number(a === selectedRef.current))
+      const entries: LabelEntry[] = order.flatMap(id => {
+        const marker = markers.get(id)
+        const label = marker?.getTooltip()?.getElement()
+        const markElement = marker?.getElement()?.querySelector<HTMLElement>('.ws-marker') ?? undefined
+        return label ? [{ label, marker: markElement, flippable: id !== mission.base.id }] : []
+      })
+      const areaElement = areaMarker.getElement()?.querySelector<HTMLElement>('span')
+      if (areaElement) entries.push({ label: areaElement })
+      const rect = container.getBoundingClientRect()
+      const area = freeArea(container)
+      layoutLabels(entries, { left: rect.left + area.left, top: rect.top + area.top, right: rect.left + area.right, bottom: rect.top + area.bottom })
+    }
+    labelsRef.current = placeLabels
+    map.on('zoomend moveend resize ws:layout', placeLabels)
+
+    // Scale bar from Leaflet's measurement on the Mars sphere.
     const scale = L.control.scale({ imperial: false, maxWidth: 110, position: 'bottomleft' }).addTo(map)
     scaleHost.append(scale.getContainer()!)
 
     const showPosition = (event: L.LeafletMouseEvent) => {
-      readout.textContent = `x ${Math.round(event.latlng.lng)} m · y ${Math.round(event.latlng.lat)} m`
+      const local = toLocalMetres(event.latlng.lat, event.latlng.lng)
+      readout.textContent = `x ${Math.round(local.xMeters)} m · y ${Math.round(local.yMeters)} m`
     }
     const clearPosition = () => { readout.textContent = 'x — · y —' }
+    const trackZoom = () => setDetailZoom(map.getZoom() >= marsTrek.detail.minZoom)
     map.on('mousemove', showPosition)
     map.on('mouseout', clearPosition)
+    map.on('zoomend', trackZoom)
 
     const reset = () => {
-      // Leave room for permanent labels around the dataset extent.
-      map.fitBounds(bounds, { ...viewportPadding(container, [40, 24]), animate: false, maxZoom: 1 })
+      map.fitBounds(bounds, { ...viewportPadding(container, [40, 24]), animate: false, maxZoom: 16 })
     }
     const reveal = () => {
       const marker = selectedRef.current ? markers.get(selectedRef.current) : undefined
@@ -211,7 +257,8 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
     resetRef.current = reset
     revealRef.current = reveal
     reset()
-    fitAreaLabel()
+    trackZoom()
+    placeLabels()
 
     let frame = 0
     const refresh = () => {
@@ -240,6 +287,7 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       markersRef.current.clear()
       resetRef.current = () => {}
       revealRef.current = () => {}
+      labelsRef.current = () => {}
     }
   }, [mission, onSelect, areaLabel])
 
@@ -253,6 +301,7 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       marker.setZIndexOffset(selected ? 1000 : 0)
     })
     revealRef.current()
+    labelsRef.current()
   }, [selectedId, inspectionRequest, mission])
 
   useEffect(() => {
@@ -262,43 +311,70 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       element?.classList.toggle('is-excluded', excluded)
       ;['1', '2', '3'].forEach(priority => element?.classList.toggle(`priority-${priority}`, stopSettings[id]?.priority === priority))
       const location = id === mission.base.id ? mission.base : mission.stops.find(stop => stop.id === id)
-      element?.setAttribute('aria-label', `Inspect ${location?.name}. ${excluded ? 'Excluded from expedition' : 'Included in expedition'}. Synthetic position.`)
+      element?.setAttribute('aria-label', `Inspect ${location?.name}. ${excluded ? 'Excluded from expedition' : 'Included in expedition'}. Provisional position.`)
       marker.getTooltip()?.getElement()?.classList.toggle('is-excluded', excluded)
     })
   }, [stopSettings, mission])
 
-  // Illustrative terrain under everything else, with a soft vignette above it.
+  // NASA Mars Trek imagery: Jezero CTX for context at every zoom, HiRISE on top from zoom 13.
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !showTerrain) return
-    const { min, max } = terrainOverlay.bounds
-    const imageBounds = L.latLngBounds([toMapPosition(min), toMapPosition(max)])
-    const image = L.imageOverlay(terrainOverlay.url, imageBounds, { pane: 'terrain', interactive: false, className: 'ws-terrain' })
-    const vignette = L.svgOverlay(terrainVignette(), imageBounds, { pane: 'terrain', interactive: false })
-    // The vignette belongs to the image: without it, its edge would show as a rectangle on the plain background.
-    image.on('load', () => {
-      setTerrainFailed(false)
-      if (!map.hasLayer(vignette)) vignette.addTo(map)
+    if (!map || !showNasa) return
+    let loads = 0
+    let failures = 0
+    const onLoad = () => {
+      loads += 1
+      if (loads === 1) setNasaStatus('ok')
+    }
+    const onError = () => {
+      failures += 1
+      if (loads === 0 && failures >= TILE_FAILURES_BEFORE_FALLBACK) setNasaStatus('failed')
+    }
+    const common = { pane: 'imagery', className: 'ws-nasa-tiles', maxZoom: marsTrek.maxZoom, noWrap: true, attribution: marsTrek.attribution }
+    const context = L.tileLayer(marsTrek.context.url, { ...common, maxNativeZoom: marsTrek.context.maxNativeZoom, bounds: marsTrek.context.bounds })
+    const detail = L.tileLayer(marsTrek.detail.url, { ...common, minZoom: marsTrek.detail.minZoom, maxNativeZoom: marsTrek.detail.maxNativeZoom, bounds: marsTrek.detail.bounds })
+    ;[context, detail].forEach(layer => {
+      layer.on('tileload', onLoad)
+      layer.on('tileerror', onError)
+      layer.addTo(map)
     })
-    image.on('error', () => {
-      setTerrainFailed(true)
-      image.setOpacity(0)
-      vignette.remove()
-    })
-    image.addTo(map)
-    return () => { image.off(); image.remove(); vignette.remove() }
-  }, [mission, showTerrain])
+    const onOffline = () => { if (loads === 0) setNasaStatus('failed') }
+    window.addEventListener('offline', onOffline)
+    return () => {
+      window.removeEventListener('offline', onOffline)
+      // remove() before off(): Leaflet drops the layer's attribution from a 'remove' listener that off() would clear.
+      ;[context, detail].forEach(layer => { layer.remove(); layer.off() })
+    }
+  }, [mission, showNasa])
 
-  // Optional coordinate grid: lines in a tile layer, one set of labels in the free map area.
+  // Retry NASA imagery automatically when the browser comes back online.
+  useEffect(() => {
+    if (nasaStatus !== 'failed') return
+    const onOnline = () => setNasaStatus('loading')
+    window.addEventListener('online', onOnline)
+    return () => window.removeEventListener('online', onOnline)
+  }, [nasaStatus])
+
+  // Illustrative terrain: the offline fallback, or the user's choice in Layers.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || showNasa) return
+    const { min, max } = terrainOverlay.bounds
+    const image = L.imageOverlay(terrainOverlay.url, L.latLngBounds([toMapPosition(min), toMapPosition(max)]), { pane: 'terrain', interactive: false, className: 'ws-terrain' })
+    image.on('load', () => setTerrainFailed(false))
+    image.on('error', () => { setTerrainFailed(true); image.setOpacity(0) })
+    image.addTo(map)
+    return () => { image.remove(); image.off() }
+  }, [mission, showNasa])
+
+  // Optional grid in local metres.
   useEffect(() => {
     const map = mapRef.current
     const root = rootRef.current
     const container = containerRef.current
     if (!map || !root || !container || !showGrid) return
-    const grid = new CoordinateGrid({ tileSize: 256, minZoom: -6, maxZoom: 3, pane: 'terrain' }).addTo(map)
-    grid.setZIndex(5)
-    const labels = createGridLabels(map, root, () => freeArea(container))
-    return () => { grid.remove(); labels.remove() }
+    const grid = createMetreGrid(map, root, () => freeArea(container))
+    return () => grid.remove()
   }, [mission, showGrid])
 
   useEffect(() => {
@@ -316,19 +392,31 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
       overlay.addTo(map)
       return overlay
     })
-    return () => overlays.forEach(overlay => { overlay.off(); overlay.remove() })
+    return () => overlays.forEach(overlay => { overlay.remove(); overlay.off() })
   }, [mission, enabledLayers])
 
   function toggleLayer(id: string) {
     setFailedLayers(previous => previous.filter(failedId => failedId !== id))
     setEnabledLayers(previous => previous.includes(id) ? previous.filter(layerId => layerId !== id) : [...previous, id])
   }
+  function chooseImagery(next: Imagery) {
+    setImagery(next)
+    if (next === 'nasa') setNasaStatus('loading')
+    else setTerrainFailed(false)
+  }
 
   const layerMenu = <>
-    <p className="ws-label">Base map</p>
-    <label className="ws-check"><input type="checkbox" checked={showTerrain} onChange={() => { setTerrainFailed(false); setShowTerrain(value => !value) }} />
-      Illustrative terrain{terrainFailed && <span className="ws-check-note">Image unavailable</span>}</label>
-    <label className="ws-check"><input type="checkbox" checked={showGrid} onChange={() => setShowGrid(value => !value)} />Coordinate grid<span className="ws-check-note">Synthetic metres</span></label>
+    <fieldset>
+      <legend className="ws-label">Base map</legend>
+      <label className="ws-check"><input type="radio" name="base-map" checked={imagery === 'nasa'} onChange={() => chooseImagery('nasa')} />
+        NASA imagery<span className="ws-check-note">{nasaStatus === 'failed' && imagery === 'nasa' ? 'Unavailable · showing illustrative terrain' : 'HiRISE 25 cm + CTX 6 m · Mars Trek'}</span></label>
+      <label className="ws-check"><input type="radio" name="base-map" checked={imagery === 'illustrative'} onChange={() => chooseImagery('illustrative')} />
+        Illustrative terrain{terrainFailed && <span className="ws-check-note">Image unavailable</span>}</label>
+    </fieldset>
+    <fieldset>
+      <legend className="ws-label">Overlays</legend>
+      <label className="ws-check"><input type="checkbox" checked={showGrid} onChange={() => setShowGrid(value => !value)} />Coordinate grid<span className="ws-check-note">Metres from Three Forks Base</span></label>
+    </fieldset>
     {layerKinds.map(({ kind, label }) => {
       const assets = mission.layers.filter(layer => layer.kind === kind)
       return <fieldset key={kind}><legend className="ws-label">{label}</legend>
@@ -342,15 +430,18 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
   const notes = <>
     <h2 className="ws-label">Coordinate & data notes</h2>
     <p>{mission.notice}</p>
-    <p>Positions use synthetic xMeters / yMeters. No mapping to imagery has been established.</p>
-    <p>Unverified placeholder: {mission.unverifiedGeographicReference.latitudeDegrees}&deg; N, {mission.unverifiedGeographicReference.longitudeDegrees}&deg; E. Exact placement and datum pending.</p>
-    <p>Synthetic positions & observation durations. Geographic placement, terrain, and route calculations pending.</p>
+    <p>Positions are local metres east (x) and north (y) of Three Forks Base at {origin.latitude}&deg; N, {origin.longitude}&deg; E, placed on Mars with a local tangent plane on the Mars 2000 sphere. Positions are provisional, from the rover position file and HiRISE.</p>
+    <p>Imagery: NASA Mars Trek, HiRISE 25 cm orthomosaic and CTX 6 m mosaic of Jezero, colourised for display. {marsTrek.attribution}.</p>
+    <p>Observation durations are synthetic. Route calculations pending.</p>
   </>
 
-  const terrainNote = showTerrain && !terrainFailed ? terrainOverlay.label : 'Terrain image unavailable'
+  const imageryNote = showNasa
+    ? `NASA ${detailZoom ? 'HiRISE' : 'CTX'} · colourised for display`
+    : terrainFailed ? 'Terrain image unavailable'
+      : imagery === 'nasa' ? 'Offline · illustrative terrain' : 'Illustrative terrain'
 
   return (
-    <section ref={rootRef} className="mission-map" aria-label="Synthetic local-metre expedition map">
+    <section ref={rootRef} className={showNasa ? 'mission-map has-nasa-imagery' : 'mission-map'} aria-label="Expedition map of Jezero Crater">
       <div ref={containerRef} className="leaflet-workspace" role="region" aria-label="Interactive map. Arrow keys pan. Plus and minus zoom." />
       <MapControls onZoomIn={() => mapRef.current?.zoomIn()} onZoomOut={() => mapRef.current?.zoomOut()} onReset={() => resetRef.current()}
         layers={layerMenu} notes={notes} />
@@ -360,7 +451,7 @@ export function MissionMap({ mission, stopSettings, selectedId, inspectionReques
         </div>}
         <div ref={scaleHostRef} className="ws-scale-host" />
         <span ref={readoutRef} className="ws-readout" aria-hidden="true">x — · y —</span>
-        <span className="ws-pill ws-terrain-pill">{terrainNote}</span>
+        <span className="ws-pill ws-terrain-pill" role="status">{imageryNote}</span>
       </div>
     </section>
   )

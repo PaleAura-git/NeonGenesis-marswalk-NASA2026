@@ -1,10 +1,12 @@
 import type { CSSProperties } from 'react'
-import type { Mission } from '../../types/mission'
+import type { Mission, Position } from '../../types/mission'
 import type { Priority, SettingsErrors, StopSettings } from '../../types/planning'
 import { Icon } from '../../components/ui/Icon'
 import { Stepper } from '../../components/ui/Stepper'
 import { Switch } from '../../components/ui/Switch'
 import { BaseDetails } from '../map/BaseDetails'
+import { positionStatus, toLatLon } from '../map/geoFrame'
+import { hiriseTileUrl, tileCoordinates } from '../map/marsTrek'
 import { terrainOverlay } from '../map/terrainOverlay'
 import { observationField } from '../mission/settings'
 import { parseSetting, priorityNames, stopNumber } from '../mission/format'
@@ -23,20 +25,44 @@ interface Props {
 }
 
 const priorities: Priority[] = ['1', '2', '3']
-// Width of terrain, in metres, shown across the header image.
+// HiRISE zoom for the header crop: about 0.6 m/px, so the 360 px header shows roughly 220 m of ground.
+const HERO_ZOOM = 16
+const TILE = 256
+// Width of illustrative terrain, in metres, shown across the header when the NASA tiles cannot load.
 const CROP_METRES = 420
 
-/** Crop of the terrain overlay centred near a position, used until real stop imagery exists. */
-function terrainCrop(xMeters: number, yMeters: number): CSSProperties {
+/**
+ * Header image for a position: a 3 × 3 block of HiRISE tiles centred on it, drawn over a crop of the
+ * illustrative terrain, which shows through when the tiles cannot load.
+ */
+function heroImage(position: Position): CSSProperties {
+  const [latitude, longitude] = toLatLon(position)
+  const point = tileCoordinates(latitude, longitude, HERO_ZOOM)
+  const column = Math.floor(point.x)
+  const row = Math.floor(point.y)
+  const images: string[] = []
+  const positions: string[] = []
+  for (let dy = -1; dy <= 1; dy += 1) {
+    for (let dx = -1; dx <= 1; dx += 1) {
+      images.push(`url("${hiriseTileUrl(HERO_ZOOM, column + dx, row + dy)}")`)
+      // background-position calc(50% + n) puts the tile centre n px from the header centre.
+      const offsetX = ((column + dx + 0.5) - point.x) * TILE
+      const offsetY = ((row + dy + 0.5) - point.y) * TILE
+      positions.push(`calc(50% + ${offsetX.toFixed(1)}px) calc(50% + ${offsetY.toFixed(1)}px)`)
+    }
+  }
   const { min, max } = terrainOverlay.bounds
   const width = max.xMeters - min.xMeters
-  const x = (xMeters - min.xMeters) / width
-  const y = (max.yMeters - yMeters) / (max.yMeters - min.yMeters)
+  const fx = (position.xMeters - min.xMeters) / width
+  const fy = (max.yMeters - position.yMeters) / (max.yMeters - min.yMeters)
+  images.push(`url("${terrainOverlay.url}")`)
+  positions.push(`${(fx * 100).toFixed(1)}% ${(fy * 100).toFixed(1)}%`)
   return {
-    '--terrain-image': `url("${terrainOverlay.url}")`,
-    '--terrain-size': `${(width / CROP_METRES) * 100}% auto`,
-    '--terrain-position': `${(x * 100).toFixed(1)}% ${(y * 100).toFixed(1)}%`,
-  } as CSSProperties
+    backgroundImage: images.join(', '),
+    backgroundPosition: positions.join(', '),
+    backgroundSize: [...Array(9).fill(`${TILE}px ${TILE}px`), `${(width / CROP_METRES) * 100}% auto`].join(', '),
+    backgroundRepeat: 'no-repeat',
+  }
 }
 
 /** Right-hand inspector for the selected stop or base. Collapses to a slim tab on the right edge. */
@@ -79,8 +105,10 @@ export function ScienceStopPanel({ mission, selectedId, open, onOpen, onCollapse
 
   return (
     <aside id="inspector" className="ws-panel ws-inspector" aria-labelledby="inspector-title">
-      <div className="ws-inspector-hero" style={terrainCrop(location.position.xMeters, location.position.yMeters)}>
-        <span className="ws-pill ws-hero-pill">{isBase ? 'Base imagery pending' : 'Perseverance imagery pending'}</span>
+      <div className="ws-inspector-hero">
+        <div className="ws-hero-image" style={heroImage(location.position)} aria-hidden="true" />
+        <div className="ws-hero-shade" aria-hidden="true" />
+        <span className="ws-pill ws-hero-pill">{isBase ? 'HiRISE context' : 'Perseverance imagery pending'}</span>
         {collapse}
         <div className="ws-hero-text">
           <p className="ws-kicker">{kicker}</p>
@@ -136,7 +164,7 @@ export function ScienceStopPanel({ mission, selectedId, open, onOpen, onCollapse
       </div>
 
       <dl className="ws-inspector-foot">
-        <div><dt>Position</dt><dd>Synthetic · awaiting verified placement</dd></div>
+        <div><dt>Position</dt><dd>{positionStatus}</dd></div>
       </dl>
     </aside>
   )

@@ -38,4 +38,6 @@
   --ws-blur: blur(16px);
   --ws-gap: 20px;
   --ws-target: 44px;
+  /* Warm tint for grayscale NASA imagery (HiRISE / CTX), display only. */
+  --ws-imagery-filter: sepia(.62) saturate(1.45) hue-rotate(-10deg) brightness(.8) contrast(1.06);
 }
