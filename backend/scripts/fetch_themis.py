@@ -2,7 +2,8 @@
 
 Night IR brightness tracks thermal inertia: rock and coarse ground stay warm at night, fine sand cools fast.
 The mosaic is 8-bit relative brightness, not calibrated temperature, so it is a stated proxy.
-Usage: python scripts/fetch_themis.py <demo_grid.tif> [out=data/raw/themis/themis_nightir_jezero.tif] [margin_m=2000]
+Usage: python scripts/fetch_themis.py <hirise_dtm> <x0_km> <y0_km> <size_km> [out=data/raw/themis/themis_nightir_jezero.tif] [margin_m=2000]
+The demo box is given the same way as for build_grid.py (km from the DTM's left/top edge).
 """
 import sys
 from pathlib import Path
@@ -13,12 +14,14 @@ from rasterio.windows import from_bounds
 URL = ("https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/Mars/THEMIS_controlled_mosaics/"
        "AA_mosaics/THEMIS_NightIR_ControlledMosaics_100m_v2_oct2018.tif")
 
-grid_path = sys.argv[1]
-out = Path(sys.argv[2] if len(sys.argv) > 2 else "data/raw/themis/themis_nightir_jezero.tif")
-margin = float(sys.argv[3]) if len(sys.argv) > 3 else 2000
+dtm_path = sys.argv[1]
+x0_km, y0_km, size_km = float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])
+out = Path(sys.argv[5] if len(sys.argv) > 5 else "data/raw/themis/themis_nightir_jezero.tif")
+margin = float(sys.argv[6]) if len(sys.argv) > 6 else 2000
 
-with rasterio.open(grid_path) as g:
-    left, bottom, right, top = g.bounds
+with rasterio.open(dtm_path) as d:
+    left, top = d.bounds.left + x0_km * 1000, d.bounds.top - y0_km * 1000
+    right, bottom = left + size_km * 1000, top - size_km * 1000
 with rasterio.open("/vsicurl/" + URL) as src:
     window = from_bounds(left - margin, bottom - margin, right + margin, top + margin, src.transform)
     window = window.round_offsets().round_lengths()
