@@ -18,13 +18,13 @@
   },
   "base": { "id": "three-forks-base", "name": "Three Forks Base", "position": { "xMeters": 0, "yMeters": 0 } },
   "bounds": {
-    "min": { "xMeters": -100, "yMeters": -220 },
-    "max": { "xMeters": 620, "yMeters": 390 }
+    "min": { "xMeters": -487, "yMeters": -863 },
+    "max": { "xMeters": 179, "yMeters": 449 }
   },
   "stops": [
-    { "id": "cape-nukshak", "name": "Cape Nukshak", "position": { "xMeters": 160, "yMeters": 220 }, "observationObjective": "Document visible rock textures and layering.", "observationDurationSeconds": 600 },
-    { "id": "hawksbill-gap", "name": "Hawksbill Gap", "position": { "xMeters": 380, "yMeters": 310 }, "observationObjective": "Compare exposed sedimentary layers.", "observationDurationSeconds": 900 },
-    { "id": "kodiak-butte", "name": "Kodiak butte", "position": { "xMeters": 520, "yMeters": -140 }, "observationObjective": "Record distant outcrop structure and context.", "observationDurationSeconds": 720 }
+    { "id": "cape-nukshak", "name": "Cape Nukshak", "position": { "xMeters": -387, "yMeters": -130 }, "observationObjective": "Document visible rock textures and layering.", "observationDurationSeconds": 600 },
+    { "id": "hawksbill-gap", "name": "Hawksbill Gap", "position": { "xMeters": -129, "yMeters": 349 }, "observationObjective": "Compare exposed sedimentary layers.", "observationDurationSeconds": 900 },
+    { "id": "kodiak-butte", "name": "Kodiak butte", "position": { "xMeters": 79, "yMeters": -763 }, "observationObjective": "Record distant outcrop structure and context.", "observationDurationSeconds": 720 }
   ],
   "layers": [],
   "sources": []
