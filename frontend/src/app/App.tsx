@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { type Stage } from '../components/layout/StageNav'
 import { LoadingError } from '../components/ui/LoadingError'
 import { MapPlaceholder } from '../features/map/MapPlaceholder'
 import { MissionMap } from '../features/map/MissionMap'
-import { BaseDetails } from '../features/map/BaseDetails'
-import { MissionOverview } from '../features/mission/MissionOverview'
+import { MissionSetupPanel } from '../features/mission/MissionSetupPanel'
+import { MissionReviewDialog } from '../features/mission/MissionReviewDialog'
+import { TimeBudgetStrip } from '../features/mission/TimeBudgetStrip'
 import { ComparePlaceholder } from '../features/routes/ComparePlaceholder'
+import { RoutesPreview } from '../features/routes/RoutesPreview'
 import { RehearsePlaceholder } from '../features/rehearsal/RehearsePlaceholder'
 import { getMission } from '../services/api/mission'
 import type { Mission } from '../types/mission'
@@ -15,7 +17,7 @@ import { buildInitialPlanningRequest, createMissionSettings, observationField, v
 import { AppHeader } from '../components/layout/AppHeader'
 import { FloatingPanel } from '../components/layout/FloatingPanel'
 import { InformationDock } from '../components/layout/InformationDock'
-import { SciencePanel } from '../features/science/SciencePanel'
+import { ScienceStopPanel } from '../features/science/ScienceStopPanel'
 
 type LoadState = { status: 'loading' } | { status: 'ready'; mission: Mission; settings: MissionSettings } | { status: 'error'; message: string }
 
@@ -23,16 +25,19 @@ export default function App({ onHome }: { onHome?: () => void }) {
   const [stage, setStage] = useState<Stage>('Plan')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [inspectionRequest, setInspectionRequest] = useState(0)
-  const sciencePanelRef = useRef<HTMLDetailsElement>(null)
+  // Layout only: whether the inspector is expanded, and whether the setup drawer is open on narrow screens.
+  const [inspectorOpen, setInspectorOpen] = useState(false)
+  const [setupOpen, setSetupOpen] = useState(false)
   const inspectLocation = useCallback((id: string) => {
     setSelectedId(id)
     setInspectionRequest(previous => previous + 1)
-    if (sciencePanelRef.current) sciencePanelRef.current.open = true
+    setInspectorOpen(true)
   }, [])
   const [attempt, setAttempt] = useState(0)
   const [load, setLoad] = useState<LoadState>({ status: 'loading' })
   const [errors, setErrors] = useState<SettingsErrors>({})
   const [reviewId, setReviewId] = useState<string | null>(null)
+  const [reviewOpen, setReviewOpen] = useState(false)
   useEffect(() => {
     const controller = new AbortController()
     getMission(controller.signal).then(mission => {
@@ -75,57 +80,73 @@ export default function App({ onHome }: { onHome?: () => void }) {
     }))
   }
 
+  // "Plan routes": the same validation and request as before. Only where focus goes, and how the review shows, changed.
   function reviewMission(form: HTMLFormElement) {
     if (load.status !== 'ready') return
     const validation = validateMissionSettings(load.settings, load.mission)
     setErrors(validation)
     if (Object.keys(validation).length > 0) {
+      const root = form.closest('main') ?? form
+      const mission = load.mission
       requestAnimationFrame(() => {
-        const firstInvalid = Array.from(form.querySelectorAll<HTMLElement>('[data-setting-field]'))
+        const firstInvalid = Array.from(root.querySelectorAll<HTMLElement>('[data-setting-field]'))
           .find(element => validation[element.dataset.settingField ?? ''])
-        const disclosure = firstInvalid?.closest('details')
-        if (disclosure) disclosure.open = true
-        firstInvalid?.focus()
+        if (firstInvalid) {
+          if (firstInvalid.closest('.ws-left')) setSetupOpen(true)
+          requestAnimationFrame(() => firstInvalid.focus())
+          return
+        }
+        // Stop priority and observation fields live in the inspector: show that stop, then focus its field.
+        const stop = mission.stops.find(item => validation[observationField(item.id)] || validation[`priority-${item.id}`])
+        if (!stop) return
+        const field = validation[observationField(stop.id)] ? observationField(stop.id) : `priority-${stop.id}`
+        inspectLocation(stop.id)
+        requestAnimationFrame(() => requestAnimationFrame(() => root.querySelector<HTMLElement>(`[data-setting-field="${field}"]`)?.focus()))
       })
       return
     }
     setReviewId(crypto.randomUUID())
-    requestAnimationFrame(() => form.querySelector<HTMLElement>('.mission-review')?.focus())
+    setReviewOpen(true)
   }
 
   const review = load.status === 'ready' && reviewId && Object.keys(validateMissionSettings(load.settings, load.mission)).length === 0
     ? buildInitialPlanningRequest(load.mission, load.settings, reviewId) : null
-  const inspectedStop = load.status === 'ready' ? load.mission.stops.find(stop => stop.id === selectedId) : undefined
 
-  return <div className="app-shell">
+  const shellClass = [
+    'app-shell', `stage-${stage.toLowerCase()}`,
+    load.status === 'ready' && inspectorOpen ? 'inspector-open' : 'inspector-closed',
+    setupOpen && 'setup-open',
+  ].filter(Boolean).join(' ')
+
+  return <div className={shellClass}>
     <a className="skip-link" href="#main">Skip to mission</a>
     <AppHeader stage={stage} onChange={setStage} synthetic={load.status === 'ready' && load.mission.dataMode === 'synthetic'}
-      onHome={onHome && (() => { setStage('Plan'); onHome() })} />
+      onHome={onHome && (() => { setStage('Plan'); onHome() })}
+      setupOpen={setupOpen} onToggleSetup={() => setSetupOpen(open => !open)} />
     <main id="main" className="workspace" tabIndex={-1} aria-label={`${stage} expedition workspace`}>
       {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation} /> : <MapPlaceholder />}
-      <div className="left-slot">
+      <div id="setup-drawer" className="ws-left" data-map-edge="left">
         {load.status === 'loading' && <section className="panel state-panel" role="status"><p className="eyebrow">Mission setup</p><h2>Loading mission...</h2><p>Preparing your expedition workspace.</p></section>}
         {load.status === 'error' && <LoadingError message={load.message} onRetry={() => { setLoad({ status: 'loading' }); setAttempt(a => a + 1) }} />}
-        {load.status === 'ready' && <FloatingPanel className={stage === 'Plan' ? 'mission-setup-panel' : ''} title={stage === 'Plan' ? 'Mission setup' : stage === 'Compare' ? 'Compare routes' : 'Rehearsal'} key={stage}>
-          {stage === 'Plan' ? <MissionOverview mission={load.mission} selectedId={selectedId} onSelect={inspectLocation}
+        {load.status === 'ready' && (stage === 'Plan'
+          ? <MissionSetupPanel mission={load.mission} selectedId={selectedId} onSelect={inspectLocation}
             settings={load.settings} errors={errors} onSettingChange={changeSetting} onStopChange={changeStop}
-            onBlur={validateField} onReview={reviewMission} review={review} reviewRequested={Boolean(reviewId)} />
-            : stage === 'Compare' ? <ComparePlaceholder onPlan={() => setStage('Plan')} /> : <RehearsePlaceholder onPlan={() => setStage('Plan')} />}
-        </FloatingPanel>}
+            onBlur={validateField} onReview={reviewMission} />
+          : <FloatingPanel title={stage === 'Compare' ? 'Compare routes' : 'Rehearsal'} key={stage}>
+            {stage === 'Compare' ? <ComparePlaceholder onPlan={() => setStage('Plan')} /> : <RehearsePlaceholder onPlan={() => setStage('Plan')} />}
+          </FloatingPanel>)}
       </div>
-      <aside className="right-slot" aria-label="Inspected location">
-        <FloatingPanel title={load.status === 'ready' && selectedId === load.mission.base.id ? 'Base location' : 'Science stop'} detailsRef={sciencePanelRef}>
-          {load.status === 'ready' && selectedId === load.mission.base.id
-            ? <BaseDetails mission={load.mission} onClear={() => setSelectedId(null)} />
-            : <SciencePanel stop={inspectedStop} onClear={() => setSelectedId(null)}
-              editor={load.status === 'ready' && inspectedStop ? {
-                settings: load.settings.stops[inspectedStop.id], errors,
-                onChange: patch => changeStop(inspectedStop.id, patch), onBlur: validateField,
-              } : undefined} />}
-        </FloatingPanel>
-      </aside>
-      <InformationDock stage={stage} />
-      <p className="data-notice">{load.status === 'ready' ? 'Synthetic positions & observation durations. ' : ''}Geographic placement, terrain, and route calculations pending.</p>
+      {load.status === 'ready' && <div className="ws-right" data-map-edge="right">
+        <ScienceStopPanel mission={load.mission} selectedId={selectedId} open={inspectorOpen}
+          onOpen={() => setInspectorOpen(true)} onCollapse={() => setInspectorOpen(false)}
+          stopSettings={load.settings.stops} errors={errors} onStopChange={changeStop} onBlur={validateField} />
+      </div>}
+      <div className="ws-bottom" data-map-edge="bottom">
+        {stage === 'Plan' && load.status === 'ready'
+          ? <div className="ws-panel ws-strip"><TimeBudgetStrip mission={load.mission} settings={load.settings} /><RoutesPreview /></div>
+          : <InformationDock stage={stage} />}
+      </div>
     </main>
+    {load.status === 'ready' && reviewOpen && review && <MissionReviewDialog mission={load.mission} request={review} onClose={() => setReviewOpen(false)} />}
   </div>
 }

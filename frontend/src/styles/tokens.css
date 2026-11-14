@@ -15,5 +15,27 @@
   --shadow-panel: 0 16px 45px #08050330;
   --gradient-action: linear-gradient(180deg, #d35716, #ad360b);
   --font-sans: 'Barlow', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: Consolas, 'Courier New', monospace;
+  --font-mono: 'IBM Plex Mono', Consolas, 'Courier New', monospace;
+
+  /* Workspace (Plan redesign). The home screen keeps using the tokens above. */
+  --ws-bg: #0e0907;
+  --ws-ink: #f3e9dc;
+  --ws-ink-2: #d9c6b4;
+  --ws-ink-3: #bba593;
+  --ws-accent: #e0642a;
+  --ws-accent-gradient: linear-gradient(180deg, #e8702f, #c24e1c);
+  --ws-on-accent: #1a0f0a;
+  --ws-reserve: #6e94b8;
+  --ws-over: #ff8a5c;
+  --ws-glass: rgba(26, 17, 12, .74);
+  --ws-glass-solid: rgba(26, 17, 12, .94);
+  --ws-glass-border: rgba(243, 233, 220, .10);
+  --ws-line: rgba(243, 233, 220, .08);
+  --ws-raised: rgba(243, 233, 220, .05);
+  --ws-radius: 18px;
+  --ws-radius-control: 10px;
+  --ws-shadow: 0 20px 50px rgba(0, 0, 0, .45);
+  --ws-blur: blur(16px);
+  --ws-gap: 20px;
+  --ws-target: 44px;
 }
