@@ -147,6 +147,10 @@ def route_json(ctx, frame, mode, r, result):
         "walkingTimeSeconds": round(r["walk_s"]),
         "returnWalkingTimeSeconds": round(r["walk_s"] * ret_m / r["distance_m"]),
         "observationTimeSeconds": r["stop_s"],
+        "restTimeSeconds": r["rest_s"],
+        "restSpots": [{"position": frame.cell(*s["rc"]), "durationSeconds": s["seconds"],
+                       "slopeDegrees": round(s["slope_deg"], 1), "roughnessDegrees": round(s["roughness_deg"], 1)}
+                      for s in r["rest_spots"]],
         "reserveSeconds": round(reserve),
         "reserveMarginSeconds": round(margin),
         "energyWh": round(r["energy_wh"]),

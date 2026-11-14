@@ -15,15 +15,16 @@ def reserve_seconds(walk_s):
     return min(30 * 60 + 0.2 * walk_s, 60 * 60)
 
 
-def timeline(path, seconds, x_scale, stop_at):
-    """Elapsed seconds and Wh used on arrival at every path point (stop time counted on leaving)."""
+def timeline(path, seconds, x_scale, stop_at, rest_at=None):
+    """Elapsed seconds and Wh used on arrival at every path point (stop and rest time counted on leaving)."""
+    rest_at = rest_at or {}
     elapsed = np.zeros(len(path))
     energy = np.zeros(len(path))
     t = e = 0.0
     for i in range(1, len(path)):
         (r1, c1), (r2, c2) = path[i - 1], path[i]
-        t += stop_at.get(i - 1, 0)
-        e += POWER_W["stop"] * stop_at.get(i - 1, 0) / 3600
+        t += stop_at.get(i - 1, 0) + rest_at.get(i - 1, 0)
+        e += (POWER_W["stop"] * stop_at.get(i - 1, 0) + POWER_W["rest"] * rest_at.get(i - 1, 0)) / 3600
         step_s = math.hypot(r2 - r1, (c2 - c1) * x_scale) * (seconds[r1, c1] + seconds[r2, c2]) / 2
         t += step_s
         e += POWER_W["walking"] * step_s / 3600
@@ -60,9 +61,9 @@ def outline(mask):
     return [[round(float(r), 2), round(float(c), 2)] for r, c in ring]
 
 
-def assess(path, seconds, x_scale, stop_at, home_map, budget_s, walk_s, reserve_floor_s=0.0):
+def assess(path, seconds, x_scale, stop_at, home_map, budget_s, walk_s, reserve_floor_s=0.0, rest_at=None):
     reserve_s = max(reserve_seconds(walk_s), reserve_floor_s)
-    elapsed, energy = timeline(path, seconds, x_scale, stop_at)
+    elapsed, energy = timeline(path, seconds, x_scale, stop_at, rest_at)
     rows, cols = zip(*path)
     home_s = home_map[rows, cols]
     m = margins(elapsed, energy, home_s, budget_s, reserve_s)

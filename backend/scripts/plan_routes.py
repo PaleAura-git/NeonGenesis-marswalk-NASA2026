@@ -21,6 +21,9 @@ MARS_RADIUS_M = 3_396_190
 SNAP_RADIUS_M = 150
 STOP_SECONDS = {"cape-nukshak": 2400, "hawksbill-gap": 2400, "kodiak-butte": 1800}
 ROUGHNESS_SCALE_DEG = 5
+REST_EVERY_S = 30 * 60
+REST_S = 5 * 60
+REST_SEARCH_POINTS = 10
 
 
 @dataclass
@@ -108,6 +111,22 @@ def best_order(legs, base, stops):
     return best
 
 
+def rest_spots(path, seconds, bands, x_scale, stop_at):
+    """A 5 min rest after every 30 min of walking, at the flattest, smoothest route cell nearby."""
+    walked, last, rests = 0.0, 0.0, {}
+    for i in range(1, len(path)):
+        (r1, c1), (r2, c2) = path[i - 1], path[i]
+        walked += math.hypot(r2 - r1, (c2 - c1) * x_scale) * (seconds[r1, c1] + seconds[r2, c2]) / 2
+        if walked - last >= REST_EVERY_S and i < len(path) - 1:
+            window = range(max(i - REST_SEARCH_POINTS, 1), min(i + REST_SEARCH_POINTS, len(path) - 1))
+            score = [bands["slope_p90_deg"][path[j]] + bands["roughness_deg"][path[j]]
+                     if j not in stop_at else np.inf for j in window]
+            best = window[int(np.argmin(score))]
+            rests[best] = REST_S
+            last = walked
+    return rests
+
+
 def path_metrics(path, seconds, bands, cell_m, x_scale):
     dist = walk_s = 0.0
     for (r1, c1), (r2, c2) in zip(path, path[1:]):
@@ -163,21 +182,28 @@ def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEF
             if b != ctx.base:
                 stop_at[len(path) - 1] = stop_seconds[b]
 
+        rest_at = rest_spots(path, seconds, ctx.bands, ctx.x_scale, stop_at)
         m = path_metrics(path, seconds, ctx.bands, ctx.cell_m, ctx.x_scale)
-        stop_s = sum(stop_at.values())
-        energy_wh = (POWER_W["walking"] * m["walk_s"] + POWER_W["stop"] * stop_s) / 3600
+        stop_s, rest_s = sum(stop_at.values()), sum(rest_at.values())
+        energy_wh = (POWER_W["walking"] * m["walk_s"] + POWER_W["stop"] * stop_s
+                     + POWER_W["rest"] * rest_s) / 3600
         m |= {
             "order": seq,
             "excluded": excluded,
             "stop_s": stop_s,
-            "total_s": m["walk_s"] + stop_s,
+            "rest_s": rest_s,
+            "rest_spots": [{"index": i, "rc": list(map(int, path[i])), "seconds": s,
+                            "slope_deg": float(ctx.bands["slope_mean_deg"][path[i]]),
+                            "roughness_deg": float(ctx.bands["roughness_deg"][path[i]])}
+                           for i, s in sorted(rest_at.items())],
+            "total_s": m["walk_s"] + stop_s + rest_s,
             "energy_wh": energy_wh,
             "oxygen_kg": energy_wh / 1000 * OXYGEN_KG_PER_KWH,
             "path_rc": [list(map(int, p)) for p in path],
             "approach_rc": {k: list(map(int, v)) for k, v in points.items()},
             "stop_index": {str(i): s for i, s in zip(sorted(stop_at), seq[1:-1])},
             "safety": assess(path, seconds, ctx.x_scale, stop_at, home_map, budget_s,
-                             m["walk_s"], reserve_floor_s),
+                             m["walk_s"], reserve_floor_s, rest_at),
             "log": log,
         }
         results[mode] = m
@@ -190,7 +216,9 @@ def describe(mode, m):
     sa = m["safety"]
     lines = [f"=== {mode} ===", *m["log"], "Order: " + " -> ".join(m["order"]),
              f"Distance {m['distance_m']:.0f} m | walking {m['walk_s'] / 60:.0f} min | "
-             f"stops {m['stop_s'] / 60:.0f} min | total {m['total_s'] / 60:.0f} min",
+             f"stops {m['stop_s'] / 60:.0f} min | rest {m['rest_s'] / 60:.0f} min | total {m['total_s'] / 60:.0f} min",
+             *(f"Rest spot {k + 1}: route point {r['index']}, slope {r['slope_deg']:.1f}°, "
+               f"roughness {r['roughness_deg']:.1f}°" for k, r in enumerate(m["rest_spots"])),
              f"Energy {m['energy_wh']:.0f} Wh | oxygen {m['oxygen_kg']:.2f} kg | "
              f"max cell slope {m['max_slope_deg']:.1f}° | steep-spot cells {m['steep_spot_cells']} | "
              f"mean roughness {m['mean_roughness_deg']:.2f}°",
@@ -222,6 +250,10 @@ def draw(ctx, result, title, out_path, blocked=None):
             r, c = np.array(m["path_rc"]).T
             plt.plot((c + 0.5) * ctx.cell_m / 1000, (r + 0.5) * ctx.cell_m / 1000, colour, lw=2,
                      label=f"{mode}: {m['distance_m']:.0f} m, {m['total_s'] / 60:.0f} min")
+            for rest in m["rest_spots"]:
+                rr, rc = rest["rc"]
+                plt.plot((rc + 0.5) * ctx.cell_m / 1000, (rr + 0.5) * ctx.cell_m / 1000, "o",
+                         color=colour, markersize=8, markeredgecolor="white")
     for s in ctx.sites:
         row, col = ctx.site_cells[s["id"]]
         px, py = (col + 0.5) * ctx.cell_m / 1000, (row + 0.5) * ctx.cell_m / 1000

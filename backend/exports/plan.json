@@ -989,15 +989,27 @@
       "walkingTimeSeconds": 3405,
       "returnWalkingTimeSeconds": 488,
       "observationTimeSeconds": 6600,
+      "restTimeSeconds": 300,
+      "restSpots": [
+        {
+          "position": {
+            "xMeters": -78.3,
+            "yMeters": -367.1
+          },
+          "durationSeconds": 300,
+          "slopeDegrees": 3.3,
+          "roughnessDegrees": 1.1
+        }
+      ],
       "reserveSeconds": 2481,
-      "reserveMarginSeconds": 9114,
-      "energyWh": 898,
-      "oxygenKg": 2.76,
+      "reserveMarginSeconds": 8814,
+      "energyWh": 915,
+      "oxygenKg": 2.81,
       "limitingResource": "time",
       "spareSeconds": {
-        "time": 9114,
-        "energy": 13670,
-        "oxygen": 13670
+        "time": 8814,
+        "energy": 13524,
+        "oxygen": 13524
       },
       "returnBoundary": [
         {
@@ -3324,7 +3336,7 @@
         }
       ],
       "explanations": [
-        "Safe return possible at every point; time is the limiting resource with 152 min to spare beyond the 41 min reserve.",
+        "Safe return possible at every point; time is the limiting resource with 147 min to spare beyond the 41 min reserve.",
         "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
         "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
       ]
@@ -4394,15 +4406,27 @@
       "walkingTimeSeconds": 3495,
       "returnWalkingTimeSeconds": 1062,
       "observationTimeSeconds": 6600,
+      "restTimeSeconds": 300,
+      "restSpots": [
+        {
+          "position": {
+            "xMeters": -11.9,
+            "yMeters": -497.1
+          },
+          "durationSeconds": 300,
+          "slopeDegrees": 0.9,
+          "roughnessDegrees": 0.6
+        }
+      ],
       "reserveSeconds": 2499,
-      "reserveMarginSeconds": 9006,
-      "energyWh": 906,
-      "oxygenKg": 2.78,
+      "reserveMarginSeconds": 8706,
+      "energyWh": 924,
+      "oxygenKg": 2.84,
       "limitingResource": "time",
       "spareSeconds": {
-        "time": 9006,
-        "energy": 13499,
-        "oxygen": 13499
+        "time": 8706,
+        "energy": 13353,
+        "oxygen": 13353
       },
       "returnBoundary": [
         {
@@ -6729,7 +6753,7 @@
         }
       ],
       "explanations": [
-        "Safe return possible at every point; time is the limiting resource with 150 min to spare beyond the 42 min reserve.",
+        "Safe return possible at every point; time is the limiting resource with 145 min to spare beyond the 42 min reserve.",
         "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
         "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
       ]

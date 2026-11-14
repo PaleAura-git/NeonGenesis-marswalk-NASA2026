@@ -45,6 +45,7 @@ East-west distances are corrected for latitude, so these are true ground metres.
 `plan.json` adds these to the draft route fields:
 
 - `observationTimeSeconds`, `reserveSeconds`, `energyWh`, `oxygenKg`
+- `restTimeSeconds`, `restSpots`: a 5 min rest after every 30 min of walking, each with `position`, `durationSeconds`, `slopeDegrees`, `roughnessDegrees`
 - `limitingResource`: `time`, `energy` or `oxygen`, whichever has the least spare at the tightest point
 - `spareSeconds`: spare walk-back time per resource beyond its reserve (negative = no safe return)
 - `reserveMarginSeconds`: the spare of the limiting resource
