@@ -1,10 +1,14 @@
-"""Crop the demo box from the HiRISE DTM, compute slope and roughness at 1 m,
-average them into 10 m cells, and check the values at each site.
+"""Build the 10 m terrain grid for the demo box and save it as a feature stack.
 
-Usage: python scripts/build_grid.py <hirise_dtm> <sites.csv> <x0_km> <y0_km> <size_km>
+HiRISE DTM -> slope and roughness at 1 m -> 10 m cells, plus THEMIS thermal
+inertia resampled onto the same cells. Writes a GeoTIFF stack, a CSV feature
+table and a sources file to data/processed/.
+
+Usage: python scripts/build_grid.py <hirise_dtm> <themis_ti> <sites.csv> <x0_km> <y0_km> <size_km>
 x0/y0 are km from the DTM's left/top edge (same axes as overview.py).
 """
 import csv
+import json
 import math
 import sys
 import warnings
@@ -12,6 +16,7 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
+from rasterio.warp import Resampling, reproject
 from rasterio.windows import from_bounds
 from scipy.ndimage import uniform_filter
 
@@ -20,9 +25,11 @@ SITE_BOX_M = 10
 ROUGH_WINDOW_PX = 5
 CELL_M = 10
 MIN_VALID = 0.5
+CRS_KEYS = ("proj", "lat_ts", "lat_0", "lon_0", "R")
+OUT_DIR = "data/processed"
 
-dtm_path, sites_path = sys.argv[1], sys.argv[2]
-x0_km, y0_km, size_km = float(sys.argv[3]), float(sys.argv[4]), float(sys.argv[5])
+dtm_path, themis_path, sites_path = sys.argv[1], sys.argv[2], sys.argv[3]
+x0_km, y0_km, size_km = float(sys.argv[4]), float(sys.argv[5]), float(sys.argv[6])
 
 with rasterio.open(dtm_path) as src:
     b = src.bounds
@@ -34,6 +41,7 @@ with rasterio.open(dtm_path) as src:
     dem = src.read(1, window=window, masked=True)
     transform = src.window_transform(window)
     res = src.res[0]
+    dtm_crs = src.crs
 
 elev = dem.filled(np.nan)
 print("Source:", dtm_path)
@@ -100,11 +108,36 @@ print(f"Cell p90 slope:  median {p50:.1f} | p95 {p95:.1f} deg")
 print(f"Cells over 15 deg by mean: {np.nanmean(cell_slope > 15) * 100:.1f}% | "
       f"by p90: {np.nanmean(cell_slope_p90 > 15) * 100:.1f}%")
 
+with rasterio.open(themis_path) as th:
+    a = {key: dtm_crs.to_dict().get(key) for key in CRS_KEYS}
+    b = {key: th.crs.to_dict().get(key) for key in CRS_KEYS}
+    print("\nCRS HiRISE:", a)
+    print("CRS THEMIS:", b)
+    if a != b:
+        sys.exit("Projections differ: reproject THEMIS before combining")
+    cell_thermal = np.full((rows, cols), np.nan, dtype="float32")
+    reproject(
+        source=rasterio.band(th, 1),
+        destination=cell_thermal,
+        src_nodata=th.nodata,
+        dst_nodata=np.nan,
+        dst_transform=cell_transform,
+        dst_crs=th.crs,
+        resampling=Resampling.bilinear,
+    )
+    th_res = th.res[0]
+
+cell_thermal[bad] = np.nan
+t50, t5, t95 = np.nanpercentile(cell_thermal, [50, 5, 95])
+print(f"Thermal inertia (THEMIS, {th_res:.0f} m -> {CELL_M} m cells): "
+      f"median {t50:.0f} | p5 {t5:.0f} | p95 {t95:.0f} | "
+      f"valid {np.isfinite(cell_thermal).mean() * 100:.1f}%")
+
 with open(sites_path, newline="") as f:
     sites = list(csv.DictReader(f))
 
 print(f"\n{'site':<18}{'median slope':>13}{'p90 slope':>11}"
-      f"{'cell slope':>12}{'cell p90':>10}{'cell rough':>12}")
+      f"{'cell slope':>12}{'cell p90':>10}{'cell rough':>12}{'thermal':>9}")
 site_px = []
 for s in sites:
     x = MARS_RADIUS_M * math.radians(float(s["lon_deg"]))
@@ -117,8 +150,63 @@ for s in sites:
     patch = slope[max(row - n, 0):row + n + 1, max(col - n, 0):col + n + 1]
     r, c = row // k, col // k
     print(f"{s['id']:<18}{np.nanmedian(patch):>12.1f}°{np.nanpercentile(patch, 90):>10.1f}°"
-          f"{cell_slope[r, c]:>11.1f}°{cell_slope_p90[r, c]:>9.1f}°{cell_rough[r, c]:>11.1f}°")
+          f"{cell_slope[r, c]:>11.1f}°{cell_slope_p90[r, c]:>9.1f}°{cell_rough[r, c]:>11.1f}°"
+          f"{cell_thermal[r, c]:>9.0f}")
     site_px.append((s["name"], col, row))
+
+layers = {
+    "elevation_m": cell_elev,
+    "slope_mean_deg": cell_slope,
+    "slope_p90_deg": cell_slope_p90,
+    "roughness_deg": cell_rough,
+    "thermal_inertia": cell_thermal,
+    "valid_fraction": valid_frac,
+}
+sources = {
+    "demo_box_km": {"x0": x0_km, "y0": y0_km, "size": size_km},
+    "cell_size_m": CELL_M,
+    "crs": a,
+    "layers": {
+        "elevation_m, slope_mean_deg, slope_p90_deg, roughness_deg, valid_fraction": {
+            "mission": "MRO", "instrument": "HiRISE DTM", "resolution_m": res,
+            "file": dtm_path.split("/")[-1],
+            "source": "USGS Astrogeology, Mars 2020 Jezero landing site products",
+        },
+        "thermal_inertia": {
+            "mission": "Mars Odyssey", "instrument": "THEMIS", "resolution_m": th_res,
+            "file": themis_path.split("/")[-1],
+            "source": "Zenodo (non-NASA host): to be replaced with a NASA source",
+            "note": f"Bilinear resample from {th_res:.0f} m; cannot resolve features within one THEMIS pixel",
+        },
+    },
+}
+
+tif_path = f"{OUT_DIR}/demo_grid.tif"
+with rasterio.open(
+    tif_path, "w", driver="GTiff", width=cols, height=rows, count=len(layers),
+    dtype="float32", crs=dtm_crs, transform=cell_transform, nodata=np.nan,
+) as dst:
+    for i, (name, arr) in enumerate(layers.items(), start=1):
+        dst.write(arr.astype("float32"), i)
+        dst.set_band_description(i, name)
+    dst.update_tags(sources=json.dumps(sources))
+
+r_idx, c_idx = np.indices((rows, cols))
+xs, ys = rasterio.transform.xy(cell_transform, r_idx.ravel(), c_idx.ravel())
+csv_path = f"{OUT_DIR}/demo_features.csv"
+with open(csv_path, "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(["row", "col", "x_m", "y_m", *layers])
+    flat = [arr.ravel() for arr in layers.values()]
+    for i in range(rows * cols):
+        w.writerow([r_idx.flat[i], c_idx.flat[i], f"{xs[i]:.1f}", f"{ys[i]:.1f}",
+                    *(f"{v[i]:.3f}" if np.isfinite(v[i]) else "" for v in flat)])
+
+with open(f"{OUT_DIR}/demo_sources.json", "w") as f:
+    json.dump(sources, f, indent=2)
+
+print(f"\nSaved {tif_path} ({len(layers)} bands), {csv_path} ({rows * cols} rows), "
+      f"{OUT_DIR}/demo_sources.json")
 
 extent = [x0_km, x0_km + elev.shape[1] * res / 1000,
           y0_km + elev.shape[0] * res / 1000, y0_km]
@@ -158,5 +246,13 @@ plt.title(f"Demo box, {CELL_M} m cells: p90 slope (from HiRISE 1 m)")
 plt.xlabel("km from DTM left edge")
 plt.ylabel("km from DTM top edge")
 plt.savefig("figures/demo_cells_slope_p90.png", dpi=120)
+
+plt.figure(figsize=(8, 7))
+plt.imshow(cell_thermal, cmap="inferno", extent=extent)
+plt.colorbar(label="Thermal inertia (J m⁻² K⁻¹ s⁻½)")
+plt.title(f"Demo box thermal inertia (Mars Odyssey THEMIS, {th_res:.0f} m, on {CELL_M} m cells)")
+plt.xlabel("km from DTM left edge")
+plt.ylabel("km from DTM top edge")
+plt.savefig("figures/demo_thermal.png", dpi=120)
 
 plt.show()
