@@ -1,12 +1,13 @@
+import type { ReactNode } from 'react'
 import type { Mission } from '../../types/mission'
 import { routeModeLabels, type InitialPlanningRequest } from '../../types/planning'
 
-export function MissionReview({ mission, request }: { mission: Mission; request: InitialPlanningRequest }) {
+export function MissionReview({ mission, request, status }: { mission: Mission; request: InitialPlanningRequest; status?: ReactNode }) {
   const priorities = ['Low', 'Medium', 'High']
   return (
     <section className="mission-review" aria-labelledby="review-title" tabIndex={-1}>
       <h3 id="review-title">Mission review</h3>
-      <p className="hint">Route calculation is the next development step.</p>
+      {status ?? <p className="hint">Route calculation is the next development step.</p>}
       <dl className="review-settings">
         <div><dt>Duration</dt><dd>{request.totalDurationSeconds / 60} min</dd></div>
         <div><dt>Reserve</dt><dd>{request.reserveSeconds / 60} min</dd></div>

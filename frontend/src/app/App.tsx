@@ -1,17 +1,23 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type Stage } from '../components/layout/StageNav'
 import { LoadingError } from '../components/ui/LoadingError'
 import { MapPlaceholder } from '../features/map/MapPlaceholder'
-import { MissionMap } from '../features/map/MissionMap'
+import { MissionMap, type MapRoute } from '../features/map/MissionMap'
 import { MissionSetupPanel } from '../features/mission/MissionSetupPanel'
 import { MissionReviewDialog } from '../features/mission/MissionReviewDialog'
 import { TimeBudgetStrip } from '../features/mission/TimeBudgetStrip'
 import { ComparePlaceholder } from '../features/routes/ComparePlaceholder'
 import { RoutesPreview } from '../features/routes/RoutesPreview'
 import { RehearsePlaceholder } from '../features/rehearsal/RehearsePlaceholder'
+import { RehearsalPanel, type RehearsalState } from '../features/rehearsal/RehearsalPanel'
+import { RouteCompare } from '../features/routes/RouteCompare'
+import { RouteTimeline } from '../features/routes/RouteTimeline'
+import { routeSummary } from '../features/routes/routeFormat'
+import { Button } from '../components/ui/Button'
 import { getMission } from '../services/api/mission'
-import type { Mission } from '../types/mission'
-import type { MissionSettings, SettingsErrors, StopSettings } from '../types/planning'
+import { requestPlan } from '../services/api/plan'
+import type { Mission, Position } from '../types/mission'
+import type { InitialPlanningRequest, MissionSettings, PlanResponse, RouteMode, SettingsErrors, StopSettings } from '../types/planning'
 import { buildInitialPlanningRequest, createMissionSettings, observationField, validateMissionSettings } from '../features/mission/settings'
 
 import { AppHeader } from '../components/layout/AppHeader'
@@ -20,6 +26,23 @@ import { InformationDock } from '../components/layout/InformationDock'
 import { ScienceStopPanel } from '../features/science/ScienceStopPanel'
 
 type LoadState = { status: 'loading' } | { status: 'ready'; mission: Mission; settings: MissionSettings } | { status: 'error'; message: string }
+type PlanState =
+  | { status: 'idle' }
+  | { status: 'loading'; request: InitialPlanningRequest }
+  | { status: 'ready'; request: InitialPlanningRequest; response: PlanResponse }
+  | { status: 'error'; request: InitialPlanningRequest; message: string }
+
+function toMapRoutes(response: PlanResponse, selected: RouteMode, previous?: PlanResponse): MapRoute[] {
+  const before = previous?.routes.find(route => route.mode === selected)
+  return [
+    ...(before ? [{ id: `previous-${before.id}`, mode: before.mode, geometry: before.geometry, emphasis: 'previous' as const }] : []),
+    ...response.routes.map(route => ({
+      id: route.id, mode: route.mode, geometry: route.geometry,
+      emphasis: route.mode === selected ? 'selected' as const : 'muted' as const,
+      restSpots: route.restSpots?.map(spot => spot.position),
+    })),
+  ]
+}
 
 export default function App({ onHome }: { onHome?: () => void }) {
   const [stage, setStage] = useState<Stage>('Plan')
@@ -38,6 +61,11 @@ export default function App({ onHome }: { onHome?: () => void }) {
   const [errors, setErrors] = useState<SettingsErrors>({})
   const [reviewId, setReviewId] = useState<string | null>(null)
   const [reviewOpen, setReviewOpen] = useState(false)
+  const [plan, setPlan] = useState<PlanState>({ status: 'idle' })
+  const [planStale, setPlanStale] = useState(false)
+  const [selectedMode, setSelectedMode] = useState<RouteMode>('time-focused')
+  const [blockCorners, setBlockCorners] = useState<Position[]>([])
+  const [rehearsal, setRehearsal] = useState<RehearsalState>({ status: 'idle' })
   useEffect(() => {
     const controller = new AbortController()
     getMission(controller.signal).then(mission => {
@@ -48,7 +76,32 @@ export default function App({ onHome }: { onHome?: () => void }) {
     return () => controller.abort()
   }, [attempt])
 
+  function runPlan(request: InitialPlanningRequest) {
+    setPlan({ status: 'loading', request })
+    setRehearsal({ status: 'idle' })
+    requestPlan(request).then(response => {
+      setPlan({ status: 'ready', request, response })
+      setPlanStale(false)
+    }).catch((error: unknown) => {
+      setPlan({ status: 'error', request, message: error instanceof Error ? error.message : 'Planning failed.' })
+    })
+  }
+
+  function replanWithBlock() {
+    if (plan.status !== 'ready' || blockCorners.length < 3) return
+    const request = { ...plan.request, requestId: crypto.randomUUID(), blockedAreas: [{ id: 'rehearsal-block', vertices: blockCorners }] }
+    setRehearsal({ status: 'loading' })
+    requestPlan(request).then(response => setRehearsal({ status: 'ready', response }))
+      .catch((error: unknown) => setRehearsal({ status: 'error', message: error instanceof Error ? error.message : 'Replanning failed.' }))
+  }
+
+  const addCorner = useCallback((position: Position) => {
+    setBlockCorners(previous => [...previous, { xMeters: Math.round(position.xMeters), yMeters: Math.round(position.yMeters) }])
+    setRehearsal(previous => previous.status === 'loading' ? previous : { status: 'idle' })
+  }, [])
+
   function changeSetting(field: Exclude<keyof MissionSettings, 'stops'>, value: string) {
+    if (plan.status === 'ready') setPlanStale(true)
     setLoad(previous => previous.status === 'ready' ? { ...previous, settings: { ...previous.settings, [field]: value } } : previous)
     setErrors(previous => ({
       ...previous, [field]: undefined,
@@ -57,6 +110,7 @@ export default function App({ onHome }: { onHome?: () => void }) {
   }
 
   function changeStop(id: string, patch: Partial<StopSettings>) {
+    if (plan.status === 'ready') setPlanStale(true)
     setLoad(previous => {
       if (previous.status !== 'ready') return previous
       return { ...previous, settings: { ...previous.settings, stops: {
@@ -105,12 +159,30 @@ export default function App({ onHome }: { onHome?: () => void }) {
       })
       return
     }
-    setReviewId(crypto.randomUUID())
+    const id = crypto.randomUUID()
+    setReviewId(id)
     setReviewOpen(true)
+    runPlan(buildInitialPlanningRequest(load.mission, load.settings, id))
   }
 
   const review = load.status === 'ready' && reviewId && Object.keys(validateMissionSettings(load.settings, load.mission)).length === 0
     ? buildInitialPlanningRequest(load.mission, load.settings, reviewId) : null
+
+  const planned = plan.status === 'ready' ? plan.response : null
+  const rehearsed = rehearsal.status === 'ready' ? rehearsal.response : null
+  const shown = stage === 'Rehearse' && rehearsed ? rehearsed : planned
+  const shownRoute = shown?.routes.find(route => route.mode === selectedMode) ?? shown?.routes[0]
+  const mapRoutes = useMemo(() => {
+    if (!planned) return undefined
+    return stage === 'Rehearse' && rehearsed ? toMapRoutes(rehearsed, selectedMode, planned) : toMapRoutes(planned, selectedMode)
+  }, [planned, rehearsed, stage, selectedMode])
+  const blockedArea = stage === 'Rehearse' ? blockCorners : undefined
+  const planStatus = plan.status === 'loading' ? <p className="hint" role="status">Calculating routes…</p>
+    : plan.status === 'error' ? <p className="hint" role="alert">{plan.message}</p>
+      : plan.status === 'ready' ? <div className="hint" role="status">
+        <p>{plan.response.routes.map(route => `${route.mode === 'time-focused' ? 'Time-focused' : 'Conservative'}: ${routeSummary(route)}`).join(' · ')}</p>
+        <Button onClick={() => { setReviewOpen(false); setStage('Compare') }}>Compare routes</Button>
+      </div> : undefined
 
   const shellClass = [
     'app-shell', `stage-${stage.toLowerCase()}`,
@@ -124,7 +196,9 @@ export default function App({ onHome }: { onHome?: () => void }) {
       onHome={onHome && (() => { setStage('Plan'); onHome() })}
       setupOpen={setupOpen} onToggleSetup={() => setSetupOpen(open => !open)} />
     <main id="main" className="workspace" tabIndex={-1} aria-label={`${stage} expedition workspace`}>
-      {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} layoutKey={`${stage}-${inspectorOpen}-${setupOpen}`} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation} /> : <MapPlaceholder />}
+      {load.status === 'ready' ? <MissionMap key={load.mission.datasetId} layoutKey={`${stage}-${inspectorOpen}-${setupOpen}`} mission={load.mission} stopSettings={load.settings.stops} selectedId={selectedId} inspectionRequest={inspectionRequest} onSelect={inspectLocation}
+        routes={mapRoutes} returnBoundary={stage === 'Plan' ? undefined : shownRoute?.returnBoundary} blockedArea={blockedArea}
+        onMapClick={stage === 'Rehearse' && planned ? addCorner : undefined} /> : <MapPlaceholder />}
       <div id="setup-drawer" className="ws-left" data-map-edge="left">
         {load.status === 'loading' && <section className="panel state-panel" role="status"><p className="eyebrow">Mission setup</p><h2>Loading mission...</h2><p>Preparing your expedition workspace.</p></section>}
         {load.status === 'error' && <LoadingError message={load.message} onRetry={() => { setLoad({ status: 'loading' }); setAttempt(a => a + 1) }} />}
@@ -133,7 +207,15 @@ export default function App({ onHome }: { onHome?: () => void }) {
             settings={load.settings} errors={errors} onSettingChange={changeSetting} onStopChange={changeStop}
             onBlur={validateField} onReview={reviewMission} />
           : <FloatingPanel title={stage === 'Compare' ? 'Compare routes' : 'Rehearsal'} key={stage}>
-            {stage === 'Compare' ? <ComparePlaceholder onPlan={() => setStage('Plan')} /> : <RehearsePlaceholder onPlan={() => setStage('Plan')} />}
+            {stage === 'Compare'
+              ? planned ? <RouteCompare mission={load.mission} plan={planned} selected={selectedMode} onSelect={setSelectedMode} stale={planStale} />
+                : plan.status === 'loading' ? <p className="hint" role="status">Calculating routes…</p>
+                  : plan.status === 'error' ? <div className="rc"><p className="rc-stale" role="alert">{plan.message}</p><Button onClick={() => runPlan(plan.request)}>Try again</Button></div>
+                    : <ComparePlaceholder onPlan={() => setStage('Plan')} />
+              : planned ? <RehearsalPanel mission={load.mission} vertices={blockCorners} state={rehearsal} selected={selectedMode} onSelect={setSelectedMode}
+                onUndo={() => { setBlockCorners(previous => previous.slice(0, -1)); setRehearsal({ status: 'idle' }) }}
+                onClear={() => { setBlockCorners([]); setRehearsal({ status: 'idle' }) }} onReplan={replanWithBlock} />
+                : <RehearsePlaceholder onPlan={() => setStage('Plan')} />}
           </FloatingPanel>)}
       </div>
       {load.status === 'ready' && <div className="ws-right" data-map-edge="right">
@@ -143,10 +225,11 @@ export default function App({ onHome }: { onHome?: () => void }) {
       </div>}
       <div className="ws-bottom" data-map-edge="bottom">
         {stage === 'Plan' && load.status === 'ready'
-          ? <div className="ws-panel ws-strip"><TimeBudgetStrip mission={load.mission} settings={load.settings} /><RoutesPreview /></div>
-          : <InformationDock stage={stage} />}
+          ? <div className="ws-panel ws-strip"><TimeBudgetStrip mission={load.mission} settings={load.settings} />
+            <RoutesPreview results={planned?.routes.map(route => ({ mode: route.mode, summary: routeSummary(route) }))} /></div>
+          : shownRoute && shown ? <RouteTimeline route={shownRoute} budgetSeconds={shown.totalDurationSeconds} /> : <InformationDock stage={stage} />}
       </div>
     </main>
-    {load.status === 'ready' && reviewOpen && review && <MissionReviewDialog mission={load.mission} request={review} onClose={() => setReviewOpen(false)} />}
+    {load.status === 'ready' && reviewOpen && review && <MissionReviewDialog mission={load.mission} request={review} onClose={() => setReviewOpen(false)} status={planStatus} />}
   </div>
 }

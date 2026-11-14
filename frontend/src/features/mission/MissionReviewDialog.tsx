@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import type { Mission } from '../../types/mission'
 import type { InitialPlanningRequest } from '../../types/planning'
 import { Icon } from '../../components/ui/Icon'
 import { MissionReview } from './MissionReview'
 
 /** Shows the unchanged mission review in a modal dialog. */
-export function MissionReviewDialog({ mission, request, onClose }: { mission: Mission; request: InitialPlanningRequest; onClose: () => void }) {
+export function MissionReviewDialog({ mission, request, onClose, status }: { mission: Mission; request: InitialPlanningRequest; onClose: () => void; status?: ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function MissionReviewDialog({ mission, request, onClose }: { mission: Mi
         <button type="button" className="ws-icon-button ws-dialog-close" aria-label="Close mission review" onClick={() => dialogRef.current?.close()}>
           <Icon name="close" />
         </button>
-        <MissionReview mission={mission} request={request} />
+        <MissionReview mission={mission} request={request} status={status} />
       </div>
     </dialog>
   )

@@ -1,0 +1,71 @@
+:root {
+  --route-time: #f08a4b;
+  --route-conservative: #7fb3e0;
+  --route-ok: #8fd19e;
+  --route-bad: #ff8a5c;
+}
+
+/* Route cards (Compare and Rehearse panels) */
+.rc { display: flex; flex-direction: column; gap: 12px; }
+.rc-list { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.rc-card { display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 14px; text-align: left; color: var(--ws-ink); background: var(--ws-raised); border: 1px solid var(--ws-glass-border); border-radius: 12px; cursor: pointer; }
+.rc-card:hover { border-color: rgba(243, 233, 220, .28); }
+.rc-card.is-selected { border-color: var(--rc-colour); box-shadow: inset 0 0 0 1px var(--rc-colour); }
+.rc-card--time-focused { --rc-colour: var(--route-time); }
+.rc-card--conservative { --rc-colour: var(--route-conservative); }
+.rc-head { display: flex; align-items: center; gap: 8px; }
+.rc-swatch { width: 18px; height: 4px; border-radius: 2px; background: var(--rc-colour); }
+.rc-title { font-weight: 600; font-size: .98rem; }
+.rc-status { margin-left: auto; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; font: 500 .68rem var(--font-mono); letter-spacing: .04em; white-space: nowrap; }
+.rc-status--feasible { color: var(--route-ok); }
+.rc-status--infeasible { color: var(--route-bad); }
+.rc-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 10px; margin: 0; }
+.rc-stats div { min-width: 0; }
+.rc-stats dt { font: 500 .62rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ws-ink-3); }
+.rc-stats dd { margin: 2px 0 0; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.rc-order { font-size: .78rem; color: var(--ws-ink-2); }
+.rc-verdict { font-size: .78rem; line-height: 1.45; color: var(--ws-ink-3); }
+.rc-notes { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 0; padding: 0 0 0 16px; font-size: .78rem; line-height: 1.45; color: var(--ws-ink-2); }
+.rc-note--change { color: var(--ws-ink); }
+.rc-stale { padding: 8px 10px; border-radius: 10px; background: rgba(255, 138, 92, .12); color: var(--route-bad); font-size: .8rem; }
+
+/* Rehearsal panel */
+.rh { display: flex; flex-direction: column; gap: 12px; }
+.rh-help { font-size: .85rem; color: var(--ws-ink-2); }
+.rh-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rh-tools .button { padding: 7px 12px; }
+.rh-tools .button:disabled, .rh .button:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Time budget bar (bottom dock in Compare and Rehearse) */
+.rt { display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 16px 24px; overflow: auto; }
+.rt-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.rt-head .eyebrow { margin: 0; }
+.rt-verdict { font-size: .85rem; color: var(--route-ok); }
+.rt-verdict.is-over { color: var(--route-bad); }
+.rt-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--ws-raised); }
+.rt-seg { height: 100%; }
+.rt-seg--walk { background: var(--route-time); }
+.rt-seg--observe { background: #e7c27a; }
+.rt-seg--rest { background: #b9a28f; }
+.rt-seg--reserve { background: var(--ws-reserve); }
+.rt-seg--spare { background: rgba(243, 233, 220, .14); }
+.rt-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; list-style: none; font-size: .76rem; color: var(--ws-ink-3); }
+.rt-legend b { color: var(--ws-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.rt-dot { display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; }
+
+/* Map overlays */
+.ws-route { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ws-route--time-focused { stroke: var(--route-time); }
+.ws-route--conservative { stroke: var(--route-conservative); }
+.ws-route--casing { stroke: rgba(14, 9, 7, .7); }
+.ws-route.is-muted { stroke-opacity: .45; }
+.ws-route--previous { stroke: #f3e9dc; stroke-opacity: .55; stroke-dasharray: 4 7; }
+.ws-boundary { fill: rgba(143, 209, 158, .05); stroke: var(--route-ok); stroke-opacity: .7; stroke-dasharray: 2 6; }
+.ws-blocked { fill: rgba(255, 138, 92, .28); stroke: var(--route-bad); stroke-width: 2; }
+.ws-rest { fill: #f3e9dc; stroke: rgba(14, 9, 7, .8); stroke-width: 2; }
+.ws-corner { fill: var(--route-bad); stroke: #f3e9dc; stroke-width: 1.5; }
+.mission-map.is-drawing .leaflet-workspace { cursor: crosshair; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rc-card { transition: border-color .15s ease, box-shadow .15s ease; }
+}

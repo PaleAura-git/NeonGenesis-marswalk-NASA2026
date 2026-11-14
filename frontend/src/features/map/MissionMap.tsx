@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import type { Mission } from '../../types/mission'
-import type { StopSettings } from '../../types/planning'
+import type { Mission, Position } from '../../types/mission'
+import type { RouteMode, StopSettings } from '../../types/planning'
 import { MapControls } from './MapControls'
 import { createMetreGrid, type FreeArea } from './MetreGrid'
 import { missionAreaMetres, missionBounds, toMapPosition } from './coordinates'
@@ -11,6 +11,16 @@ import { layoutLabels, type LabelEntry } from './labelLayout'
 import { MarsCRS, marsTrek } from './marsTrek'
 import { terrainOverlay } from './terrainOverlay'
 import './map.css'
+import '../routes/routes.css'
+
+/** A planned route drawn on the map: the selected one on top, the other muted, a pre-rehearsal route dashed. */
+export interface MapRoute {
+  id: string
+  mode: RouteMode
+  geometry: Position[]
+  emphasis: 'selected' | 'muted' | 'previous'
+  restSpots?: Position[]
+}
 
 const layerKinds = [
   { kind: 'imagery', label: 'Imagery' },
@@ -34,6 +44,13 @@ interface Props {
   selectedId: string | null
   inspectionRequest: number
   onSelect: (id: string) => void
+  routes?: MapRoute[]
+  /** Area the astronaut could still walk home from, for the selected route. */
+  returnBoundary?: Position[]
+  /** Corners of a rehearsal block, in order. */
+  blockedArea?: Position[]
+  /** When set, clicks on the map report a local position (rehearsal drawing). */
+  onMapClick?: (position: Position) => void
 }
 
 /** Part of the map container not covered by panels or controls, in container pixels. */
@@ -83,7 +100,7 @@ function missionAreaOutline(widthMeters: number, heightMeters: number): SVGSVGEl
 
 const formatKilometres = (meters: number) => (meters / 1000).toFixed(meters % 100 === 0 ? 1 : 2)
 
-export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspectionRequest, onSelect }: Props) {
+export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspectionRequest, onSelect, routes, returnBoundary, blockedArea, onMapClick }: Props) {
   const rootRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const scaleHostRef = useRef<HTMLDivElement>(null)
@@ -421,6 +438,44 @@ export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspe
     return () => overlays.forEach(overlay => { overlay.remove(); overlay.off() })
   }, [mission, enabledLayers])
 
+  // Planned routes, rest spots, return boundary and the rehearsal block. Drawn below the markers.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map) return
+    const group = L.layerGroup().addTo(map)
+    if (returnBoundary && returnBoundary.length > 2) {
+      L.polygon(returnBoundary.map(toMapPosition), { className: 'ws-boundary', interactive: false, weight: 1.5 }).addTo(group)
+    }
+    if (blockedArea && blockedArea.length > 0) {
+      if (blockedArea.length > 2) L.polygon(blockedArea.map(toMapPosition), { className: 'ws-blocked', interactive: false }).addTo(group)
+      else if (blockedArea.length === 2) L.polyline(blockedArea.map(toMapPosition), { className: 'ws-blocked', interactive: false }).addTo(group)
+      blockedArea.forEach(corner => L.circleMarker(toMapPosition(corner), { radius: 5, className: 'ws-corner', interactive: false }).addTo(group))
+    }
+    const order = { previous: 0, muted: 1, selected: 2 }
+    ;[...(routes ?? [])].sort((a, b) => order[a.emphasis] - order[b.emphasis]).forEach(route => {
+      const line = route.geometry.map(toMapPosition)
+      if (line.length < 2) return
+      if (route.emphasis === 'previous') {
+        L.polyline(line, { className: 'ws-route ws-route--previous', weight: 2.5, interactive: false }).addTo(group)
+        return
+      }
+      const selected = route.emphasis === 'selected'
+      L.polyline(line, { className: 'ws-route ws-route--casing', weight: selected ? 7 : 5, interactive: false }).addTo(group)
+      L.polyline(line, { className: `ws-route ws-route--${route.mode}${selected ? '' : ' is-muted'}`, weight: selected ? 4 : 2.5, interactive: false }).addTo(group)
+      if (selected) route.restSpots?.forEach(spot => L.circleMarker(toMapPosition(spot), { radius: 5, className: 'ws-rest', interactive: false })
+        .bindTooltip('Rest spot', { direction: 'top' }).addTo(group))
+    })
+    return () => { group.remove() }
+  }, [routes, returnBoundary, blockedArea])
+
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !onMapClick) return
+    const handler = (event: L.LeafletMouseEvent) => onMapClick(toLocalMetres(event.latlng.lat, event.latlng.lng))
+    map.on('click', handler)
+    return () => { map.off('click', handler) }
+  }, [onMapClick])
+
   function toggleLayer(id: string) {
     setFailedLayers(previous => previous.filter(failedId => failedId !== id))
     setEnabledLayers(previous => previous.includes(id) ? previous.filter(layerId => layerId !== id) : [...previous, id])
@@ -458,7 +513,7 @@ export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspe
     <p>{mission.notice}</p>
     <p>Positions are local metres east (x) and north (y) of Three Forks Base at {origin.latitude}&deg; N, {origin.longitude}&deg; E, placed on Mars with a local tangent plane on the Mars 2000 sphere. Positions are provisional, from the rover position file and HiRISE.</p>
     <p>Imagery: NASA Mars Trek, HiRISE 25 cm orthomosaic and CTX 6 m mosaic of Jezero, colourised for display. {marsTrek.attribution}.</p>
-    <p>Observation durations are synthetic. Route calculations pending.</p>
+    <p>{mission.dataMode === 'real' ? 'Routes, rest spots and the return boundary come from the backend planner (HiRISE 10 m grid).' : 'Observation durations are synthetic. Route calculations pending.'}</p>
   </>
 
   const imageryNote = showNasa
@@ -467,7 +522,7 @@ export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspe
       : imagery === 'nasa' ? 'Offline · illustrative terrain' : 'Illustrative terrain'
 
   return (
-    <section ref={rootRef} className={showNasa ? 'mission-map has-nasa-imagery' : 'mission-map'} aria-label="Expedition map of Jezero Crater">
+    <section ref={rootRef} className={['mission-map', showNasa && 'has-nasa-imagery', onMapClick && 'is-drawing'].filter(Boolean).join(' ')} aria-label="Expedition map of Jezero Crater">
       <div ref={containerRef} className="leaflet-workspace" role="region" aria-label="Interactive map. Arrow keys pan. Plus and minus zoom." />
       <MapControls onZoomIn={() => mapRef.current?.zoomIn()} onZoomOut={() => mapRef.current?.zoomOut()} onReset={() => resetRef.current()}
         layers={layerMenu} notes={notes} />
