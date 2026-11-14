@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.1",
+  "datasetId": "jezero-three-forks-hirise-v1",
+  "dataMode": "real",
+  "notice": "Terrain from NASA MRO HiRISE (1 m, averaged to 10 m cells). Positions from NASA's Perseverance position file, except Kodiak (team-read, to be re-checked in Mars Trek).",
+  "coordinateSystem": {
+    "id": "three-forks-local-v1",
+    "kind": "local-cartesian",
+    "units": "metres",
+    "axes": {
+      "x": "east",
+      "y": "north"
+    },
+    "origin": "Three Forks sample depot (18.4529 N, 77.4083 E) at (0, 0); Mars equirectangular, R = 3,396,190 m, standard parallel 0."
+  },
+  "geographicReference": {
+    "latitudeDegrees": 18.4529,
+    "longitudeDegrees": 77.4083,
+    "status": "verified",
+    "notice": "NASA rover position file (S23) matched to sample dates (S24); agrees with JPL depot zones (S22)"
+  },
+  "base": {
+    "id": "three-forks-base",
+    "name": "Three Forks (sample depot)",
+    "position": {
+      "xMeters": 0.0,
+      "yMeters": 0.0
+    }
+  },
+  "bounds": {
+    "min": {
+      "xMeters": -1885.4,
+      "yMeters": -1972.1
+    },
+    "max": {
+      "xMeters": 1909.0,
+      "yMeters": 2027.9
+    }
+  },
+  "stops": [
+    {
+      "id": "cape-nukshak",
+      "name": "Cape Nukshak",
+      "position": {
+        "xMeters": -388.0,
+        "yMeters": -130.4
+      },
+      "observationObjective": "Delta-front basal layers: how river sediment entered the lake.",
+      "observationDurationSeconds": 2400
+    },
+    {
+      "id": "hawksbill-gap",
+      "name": "Hawksbill Gap",
+      "position": {
+        "xMeters": -129.3,
+        "yMeters": 349.7
+      },
+      "observationObjective": "Exposed delta stack and the way up the scarp: layering, contacts, sample targets.",
+      "observationDurationSeconds": 2400
+    },
+    {
+      "id": "kodiak-butte",
+      "name": "Kodiak butte",
+      "position": {
+        "xMeters": 78.7,
+        "yMeters": -764.6
+      },
+      "observationObjective": "Isolated delta remnant viewed from its foot: inclined layers record lake-level changes.",
+      "observationDurationSeconds": 1800
+    }
+  ],
+  "layers": [
+    {
+      "id": "slope-10m",
+      "kind": "slope",
+      "url": "/data/slope.png",
+      "bounds": {
+        "min": {
+          "xMeters": -1885.4,
+          "yMeters": -1972.1
+        },
+        "max": {
+          "xMeters": 1909.0,
+          "yMeters": 2027.9
+        }
+      },
+      "coordinateSystemId": "three-forks-local-v1",
+      "attribution": "NASA/JPL/University of Arizona, MRO HiRISE DTM via USGS Astrogeology; slope 0-30 degrees, 10 m cells",
+      "illustrative": false
+    }
+  ],
+  "sources": [
+    {
+      "layer": "elevation_m, slope_mean_deg, slope_p90_deg, roughness_deg, valid_fraction",
+      "mission": "MRO",
+      "instrument": "HiRISE DTM",
+      "resolution_m": 1.0,
+      "file": "JEZ_hirise_soc_006_DTM_MOLAtopography_DeltaGeoid_1m_Eqc_latTs0_lon0_blend40.tif",
+      "source": "USGS Astrogeology, Mars 2020 Jezero landing site products"
+    },
+    {
+      "layer": "thermal_inertia",
+      "mission": "Mars Odyssey",
+      "instrument": "THEMIS",
+      "resolution_m": 100.0,
+      "file": "Jezero_Thermal_Inertia_v1.tiff",
+      "source": "Zenodo (non-NASA host): to be replaced with a NASA source",
+      "note": "Bilinear resample from 100 m; cannot resolve features within one THEMIS pixel"
+    }
+  ]
+}

@@ -41,15 +41,18 @@ with rasterio.open(dtm_path) as src:
     dem = src.read(1, window=window, masked=True)
     transform = src.window_transform(window)
     res = src.res[0]
+    lat_c = math.degrees((top + bottom) / 2 / MARS_RADIUS_M)
+    x_scale = math.cos(math.radians(lat_c))
     dtm_crs = src.crs
 
 elev = dem.filled(np.nan)
 print("Source:", dtm_path)
 print("Instrument: MRO HiRISE DTM, 1 m")
+print(f"East-west ground scale at {lat_c:.2f}° N: 1 map metre = {x_scale:.4f} m on the ground")
 print(f"Demo box: x {x0_km}-{x0_km + size_km} km, y {y0_km}-{y0_km + size_km} km "
       f"-> {elev.shape[1]} x {elev.shape[0]} px")
 
-dy, dx = np.gradient(elev, res)
+dy, dx = np.gradient(elev, res, res * x_scale)
 slope = np.degrees(np.arctan(np.hypot(dx, dy)))
 
 valid = np.isfinite(elev)
@@ -165,6 +168,7 @@ layers = {
 sources = {
     "demo_box_km": {"x0": x0_km, "y0": y0_km, "size": size_km},
     "cell_size_m": CELL_M,
+    "x_ground_scale": x_scale,
     "crs": a,
     "layers": {
         "elevation_m, slope_mean_deg, slope_p90_deg, roughness_deg, valid_fraction": {
@@ -189,7 +193,7 @@ with rasterio.open(
     for i, (name, arr) in enumerate(layers.items(), start=1):
         dst.write(arr.astype("float32"), i)
         dst.set_band_description(i, name)
-    dst.update_tags(sources=json.dumps(sources))
+    dst.update_tags(sources=json.dumps(sources), x_ground_scale=str(x_scale))
 
 r_idx, c_idx = np.indices((rows, cols))
 xs, ys = rasterio.transform.xy(cell_transform, r_idx.ravel(), c_idx.ravel())
