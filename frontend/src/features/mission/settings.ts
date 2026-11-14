@@ -1,13 +1,17 @@
 import type { Mission } from '../../types/mission'
 import { requestedRouteModes, type InitialPlanningRequest, type MissionSettings, type SettingsErrors } from '../../types/planning'
 
+// Planner limits (backend/scripts/walk_cost.py): 3.3 km/h top walking speed, slope limit raisable to 20 degrees.
+const MAX_SPEED_MS = 3.3 / 3.6
+const MAX_SLOPE_DEG = 20
+
 export function observationField(id: string): string {
   return `observation-${id}`
 }
 
 export function createMissionSettings(mission: Mission): MissionSettings {
   return {
-    durationHours: '3',
+    durationHours: '6',
     durationMinutes: '0',
     reserveMinutes: '30',
     walkingSpeed: '0.6',
@@ -41,7 +45,9 @@ export function validateMissionSettings(settings: MissionSettings, mission: Miss
   if (!Number.isFinite(reserve) || reserve < 0) errors.reserveMinutes = 'Enter finite reserve minutes, zero or greater.'
   else if (Number.isFinite(totalSeconds) && totalSeconds > 0 && reserve >= totalSeconds) errors.reserveMinutes = 'Reserve must be less than mission duration.'
   if (!Number.isFinite(speed) || speed <= 0) errors.walkingSpeed = 'Walking speed must be finite and greater than zero.'
+  else if (speed > MAX_SPEED_MS) errors.walkingSpeed = 'Walking speed can be at most 0.92 m/s (3.3 km/h, Apollo traverse planning).'
   if (!Number.isFinite(slope) || slope <= 0 || slope >= 90) errors.maxSlopeDegrees = 'Maximum slope must be greater than 0 and less than 90 degrees.'
+  else if (slope > MAX_SLOPE_DEG) errors.maxSlopeDegrees = 'Maximum slope can be at most 20 degrees (lunar traverse planning limit).'
 
   let included = 0
   mission.stops.forEach(stop => {

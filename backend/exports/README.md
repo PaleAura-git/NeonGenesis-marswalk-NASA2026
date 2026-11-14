@@ -37,11 +37,11 @@ Coordinates: local metres, x east, y north, origin (0, 0) at the Three Forks sam
 East-west distances are corrected for latitude, so these are true ground metres. The PNGs are expected at `/data/<name>.png` (copy them to `frontend/public/data/`, or let the API serve them).
 
 Terrain classes: a random forest predicts surface material (sand / bedrock / rough) from HiRISE slope, roughness,
-brightness and texture plus THEMIS thermal inertia. "Steep" is measured, not predicted (mean slope > 15°).
+brightness and texture plus THEMIS night IR (USGS controlled mosaic, 100 m; a relative proxy for thermal inertia). "Steep" is measured, not predicted (mean slope > 15°).
 Training labels (`backend/labels/labels.csv`) were made from HiRISE image patches with AI assistance. Two team
 members each labelled 30 different random patches blind (`backend/labels/check_labels*.csv`). Agreement on
 material: 74% (17/23) and 57% (8/14), **68% combined (25/37)**. Most disagreements are sand vs bedrock (8 of 12).
-The team's "steep" calls mostly measured 4-15°, which is why steep is taken from the DTM instead of the image. Spatial cross-validation accuracy is 61% (always guessing "sand" scores 53%).
+The team's "steep" calls mostly measured 4-15°, which is why steep is taken from the DTM instead of the image. Spatial cross-validation accuracy is 67% (always guessing "sand" scores 53%).
 The planner uses the classes as speed factors (sand ×0.85, rough ×0.8, *assumed*) and the conservative mode
 also penalises low-confidence cells.
 
@@ -63,3 +63,12 @@ also penalises low-confidence cells.
 - `returnBoundary`: polygon (local metres) of the area you could still walk home from at the start, with all reserves
 - `returnBoundaryCheckpoints`: the same polygon on leaving each stop (`when`, `polygon`); empty = head straight home
 - `status: "infeasible"` means no safe return exists for this plan; `explanations[0]` says which resource runs short
+
+## Data sources (all NASA missions; files from USGS Astrogeology, NASA's planetary mapping partner)
+
+| Layer | Mission / instrument | Product |
+|---|---|---|
+| Elevation, slope, roughness | MRO HiRISE DTM, 1 m | `JEZ_hirise_soc_006_DTM_MOLAtopography_DeltaGeoid_1m` (Mars 2020 landing site products) |
+| Optical | MRO HiRISE, 25 cm | `JEZ_hirise_soc_006_orthoMosaic_25cm` (`backend/scripts/make_ortho.py`) |
+| Thermal | Mars Odyssey THEMIS night IR, 100 m | THEMIS Night IR Controlled Mosaic v2, 2018 (`backend/scripts/fetch_themis.py`) |
+| Rover track | Mars 2020 Perseverance | NASA `M20_traverse.json` ("Where is Perseverance?"), used in `validate_routes.py` |

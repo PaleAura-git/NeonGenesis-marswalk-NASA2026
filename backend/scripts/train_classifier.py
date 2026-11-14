@@ -21,7 +21,7 @@ MATERIALS = CLASSES[:3]
 STEEP_DEG = 15
 COLOURS = ["#e3c16f", "#8c8c8c", "#b5562e", "#6a2c70"]
 BLOCK_CELLS = 100
-TERRAIN = ["slope_mean_deg", "slope_p90_deg", "roughness_deg", "thermal_inertia"]
+TERRAIN = ["slope_mean_deg", "slope_p90_deg", "roughness_deg", "thermal"]
 OPTICAL = ["brightness", "texture"]
 SEED = 2026
 

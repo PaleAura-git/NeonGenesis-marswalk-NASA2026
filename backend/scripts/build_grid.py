@@ -1,10 +1,11 @@
 """Build the 10 m terrain grid for the demo box and save it as a feature stack.
 
-HiRISE DTM -> slope and roughness at 1 m -> 10 m cells, plus THEMIS thermal
+HiRISE DTM -> slope and roughness at 1 m -> 10 m cells, plus a THEMIS thermal layer
 inertia resampled onto the same cells. Writes a GeoTIFF stack, a CSV feature
 table and a sources file to data/processed/.
 
-Usage: python scripts/build_grid.py <hirise_dtm> <themis_ti> <sites.csv> <x0_km> <y0_km> <size_km>
+Usage: python scripts/build_grid.py <hirise_dtm> <themis_thermal.tif> <sites.csv> <x0_km> <y0_km> <size_km>
+The thermal file's tags (from fetch_themis.py) give its quantity and source.
 x0/y0 are km from the DTM's left/top edge (same axes as overview.py).
 """
 import csv
@@ -118,10 +119,17 @@ with rasterio.open(themis_path) as th:
     print("CRS THEMIS:", b)
     if a != b:
         sys.exit("Projections differ: reproject THEMIS before combining")
+    th_window = from_bounds(*rasterio.transform.array_bounds(rows, cols, cell_transform), th.transform)
+    th_window = th_window.round_offsets().round_lengths()
+    th_window = rasterio.windows.Window(th_window.col_off - 2, th_window.row_off - 2,
+                                        th_window.width + 4, th_window.height + 4)
+    th_data = th.read(1, window=th_window, boundless=True, fill_value=th.nodata or 0)
     cell_thermal = np.full((rows, cols), np.nan, dtype="float32")
     reproject(
-        source=rasterio.band(th, 1),
+        source=th_data,
         destination=cell_thermal,
+        src_transform=th.window_transform(th_window),
+        src_crs=th.crs,
         src_nodata=th.nodata,
         dst_nodata=np.nan,
         dst_transform=cell_transform,
@@ -129,10 +137,13 @@ with rasterio.open(themis_path) as th:
         resampling=Resampling.bilinear,
     )
     th_res = th.res[0]
+    th_tags = th.tags()
+th_quantity = th_tags.get("quantity", "thermal_inertia")
+th_units = th_tags.get("units", "J m⁻² K⁻¹ s⁻½")
 
 cell_thermal[bad] = np.nan
 t50, t5, t95 = np.nanpercentile(cell_thermal, [50, 5, 95])
-print(f"Thermal inertia (THEMIS, {th_res:.0f} m -> {CELL_M} m cells): "
+print(f"Thermal ({th_quantity}, THEMIS {th_res:.0f} m -> {CELL_M} m cells): "
       f"median {t50:.0f} | p5 {t5:.0f} | p95 {t95:.0f} | "
       f"valid {np.isfinite(cell_thermal).mean() * 100:.1f}%")
 
@@ -162,7 +173,7 @@ layers = {
     "slope_mean_deg": cell_slope,
     "slope_p90_deg": cell_slope_p90,
     "roughness_deg": cell_rough,
-    "thermal_inertia": cell_thermal,
+    "thermal": cell_thermal,
     "valid_fraction": valid_frac,
 }
 sources = {
@@ -176,11 +187,16 @@ sources = {
             "file": dtm_path.split("/")[-1],
             "source": "USGS Astrogeology, Mars 2020 Jezero landing site products",
         },
-        "thermal_inertia": {
-            "mission": "Mars Odyssey", "instrument": "THEMIS", "resolution_m": th_res,
+        "thermal": {
+            "mission": th_tags.get("mission", "Mars Odyssey"),
+            "instrument": th_tags.get("instrument", "THEMIS"),
+            "resolution_m": th_res,
             "file": themis_path.split("/")[-1],
-            "source": "Zenodo (non-NASA host): to be replaced with a NASA source",
-            "note": f"Bilinear resample from {th_res:.0f} m; cannot resolve features within one THEMIS pixel",
+            "source": th_tags.get("source", "Zenodo (non-NASA host): replace with fetch_themis.py"),
+            "quantity": f"{th_quantity} ({th_units})",
+            "note": f"Bilinear resample from {th_res:.0f} m; cannot resolve features within one THEMIS pixel"
+                    + ("; night IR brightness is a relative proxy for thermal inertia, not calibrated"
+                       if th_quantity == "night_ir_brightness" else ""),
         },
     },
 }
@@ -253,8 +269,8 @@ plt.savefig("figures/demo_cells_slope_p90.png", dpi=120)
 
 plt.figure(figsize=(8, 7))
 plt.imshow(cell_thermal, cmap="inferno", extent=extent)
-plt.colorbar(label="Thermal inertia (J m⁻² K⁻¹ s⁻½)")
-plt.title(f"Demo box thermal inertia (Mars Odyssey THEMIS, {th_res:.0f} m, on {CELL_M} m cells)")
+plt.colorbar(label=f"{th_quantity.replace('_', ' ')} ({th_units})")
+plt.title(f"Demo box {th_quantity.replace('_', ' ')} (Mars Odyssey THEMIS, {th_res:.0f} m, on {CELL_M} m cells)")
 plt.xlabel("km from DTM left edge")
 plt.ylabel("km from DTM top edge")
 plt.savefig("figures/demo_thermal.png", dpi=120)

@@ -14,23 +14,35 @@ export interface ScienceStop extends MissionLocation {
   observationObjective: string
   observationDurationSeconds: number
 }
+export interface GeographicReference {
+  latitudeDegrees: number; longitudeDegrees: number
+  status: 'unverified-placeholder' | 'verified'; notice: string
+}
+export interface DataSource {
+  layer: string
+  mission?: string
+  instrument?: string
+  resolution_m?: number
+  file?: string
+  source: string
+  note?: string
+}
 export interface Mission {
   schemaVersion: '1.0' | '1.1'
   datasetId: string
-  dataMode: 'synthetic'
+  dataMode: 'synthetic' | 'real'
   notice: string
   coordinateSystem: {
     id: string; kind: 'local-cartesian'; units: 'metres'
     axes: { x: string; y: string }; origin: string
   }
-  unverifiedGeographicReference: {
-    latitudeDegrees: number; longitudeDegrees: number
-    status: 'unverified-placeholder'; notice: string
-  }
+  // Synthetic data carries an unverified placeholder; real data a verified reference.
+  unverifiedGeographicReference?: GeographicReference
+  geographicReference?: GeographicReference
   base: MissionLocation
   stops: ScienceStop[]
   // Optional for older schema 1.0 responses, which derive bounds from positions.
   bounds?: MapBounds
   layers: MapLayer[]
-  sources: never[]
+  sources: DataSource[]
 }

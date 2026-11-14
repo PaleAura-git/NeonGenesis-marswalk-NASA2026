@@ -121,7 +121,7 @@
         }
       },
       "coordinateSystemId": "three-forks-local-v1",
-      "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS thermal inertia; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured slope > 15 degrees); opacity = confidence",
+      "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS night IR; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured slope > 15 degrees); opacity = confidence",
       "illustrative": false
     }
   ],
@@ -135,13 +135,14 @@
       "source": "USGS Astrogeology, Mars 2020 Jezero landing site products"
     },
     {
-      "layer": "thermal_inertia",
+      "layer": "thermal",
       "mission": "Mars Odyssey",
-      "instrument": "THEMIS",
+      "instrument": "THEMIS (band 9, 12.57 um)",
       "resolution_m": 100.0,
-      "file": "Jezero_Thermal_Inertia_v1.tiff",
-      "source": "Zenodo (non-NASA host): to be replaced with a NASA source",
-      "note": "Bilinear resample from 100 m; cannot resolve features within one THEMIS pixel"
+      "file": "themis_nightir_jezero.tif",
+      "source": "https://asc-pds-services.s3.us-west-2.amazonaws.com/mosaic/Mars/THEMIS_controlled_mosaics/AA_mosaics/THEMIS_NightIR_ControlledMosaics_100m_v2_oct2018.tif",
+      "quantity": "night_ir_brightness (DN (8-bit, relative))",
+      "note": "Bilinear resample from 100 m; cannot resolve features within one THEMIS pixel; night IR brightness is a relative proxy for thermal inertia, not calibrated"
     }
   ]
 }

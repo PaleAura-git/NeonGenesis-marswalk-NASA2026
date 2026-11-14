@@ -6,18 +6,19 @@ const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFi
 const position = (v: unknown): v is { xMeters: number; yMeters: number } => object(v) && finite(v.xMeters) && finite(v.yMeters)
 const bounds = (v: unknown): boolean => object(v) && position(v.min) && position(v.max) && v.min.xMeters < v.max.xMeters && v.min.yMeters < v.max.yMeters
 const assetUrl = (v: unknown): boolean => text(v) && (/^https?:\/\//.test(v) || (v.startsWith('/') && !v.startsWith('//')))
+const geoReference = (v: unknown, status: string): boolean => object(v) && finite(v.latitudeDegrees) && Math.abs(v.latitudeDegrees) <= 90
+  && finite(v.longitudeDegrees) && Math.abs(v.longitudeDegrees) <= 180 && v.status === status && text(v.notice)
 const location = (v: unknown): boolean => object(v) && text(v.id) && text(v.name) && object(v.position) && finite(v.position.xMeters) && finite(v.position.yMeters)
 
 export function parseMission(value: unknown): Mission {
-  const fail = (): never => { throw new Error('Malformed mission data: expected schema 1.0 or 1.1 with valid local coordinates, bounds, layer metadata, unique IDs, and observation durations.') }
+  const fail = (): never => { throw new Error('Malformed mission data: expected schema 1.0 or 1.1 (synthetic or real) with valid local coordinates, bounds, layer metadata, unique IDs, and observation durations.') }
   if (!object(value)) return fail()
   const c = value.coordinateSystem
-  const g = value.unverifiedGeographicReference
-  if (!['1.0', '1.1'].includes(String(value.schemaVersion)) || value.dataMode !== 'synthetic' || !text(value.datasetId) || !text(value.notice)
+  const real = value.dataMode === 'real'
+  if (!['1.0', '1.1'].includes(String(value.schemaVersion)) || !['synthetic', 'real'].includes(String(value.dataMode)) || !text(value.datasetId) || !text(value.notice)
     || !object(c) || !text(c.id) || c.kind !== 'local-cartesian' || c.units !== 'metres' || !text(c.origin)
     || !object(c.axes) || !text(c.axes.x) || !text(c.axes.y)
-    || !object(g) || !finite(g.latitudeDegrees) || Math.abs(g.latitudeDegrees) > 90
-    || !finite(g.longitudeDegrees) || Math.abs(g.longitudeDegrees) > 180 || g.status !== 'unverified-placeholder' || !text(g.notice)
+    || (real ? !geoReference(value.geographicReference, 'verified') : !geoReference(value.unverifiedGeographicReference, 'unverified-placeholder'))
     || !location(value.base) || !Array.isArray(value.stops)
     || !value.stops.every(s => location(s) && object(s) && text(s.observationObjective) && finite(s.observationDurationSeconds) && s.observationDurationSeconds >= 0)
     || (value.schemaVersion === '1.1' && !bounds(value.bounds))
@@ -28,7 +29,7 @@ export function parseMission(value: unknown): Mission {
       && text(layer.attribution) && typeof layer.illustrative === 'boolean'
       && (!layer.illustrative || layer.kind === 'imagery'))
     || (value.schemaVersion === '1.0' && value.layers.length !== 0)
-    || !Array.isArray(value.sources) || value.sources.length !== 0) return fail()
+    || !Array.isArray(value.sources) || (real ? !value.sources.every(s => object(s) && text(s.layer) && text(s.source)) : value.sources.length !== 0)) return fail()
   const ids = [(value.base as Record<string, unknown>).id, ...value.stops.map(s => (s as Record<string, unknown>).id)]
   if (new Set(ids).size !== ids.length) return fail()
   if (new Set(value.layers.map(layer => layer.id)).size !== value.layers.length) return fail()

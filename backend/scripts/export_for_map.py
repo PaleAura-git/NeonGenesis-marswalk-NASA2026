@@ -119,8 +119,8 @@ def mission_json(ctx, frame):
             "url": "/data/terrain.png",
             "bounds": bounds,
             "coordinateSystemId": FRAME_ID,
-            "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS thermal "
-                           "inertia; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured "
+            "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS night "
+                           "IR; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured "
                            "slope > 15 degrees); opacity = confidence",
             "illustrative": False,
         }] if ctx.terrain is not None and (OUT / "terrain.png").exists() else [])],
