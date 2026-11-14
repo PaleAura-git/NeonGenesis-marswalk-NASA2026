@@ -95,7 +95,16 @@ def mission_json(ctx, frame):
             "observationObjective": OBJECTIVES[s["id"]],
             "observationDurationSeconds": STOP_SECONDS[s["id"]],
         } for s in ctx.sites if s["id"] in ctx.stops],
-        "layers": [{
+        "layers": [*([{
+            "id": "hirise-optical",
+            "kind": "imagery",
+            "url": "/data/optical.png",
+            "bounds": bounds,
+            "coordinateSystemId": FRAME_ID,
+            "attribution": "NASA/JPL/University of Arizona, MRO HiRISE orthomosaic (25 cm, shown at 2 m) "
+                           "via USGS Astrogeology",
+            "illustrative": False,
+        }] if (OUT / "optical.png").exists() else []), {
             "id": "slope-10m",
             "kind": "slope",
             "url": "/data/slope.png",
@@ -104,7 +113,17 @@ def mission_json(ctx, frame):
             "attribution": "NASA/JPL/University of Arizona, MRO HiRISE DTM via USGS Astrogeology; "
                            "slope 0-30 degrees, 10 m cells",
             "illustrative": False,
-        }],
+        }, *([{
+            "id": "terrain-10m",
+            "kind": "terrain-classification",
+            "url": "/data/terrain.png",
+            "bounds": bounds,
+            "coordinateSystemId": FRAME_ID,
+            "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS thermal "
+                           "inertia; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured "
+                           "slope > 15 degrees); opacity = confidence",
+            "illustrative": False,
+        }] if ctx.terrain is not None and (OUT / "terrain.png").exists() else [])],
         "sources": [{"layer": k, **v} for k, v in ctx.sources.get("layers", {}).items()],
     }
 

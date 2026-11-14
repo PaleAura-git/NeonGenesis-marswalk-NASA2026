@@ -8,6 +8,7 @@ import json
 import math
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,6 +25,9 @@ ROUGHNESS_SCALE_DEG = 5
 REST_EVERY_S = 30 * 60
 REST_S = 5 * 60
 REST_SEARCH_POINTS = 10
+TERRAIN_PATH = "data/processed/terrain.tif"
+CLASS_SPEED = {"sand": 0.85, "bedrock": 1.0, "rough": 0.8, "steep": 1.0}
+UNCERTAINTY_PENALTY = 0.5
 
 
 @dataclass
@@ -37,6 +41,7 @@ class Context:
     base: str
     stops: list
     site_cells: dict
+    terrain: dict | None = None
 
 
 def lonlat_to_map(lon, lat):
@@ -50,20 +55,30 @@ def load_context(grid_path, sites_path):
         transform, cell_m = src.transform, src.res[0]
     with open(sites_path, newline="") as f:
         sites = [s for s in csv.DictReader(f) if s["role"] in ("habitat", "stop")]
+    terrain = None
+    if Path(TERRAIN_PATH).exists():
+        with rasterio.open(TERRAIN_PATH) as t:
+            terrain = {"class": t.read(1), "confidence": t.read(2), "names": t.tags()["classes"].split(",")}
     site_cells = {s["id"]: rasterio.transform.rowcol(
         transform, *lonlat_to_map(float(s["lon_deg"]), float(s["lat_deg"]))) for s in sites}
     return Context(
         bands=bands, transform=transform, cell_m=cell_m,
         x_scale=float(tags.get("x_ground_scale", 1)), sources=json.loads(tags.get("sources", "{}")),
         sites=sites, base=next(s["id"] for s in sites if s["role"] == "habitat"),
-        stops=[s["id"] for s in sites if s["role"] == "stop"], site_cells=site_cells,
+        stops=[s["id"] for s in sites if s["role"] == "stop"], site_cells=site_cells, terrain=terrain,
     )
 
 
-def cost_surfaces(bands, cell_m, speed_kmh, max_slope):
+def cost_surfaces(bands, cell_m, speed_kmh, max_slope, terrain=None):
     seconds, _, _ = cell_costs(bands["slope_mean_deg"], cell_m, speed_kmh, max_slope)
     p90 = bands["slope_p90_deg"]
     penalty = 1 + p90 / max_slope + bands["roughness_deg"] / ROUGHNESS_SCALE_DEG
+    if terrain is not None:
+        speed = np.ones_like(seconds)
+        for i, name in enumerate(terrain["names"]):
+            speed[terrain["class"] == i] = CLASS_SPEED[name]
+        seconds = seconds / speed
+        penalty = penalty * (1 + UNCERTAINTY_PENALTY * (1 - np.nan_to_num(terrain["confidence"], nan=0.0)))
     safest = np.where(p90 <= max_slope + 5, seconds * penalty, np.nan)
     return {"fastest": seconds, "safest": safest}, seconds
 
@@ -147,7 +162,7 @@ def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEF
          stop_seconds=None, blocked=None, reserve_floor_s=0.0):
     """Both route modes for one set of settings. `blocked` = boolean cell mask that may not be entered."""
     stop_seconds = STOP_SECONDS if stop_seconds is None else stop_seconds
-    costs, seconds = cost_surfaces(ctx.bands, ctx.cell_m, speed_kmh, max_slope)
+    costs, seconds = cost_surfaces(ctx.bands, ctx.cell_m, speed_kmh, max_slope, ctx.terrain)
     if blocked is not None:
         seconds = np.where(blocked, np.nan, seconds)
         costs = {k: np.where(blocked, np.nan, v) for k, v in costs.items()}

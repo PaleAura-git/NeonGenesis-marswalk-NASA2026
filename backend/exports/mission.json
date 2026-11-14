@@ -71,6 +71,24 @@
   ],
   "layers": [
     {
+      "id": "hirise-optical",
+      "kind": "imagery",
+      "url": "/data/optical.png",
+      "bounds": {
+        "min": {
+          "xMeters": -1885.4,
+          "yMeters": -1972.1
+        },
+        "max": {
+          "xMeters": 1909.0,
+          "yMeters": 2027.9
+        }
+      },
+      "coordinateSystemId": "three-forks-local-v1",
+      "attribution": "NASA/JPL/University of Arizona, MRO HiRISE orthomosaic (25 cm, shown at 2 m) via USGS Astrogeology",
+      "illustrative": false
+    },
+    {
       "id": "slope-10m",
       "kind": "slope",
       "url": "/data/slope.png",
@@ -86,6 +104,24 @@
       },
       "coordinateSystemId": "three-forks-local-v1",
       "attribution": "NASA/JPL/University of Arizona, MRO HiRISE DTM via USGS Astrogeology; slope 0-30 degrees, 10 m cells",
+      "illustrative": false
+    },
+    {
+      "id": "terrain-10m",
+      "kind": "terrain-classification",
+      "url": "/data/terrain.png",
+      "bounds": {
+        "min": {
+          "xMeters": -1885.4,
+          "yMeters": -1972.1
+        },
+        "max": {
+          "xMeters": 1909.0,
+          "yMeters": 2027.9
+        }
+      },
+      "coordinateSystemId": "three-forks-local-v1",
+      "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS thermal inertia; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured slope > 15 degrees); opacity = confidence",
       "illustrative": false
     }
   ],

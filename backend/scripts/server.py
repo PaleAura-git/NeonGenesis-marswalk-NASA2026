@@ -83,8 +83,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/api/mission":
             self.send(200, MISSION)
-        elif self.path == "/data/slope.png" and (OUT / "slope.png").exists():
-            self.send(200, (OUT / "slope.png").read_bytes(), "image/png")
+        elif self.path in ("/data/slope.png", "/data/optical.png", "/data/terrain.png") \
+                and (OUT / self.path.split("/")[-1]).exists():
+            self.send(200, (OUT / self.path.split("/")[-1]).read_bytes(), "image/png")
         else:
             self.send(404, {"error": "not found"})
 

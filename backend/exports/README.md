@@ -30,9 +30,20 @@ Serves on `http://127.0.0.1:8000`, which matches the Vite dev proxy:
 | `mission.json` | Base, stops, bounds, slope layer and data sources, in the `GET /api/mission` shape (schema 1.1) |
 | `plan.json` | Time-focused and conservative routes in the proposed `POST /api/plan` response shape |
 | `slope.png` | 400 × 400 slope overlay (0–30°, transparent where no data), north-up, registered to `bounds` |
+| `optical.png` | HiRISE orthomosaic of the demo box, 2000 × 2000 (2 m; source is 25 cm), north-up, same `bounds`: the optical base layer |
+| `terrain.png` | Terrain classes, 400 × 400: sand (yellow), bedrock (grey), rough (rust), steep (purple); opacity = confidence |
 
 Coordinates: local metres, x east, y north, origin (0, 0) at the Three Forks sample depot (18.4529° N, 77.4083° E).
-East-west distances are corrected for latitude, so these are true ground metres. `slope.png` is expected at `/data/slope.png`.
+East-west distances are corrected for latitude, so these are true ground metres. The PNGs are expected at `/data/<name>.png` (copy them to `frontend/public/data/`, or let the API serve them).
+
+Terrain classes: a random forest predicts surface material (sand / bedrock / rough) from HiRISE slope, roughness,
+brightness and texture plus THEMIS thermal inertia. "Steep" is measured, not predicted (mean slope > 15°).
+Training labels (`backend/labels/labels.csv`) were made from HiRISE image patches with AI assistance. Two team
+members each labelled 30 different random patches blind (`backend/labels/check_labels*.csv`). Agreement on
+material: 74% (17/23) and 57% (8/14), **68% combined (25/37)**. Most disagreements are sand vs bedrock (8 of 12).
+The team's "steep" calls mostly measured 4-15°, which is why steep is taken from the DTM instead of the image. Spatial cross-validation accuracy is 61% (always guessing "sand" scores 53%).
+The planner uses the classes as speed factors (sand ×0.85, rough ×0.8, *assumed*) and the conservative mode
+also penalises low-confidence cells.
 
 ## Differences from the current frontend validator
 

@@ -15,822 +15,138 @@
         },
         {
           "xMeters": -2.4,
-          "yMeters": -7.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -17.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -27.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -37.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -47.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -57.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -67.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -77.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -87.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -97.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -107.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -117.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -127.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -157.1
-        },
-        {
-          "xMeters": 7.0,
-          "yMeters": -167.1
-        },
-        {
-          "xMeters": 16.5,
-          "yMeters": -177.1
-        },
-        {
-          "xMeters": 26.0,
-          "yMeters": -187.1
-        },
-        {
-          "xMeters": 35.5,
-          "yMeters": -197.1
-        },
-        {
-          "xMeters": 45.0,
-          "yMeters": -207.1
-        },
-        {
-          "xMeters": 54.5,
-          "yMeters": -217.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -227.1
-        },
-        {
-          "xMeters": 73.5,
-          "yMeters": -237.1
-        },
-        {
-          "xMeters": 82.9,
-          "yMeters": -247.1
-        },
-        {
-          "xMeters": 92.4,
-          "yMeters": -257.1
-        },
-        {
-          "xMeters": 101.9,
-          "yMeters": -267.1
-        },
-        {
-          "xMeters": 111.4,
-          "yMeters": -277.1
-        },
-        {
-          "xMeters": 120.9,
-          "yMeters": -287.1
-        },
-        {
-          "xMeters": 130.4,
-          "yMeters": -297.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -307.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -317.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -327.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -337.1
-        },
-        {
-          "xMeters": 168.3,
-          "yMeters": -347.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -367.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -377.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -387.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -397.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -407.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -417.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -427.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -437.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -447.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -457.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -497.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -507.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -517.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -527.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -567.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -577.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -587.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -597.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -607.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 168.3,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -607.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -597.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -587.1
-        },
-        {
-          "xMeters": 130.4,
-          "yMeters": -577.1
-        },
-        {
-          "xMeters": 120.9,
-          "yMeters": -567.1
-        },
-        {
-          "xMeters": 120.9,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 111.4,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 101.9,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 92.4,
-          "yMeters": -527.1
-        },
-        {
-          "xMeters": 82.9,
-          "yMeters": -517.1
-        },
-        {
-          "xMeters": 73.5,
-          "yMeters": -507.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -497.1
-        },
-        {
-          "xMeters": 54.5,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": 45.0,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": 35.5,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": 26.0,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": 16.5,
-          "yMeters": -457.1
-        },
-        {
-          "xMeters": 7.0,
-          "yMeters": -447.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -437.1
-        },
-        {
-          "xMeters": -11.9,
-          "yMeters": -427.1
-        },
-        {
-          "xMeters": -21.4,
-          "yMeters": -417.1
-        },
-        {
-          "xMeters": -30.9,
-          "yMeters": -407.1
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": -407.1
-        },
-        {
-          "xMeters": -49.9,
-          "yMeters": -397.1
-        },
-        {
-          "xMeters": -59.4,
-          "yMeters": -387.1
-        },
-        {
-          "xMeters": -68.8,
-          "yMeters": -377.1
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": -367.1
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": -97.3,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": -347.1
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": -337.1
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": -327.1
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": -317.1
-        },
-        {
-          "xMeters": -144.7,
-          "yMeters": -307.1
-        },
-        {
-          "xMeters": -154.2,
-          "yMeters": -297.1
-        },
-        {
-          "xMeters": -163.7,
-          "yMeters": -287.1
-        },
-        {
-          "xMeters": -173.2,
-          "yMeters": -277.1
-        },
-        {
-          "xMeters": -182.7,
-          "yMeters": -267.1
-        },
-        {
-          "xMeters": -192.2,
-          "yMeters": -257.1
-        },
-        {
-          "xMeters": -201.6,
-          "yMeters": -247.1
-        },
-        {
-          "xMeters": -211.1,
-          "yMeters": -237.1
-        },
-        {
-          "xMeters": -220.6,
-          "yMeters": -227.1
-        },
-        {
-          "xMeters": -230.1,
-          "yMeters": -217.1
-        },
-        {
-          "xMeters": -239.6,
-          "yMeters": -207.1
-        },
-        {
-          "xMeters": -249.1,
-          "yMeters": -197.1
-        },
-        {
-          "xMeters": -258.6,
-          "yMeters": -187.1
-        },
-        {
-          "xMeters": -268.0,
-          "yMeters": -177.1
-        },
-        {
-          "xMeters": -277.5,
-          "yMeters": -167.1
-        },
-        {
-          "xMeters": -287.0,
-          "yMeters": -157.1
-        },
-        {
-          "xMeters": -296.5,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -306.0,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -315.5,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -325.0,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -334.4,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -343.9,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -353.4,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -362.9,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -127.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -117.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -107.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -97.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -87.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -77.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -67.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -57.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -47.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -37.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -27.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -17.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": -7.1
-        },
-        {
-          "xMeters": -372.4,
-          "yMeters": 2.9
-        },
-        {
-          "xMeters": -372.4,
           "yMeters": 12.9
         },
         {
-          "xMeters": -362.9,
+          "xMeters": -2.4,
           "yMeters": 22.9
         },
         {
-          "xMeters": -353.4,
+          "xMeters": -2.4,
           "yMeters": 32.9
         },
         {
-          "xMeters": -343.9,
+          "xMeters": -11.9,
           "yMeters": 42.9
         },
         {
-          "xMeters": -334.4,
+          "xMeters": -21.4,
           "yMeters": 52.9
         },
         {
-          "xMeters": -325.0,
+          "xMeters": -21.4,
           "yMeters": 62.9
         },
         {
-          "xMeters": -315.5,
+          "xMeters": -30.9,
           "yMeters": 72.9
         },
         {
-          "xMeters": -306.0,
+          "xMeters": -30.9,
           "yMeters": 82.9
         },
         {
-          "xMeters": -296.5,
+          "xMeters": -30.9,
           "yMeters": 92.9
         },
         {
-          "xMeters": -287.0,
+          "xMeters": -40.4,
           "yMeters": 102.9
         },
         {
-          "xMeters": -287.0,
+          "xMeters": -49.9,
           "yMeters": 112.9
         },
         {
-          "xMeters": -277.5,
+          "xMeters": -59.4,
           "yMeters": 122.9
         },
         {
-          "xMeters": -268.0,
+          "xMeters": -68.8,
           "yMeters": 132.9
         },
         {
-          "xMeters": -258.6,
+          "xMeters": -78.3,
           "yMeters": 142.9
         },
         {
-          "xMeters": -249.1,
+          "xMeters": -87.8,
           "yMeters": 152.9
         },
         {
-          "xMeters": -239.6,
+          "xMeters": -97.3,
           "yMeters": 162.9
         },
         {
-          "xMeters": -239.6,
+          "xMeters": -106.8,
           "yMeters": 172.9
         },
         {
-          "xMeters": -230.1,
+          "xMeters": -116.3,
           "yMeters": 182.9
         },
         {
-          "xMeters": -220.6,
+          "xMeters": -125.8,
           "yMeters": 192.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -135.2,
           "yMeters": 202.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -135.2,
           "yMeters": 212.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -135.2,
           "yMeters": 222.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -135.2,
           "yMeters": 232.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -135.2,
           "yMeters": 242.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -135.2,
           "yMeters": 252.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -135.2,
           "yMeters": 262.9
         },
         {
-          "xMeters": -192.2,
+          "xMeters": -135.2,
           "yMeters": 272.9
         },
         {
-          "xMeters": -182.7,
+          "xMeters": -135.2,
           "yMeters": 282.9
         },
         {
-          "xMeters": -173.2,
+          "xMeters": -135.2,
           "yMeters": 292.9
         },
         {
-          "xMeters": -163.7,
+          "xMeters": -135.2,
           "yMeters": 302.9
         },
         {
-          "xMeters": -154.2,
+          "xMeters": -125.8,
           "yMeters": 312.9
         },
         {
-          "xMeters": -144.7,
+          "xMeters": -125.8,
           "yMeters": 322.9
         },
         {
-          "xMeters": -135.2,
+          "xMeters": -125.8,
           "yMeters": 332.9
         },
         {
-          "xMeters": -125.8,
+          "xMeters": -116.3,
           "yMeters": 342.9
         },
         {
@@ -842,7 +158,7 @@
           "yMeters": 342.9
         },
         {
-          "xMeters": -116.3,
+          "xMeters": -125.8,
           "yMeters": 332.9
         },
         {
@@ -860,2694 +176,37 @@
         {
           "xMeters": -135.2,
           "yMeters": 292.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 282.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 272.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 262.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 252.9
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": 242.9
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": 232.9
-        },
-        {
-          "xMeters": -97.3,
-          "yMeters": 222.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 212.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 202.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 192.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 182.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 172.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 162.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 152.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 142.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 132.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 122.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 112.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 102.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 92.9
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": 82.9
-        },
-        {
-          "xMeters": -68.8,
-          "yMeters": 72.9
-        },
-        {
-          "xMeters": -59.4,
-          "yMeters": 62.9
-        },
-        {
-          "xMeters": -49.9,
-          "yMeters": 52.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 42.9
-        },
-        {
-          "xMeters": -30.9,
-          "yMeters": 32.9
-        },
-        {
-          "xMeters": -21.4,
-          "yMeters": 22.9
-        },
-        {
-          "xMeters": -11.9,
-          "yMeters": 12.9
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": 2.9
-        }
-      ],
-      "visitingOrder": [
-        "kodiak-butte",
-        "cape-nukshak",
-        "hawksbill-gap"
-      ],
-      "excludedStops": [],
-      "distanceMeters": 2862,
-      "returnDistanceMeters": 411,
-      "walkingTimeSeconds": 3405,
-      "returnWalkingTimeSeconds": 488,
-      "observationTimeSeconds": 6600,
-      "restTimeSeconds": 300,
-      "restSpots": [
-        {
-          "position": {
-            "xMeters": -78.3,
-            "yMeters": -367.1
-          },
-          "durationSeconds": 300,
-          "slopeDegrees": 3.3,
-          "roughnessDegrees": 1.1
-        }
-      ],
-      "reserveSeconds": 2481,
-      "reserveMarginSeconds": 8814,
-      "energyWh": 915,
-      "oxygenKg": 2.81,
-      "limitingResource": "time",
-      "spareSeconds": {
-        "time": 8814,
-        "energy": 13524,
-        "oxygen": 13524
-      },
-      "returnBoundary": [
-        {
-          "xMeters": 1904.2,
-          "yMeters": -1972.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -1967.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -1727.1
-        },
-        {
-          "xMeters": -1866.4,
-          "yMeters": -1707.1
-        },
-        {
-          "xMeters": -1866.4,
-          "yMeters": -1687.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -1677.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -917.1
-        },
-        {
-          "xMeters": -1819.0,
-          "yMeters": -867.1
-        },
-        {
-          "xMeters": -1809.5,
-          "yMeters": -827.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": -1856.9,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": -1856.9,
-          "yMeters": -577.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 252.9
-        },
-        {
-          "xMeters": -1823.7,
-          "yMeters": 237.9
-        },
-        {
-          "xMeters": -1738.3,
-          "yMeters": 287.9
-        },
-        {
-          "xMeters": -1700.4,
-          "yMeters": 257.9
-        },
-        {
-          "xMeters": -1634.0,
-          "yMeters": 247.9
-        },
-        {
-          "xMeters": -1543.9,
-          "yMeters": 302.9
-        },
-        {
-          "xMeters": -1515.4,
-          "yMeters": 362.9
-        },
-        {
-          "xMeters": -1524.9,
-          "yMeters": 382.9
-        },
-        {
-          "xMeters": -1496.5,
-          "yMeters": 432.9
-        },
-        {
-          "xMeters": -1496.5,
-          "yMeters": 472.9
-        },
-        {
-          "xMeters": -1520.2,
-          "yMeters": 497.9
-        },
-        {
-          "xMeters": -1529.7,
-          "yMeters": 487.9
-        },
-        {
-          "xMeters": -1548.6,
-          "yMeters": 527.9
-        },
-        {
-          "xMeters": -1567.6,
-          "yMeters": 517.9
-        },
-        {
-          "xMeters": -1624.5,
-          "yMeters": 547.9
-        },
-        {
-          "xMeters": -1629.3,
-          "yMeters": 532.9
-        },
-        {
-          "xMeters": -1562.9,
-          "yMeters": 482.9
-        },
-        {
-          "xMeters": -1591.3,
-          "yMeters": 432.9
-        },
-        {
-          "xMeters": -1581.8,
-          "yMeters": 372.9
-        },
-        {
-          "xMeters": -1596.1,
-          "yMeters": 357.9
-        },
-        {
-          "xMeters": -1643.5,
-          "yMeters": 327.9
-        },
-        {
-          "xMeters": -1709.9,
-          "yMeters": 337.9
-        },
-        {
-          "xMeters": -1747.8,
-          "yMeters": 367.9
-        },
-        {
-          "xMeters": -1814.2,
-          "yMeters": 357.9
-        },
-        {
-          "xMeters": -1833.2,
-          "yMeters": 317.9
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": -1880.6,
-          "yMeters": 397.9
-        },
-        {
-          "xMeters": -1828.5,
-          "yMeters": 382.9
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 442.9
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 1432.9
-        },
-        {
-          "xMeters": -1785.8,
-          "yMeters": 1367.9
-        },
-        {
-          "xMeters": -1700.4,
-          "yMeters": 1357.9
-        },
-        {
-          "xMeters": -1714.6,
-          "yMeters": 1332.9
-        },
-        {
-          "xMeters": -1681.4,
-          "yMeters": 1317.9
-        },
-        {
-          "xMeters": -1667.2,
-          "yMeters": 1352.9
-        },
-        {
-          "xMeters": -1634.0,
-          "yMeters": 1377.9
-        },
-        {
-          "xMeters": -1515.4,
-          "yMeters": 1402.9
-        },
-        {
-          "xMeters": -1567.6,
-          "yMeters": 1417.9
-        },
-        {
-          "xMeters": -1586.6,
-          "yMeters": 1457.9
-        },
-        {
-          "xMeters": -1624.5,
-          "yMeters": 1447.9
-        },
-        {
-          "xMeters": -1634.0,
-          "yMeters": 1467.9
-        },
-        {
-          "xMeters": -1662.5,
-          "yMeters": 1467.9
-        },
-        {
-          "xMeters": -1671.9,
-          "yMeters": 1497.9
-        },
-        {
-          "xMeters": -1700.4,
-          "yMeters": 1497.9
-        },
-        {
-          "xMeters": -1719.4,
-          "yMeters": 1517.9
-        },
-        {
-          "xMeters": -1728.9,
-          "yMeters": 1507.9
-        },
-        {
-          "xMeters": -1766.8,
-          "yMeters": 1537.9
-        },
-        {
-          "xMeters": -1804.7,
-          "yMeters": 1537.9
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 1592.9
-        },
-        {
-          "xMeters": -1885.4,
-          "yMeters": 2012.9
-        },
-        {
-          "xMeters": -1871.1,
-          "yMeters": 2027.9
-        },
-        {
-          "xMeters": -1463.3,
-          "yMeters": 2027.9
-        },
-        {
-          "xMeters": -1444.3,
-          "yMeters": 1997.9
-        },
-        {
-          "xMeters": -1396.9,
-          "yMeters": 1997.9
-        },
-        {
-          "xMeters": -1406.3,
-          "yMeters": 1977.9
-        },
-        {
-          "xMeters": -1368.4,
-          "yMeters": 1967.9
-        },
-        {
-          "xMeters": -1358.9,
-          "yMeters": 1987.9
-        },
-        {
-          "xMeters": -1330.5,
-          "yMeters": 1987.9
-        },
-        {
-          "xMeters": -1321.0,
-          "yMeters": 1967.9
-        },
-        {
-          "xMeters": -1264.0,
-          "yMeters": 1937.9
-        },
-        {
-          "xMeters": -1211.9,
-          "yMeters": 1992.9
-        },
-        {
-          "xMeters": -1254.6,
-          "yMeters": 2007.9
-        },
-        {
-          "xMeters": -1245.1,
-          "yMeters": 2027.9
-        },
-        {
-          "xMeters": 1183.3,
-          "yMeters": 2027.9
-        },
-        {
-          "xMeters": 1240.2,
-          "yMeters": 1987.9
-        },
-        {
-          "xMeters": 1420.4,
-          "yMeters": 1927.9
-        },
-        {
-          "xMeters": 1515.3,
-          "yMeters": 1817.9
-        },
-        {
-          "xMeters": 1629.1,
-          "yMeters": 1767.9
-        },
-        {
-          "xMeters": 1671.8,
-          "yMeters": 1722.9
-        },
-        {
-          "xMeters": 1671.8,
-          "yMeters": 1682.9
-        },
-        {
-          "xMeters": 1629.1,
-          "yMeters": 1627.9
-        },
-        {
-          "xMeters": 1572.2,
-          "yMeters": 1637.9
-        },
-        {
-          "xMeters": 1558.0,
-          "yMeters": 1672.9
-        },
-        {
-          "xMeters": 1534.3,
-          "yMeters": 1687.9
-        },
-        {
-          "xMeters": 1401.5,
-          "yMeters": 1657.9
-        },
-        {
-          "xMeters": 1392.0,
-          "yMeters": 1687.9
-        },
-        {
-          "xMeters": 1301.9,
-          "yMeters": 1712.9
-        },
-        {
-          "xMeters": 1358.8,
-          "yMeters": 1662.9
-        },
-        {
-          "xMeters": 1358.8,
-          "yMeters": 1642.9
-        },
-        {
-          "xMeters": 1411.0,
-          "yMeters": 1587.9
-        },
-        {
-          "xMeters": 1496.3,
-          "yMeters": 1587.9
-        },
-        {
-          "xMeters": 1581.7,
-          "yMeters": 1507.9
-        },
-        {
-          "xMeters": 1676.6,
-          "yMeters": 1507.9
-        },
-        {
-          "xMeters": 1724.0,
-          "yMeters": 1537.9
-        },
-        {
-          "xMeters": 1795.1,
-          "yMeters": 1632.9
-        },
-        {
-          "xMeters": 1804.6,
-          "yMeters": 1732.9
-        },
-        {
-          "xMeters": 1752.4,
-          "yMeters": 1867.9
-        },
-        {
-          "xMeters": 1724.0,
-          "yMeters": 1867.9
-        },
-        {
-          "xMeters": 1714.5,
-          "yMeters": 1887.9
-        },
-        {
-          "xMeters": 1657.6,
-          "yMeters": 1907.9
-        },
-        {
-          "xMeters": 1619.6,
-          "yMeters": 1897.9
-        },
-        {
-          "xMeters": 1581.7,
-          "yMeters": 1947.9
-        },
-        {
-          "xMeters": 1567.5,
-          "yMeters": 1942.9
-        },
-        {
-          "xMeters": 1543.8,
-          "yMeters": 1987.9
-        },
-        {
-          "xMeters": 1482.1,
-          "yMeters": 2022.9
-        },
-        {
-          "xMeters": 1909.0,
-          "yMeters": 2022.9
-        },
-        {
-          "xMeters": 1909.0,
-          "yMeters": 382.9
-        },
-        {
-          "xMeters": 1833.1,
-          "yMeters": 392.9
-        },
-        {
-          "xMeters": 1866.3,
-          "yMeters": 357.9
-        },
-        {
-          "xMeters": 1909.0,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": 1904.2,
-          "yMeters": -1972.1
-        }
-      ],
-      "returnBoundaryCheckpoints": [
-        {
-          "when": "at the start",
-          "polygon": [
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1967.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1727.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1707.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1687.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1677.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -917.1
-            },
-            {
-              "xMeters": -1819.0,
-              "yMeters": -867.1
-            },
-            {
-              "xMeters": -1809.5,
-              "yMeters": -827.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -777.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -647.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -617.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -577.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -547.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 252.9
-            },
-            {
-              "xMeters": -1823.7,
-              "yMeters": 237.9
-            },
-            {
-              "xMeters": -1738.3,
-              "yMeters": 287.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 257.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 247.9
-            },
-            {
-              "xMeters": -1543.9,
-              "yMeters": 302.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 362.9
-            },
-            {
-              "xMeters": -1524.9,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 472.9
-            },
-            {
-              "xMeters": -1520.2,
-              "yMeters": 497.9
-            },
-            {
-              "xMeters": -1529.7,
-              "yMeters": 487.9
-            },
-            {
-              "xMeters": -1548.6,
-              "yMeters": 527.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 517.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 547.9
-            },
-            {
-              "xMeters": -1629.3,
-              "yMeters": 532.9
-            },
-            {
-              "xMeters": -1562.9,
-              "yMeters": 482.9
-            },
-            {
-              "xMeters": -1591.3,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1581.8,
-              "yMeters": 372.9
-            },
-            {
-              "xMeters": -1596.1,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1643.5,
-              "yMeters": 327.9
-            },
-            {
-              "xMeters": -1709.9,
-              "yMeters": 337.9
-            },
-            {
-              "xMeters": -1747.8,
-              "yMeters": 367.9
-            },
-            {
-              "xMeters": -1814.2,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1833.2,
-              "yMeters": 317.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": -1880.6,
-              "yMeters": 397.9
-            },
-            {
-              "xMeters": -1828.5,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 442.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1432.9
-            },
-            {
-              "xMeters": -1785.8,
-              "yMeters": 1367.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1357.9
-            },
-            {
-              "xMeters": -1714.6,
-              "yMeters": 1332.9
-            },
-            {
-              "xMeters": -1681.4,
-              "yMeters": 1317.9
-            },
-            {
-              "xMeters": -1667.2,
-              "yMeters": 1352.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1377.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 1402.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 1417.9
-            },
-            {
-              "xMeters": -1586.6,
-              "yMeters": 1457.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 1447.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1662.5,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1671.9,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1719.4,
-              "yMeters": 1517.9
-            },
-            {
-              "xMeters": -1728.9,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": -1766.8,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1804.7,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1592.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 2012.9
-            },
-            {
-              "xMeters": -1871.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1463.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1444.3,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1396.9,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1406.3,
-              "yMeters": 1977.9
-            },
-            {
-              "xMeters": -1368.4,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1358.9,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1330.5,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1321.0,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1264.0,
-              "yMeters": 1937.9
-            },
-            {
-              "xMeters": -1211.9,
-              "yMeters": 1992.9
-            },
-            {
-              "xMeters": -1254.6,
-              "yMeters": 2007.9
-            },
-            {
-              "xMeters": -1245.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1183.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1240.2,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1420.4,
-              "yMeters": 1927.9
-            },
-            {
-              "xMeters": 1515.3,
-              "yMeters": 1817.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1767.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1722.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1682.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1627.9
-            },
-            {
-              "xMeters": 1572.2,
-              "yMeters": 1637.9
-            },
-            {
-              "xMeters": 1558.0,
-              "yMeters": 1672.9
-            },
-            {
-              "xMeters": 1534.3,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1401.5,
-              "yMeters": 1657.9
-            },
-            {
-              "xMeters": 1392.0,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1301.9,
-              "yMeters": 1712.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1662.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1642.9
-            },
-            {
-              "xMeters": 1411.0,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1496.3,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1676.6,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": 1795.1,
-              "yMeters": 1632.9
-            },
-            {
-              "xMeters": 1804.6,
-              "yMeters": 1732.9
-            },
-            {
-              "xMeters": 1752.4,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1714.5,
-              "yMeters": 1887.9
-            },
-            {
-              "xMeters": 1657.6,
-              "yMeters": 1907.9
-            },
-            {
-              "xMeters": 1619.6,
-              "yMeters": 1897.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1947.9
-            },
-            {
-              "xMeters": 1567.5,
-              "yMeters": 1942.9
-            },
-            {
-              "xMeters": 1543.8,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1482.1,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": 1833.1,
-              "yMeters": 392.9
-            },
-            {
-              "xMeters": 1866.3,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            }
-          ]
-        },
-        {
-          "when": "after Kodiak butte",
-          "polygon": [
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1967.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1727.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1707.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1687.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1677.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -917.1
-            },
-            {
-              "xMeters": -1819.0,
-              "yMeters": -867.1
-            },
-            {
-              "xMeters": -1809.5,
-              "yMeters": -827.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -777.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -647.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -617.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -577.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -547.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 252.9
-            },
-            {
-              "xMeters": -1823.7,
-              "yMeters": 237.9
-            },
-            {
-              "xMeters": -1738.3,
-              "yMeters": 287.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 257.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 247.9
-            },
-            {
-              "xMeters": -1543.9,
-              "yMeters": 302.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 362.9
-            },
-            {
-              "xMeters": -1524.9,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 472.9
-            },
-            {
-              "xMeters": -1520.2,
-              "yMeters": 497.9
-            },
-            {
-              "xMeters": -1529.7,
-              "yMeters": 487.9
-            },
-            {
-              "xMeters": -1548.6,
-              "yMeters": 527.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 517.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 547.9
-            },
-            {
-              "xMeters": -1629.3,
-              "yMeters": 532.9
-            },
-            {
-              "xMeters": -1562.9,
-              "yMeters": 482.9
-            },
-            {
-              "xMeters": -1591.3,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1581.8,
-              "yMeters": 372.9
-            },
-            {
-              "xMeters": -1596.1,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1643.5,
-              "yMeters": 327.9
-            },
-            {
-              "xMeters": -1709.9,
-              "yMeters": 337.9
-            },
-            {
-              "xMeters": -1747.8,
-              "yMeters": 367.9
-            },
-            {
-              "xMeters": -1814.2,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1833.2,
-              "yMeters": 317.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": -1880.6,
-              "yMeters": 397.9
-            },
-            {
-              "xMeters": -1828.5,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 442.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1432.9
-            },
-            {
-              "xMeters": -1785.8,
-              "yMeters": 1367.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1357.9
-            },
-            {
-              "xMeters": -1714.6,
-              "yMeters": 1332.9
-            },
-            {
-              "xMeters": -1681.4,
-              "yMeters": 1317.9
-            },
-            {
-              "xMeters": -1667.2,
-              "yMeters": 1352.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1377.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 1402.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 1417.9
-            },
-            {
-              "xMeters": -1586.6,
-              "yMeters": 1457.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 1447.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1662.5,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1671.9,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1719.4,
-              "yMeters": 1517.9
-            },
-            {
-              "xMeters": -1728.9,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": -1766.8,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1804.7,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1592.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 2012.9
-            },
-            {
-              "xMeters": -1871.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1463.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1444.3,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1396.9,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1406.3,
-              "yMeters": 1977.9
-            },
-            {
-              "xMeters": -1368.4,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1358.9,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1330.5,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1321.0,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1264.0,
-              "yMeters": 1937.9
-            },
-            {
-              "xMeters": -1211.9,
-              "yMeters": 1992.9
-            },
-            {
-              "xMeters": -1254.6,
-              "yMeters": 2007.9
-            },
-            {
-              "xMeters": -1245.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1183.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1240.2,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1420.4,
-              "yMeters": 1927.9
-            },
-            {
-              "xMeters": 1515.3,
-              "yMeters": 1817.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1767.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1722.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1682.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1627.9
-            },
-            {
-              "xMeters": 1572.2,
-              "yMeters": 1637.9
-            },
-            {
-              "xMeters": 1558.0,
-              "yMeters": 1672.9
-            },
-            {
-              "xMeters": 1534.3,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1401.5,
-              "yMeters": 1657.9
-            },
-            {
-              "xMeters": 1392.0,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1301.9,
-              "yMeters": 1712.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1662.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1642.9
-            },
-            {
-              "xMeters": 1411.0,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1496.3,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1676.6,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": 1795.1,
-              "yMeters": 1632.9
-            },
-            {
-              "xMeters": 1804.6,
-              "yMeters": 1732.9
-            },
-            {
-              "xMeters": 1752.4,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1714.5,
-              "yMeters": 1887.9
-            },
-            {
-              "xMeters": 1657.6,
-              "yMeters": 1907.9
-            },
-            {
-              "xMeters": 1619.6,
-              "yMeters": 1897.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1947.9
-            },
-            {
-              "xMeters": 1567.5,
-              "yMeters": 1942.9
-            },
-            {
-              "xMeters": 1543.8,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1482.1,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": 1833.1,
-              "yMeters": 392.9
-            },
-            {
-              "xMeters": 1866.3,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            }
-          ]
-        },
-        {
-          "when": "after Cape Nukshak",
-          "polygon": [
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1967.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1727.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1707.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1687.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1677.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -917.1
-            },
-            {
-              "xMeters": -1819.0,
-              "yMeters": -867.1
-            },
-            {
-              "xMeters": -1809.5,
-              "yMeters": -827.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -777.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -647.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -617.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -577.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -547.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 252.9
-            },
-            {
-              "xMeters": -1823.7,
-              "yMeters": 237.9
-            },
-            {
-              "xMeters": -1738.3,
-              "yMeters": 287.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 257.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 247.9
-            },
-            {
-              "xMeters": -1543.9,
-              "yMeters": 302.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 362.9
-            },
-            {
-              "xMeters": -1524.9,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 472.9
-            },
-            {
-              "xMeters": -1520.2,
-              "yMeters": 497.9
-            },
-            {
-              "xMeters": -1529.7,
-              "yMeters": 487.9
-            },
-            {
-              "xMeters": -1548.6,
-              "yMeters": 527.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 517.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 547.9
-            },
-            {
-              "xMeters": -1629.3,
-              "yMeters": 532.9
-            },
-            {
-              "xMeters": -1562.9,
-              "yMeters": 482.9
-            },
-            {
-              "xMeters": -1591.3,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1581.8,
-              "yMeters": 372.9
-            },
-            {
-              "xMeters": -1596.1,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1643.5,
-              "yMeters": 327.9
-            },
-            {
-              "xMeters": -1709.9,
-              "yMeters": 337.9
-            },
-            {
-              "xMeters": -1747.8,
-              "yMeters": 367.9
-            },
-            {
-              "xMeters": -1814.2,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1833.2,
-              "yMeters": 317.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": -1880.6,
-              "yMeters": 397.9
-            },
-            {
-              "xMeters": -1828.5,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 442.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1432.9
-            },
-            {
-              "xMeters": -1785.8,
-              "yMeters": 1367.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1357.9
-            },
-            {
-              "xMeters": -1714.6,
-              "yMeters": 1332.9
-            },
-            {
-              "xMeters": -1681.4,
-              "yMeters": 1317.9
-            },
-            {
-              "xMeters": -1667.2,
-              "yMeters": 1352.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1377.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 1402.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 1417.9
-            },
-            {
-              "xMeters": -1586.6,
-              "yMeters": 1457.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 1447.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1662.5,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1671.9,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1719.4,
-              "yMeters": 1517.9
-            },
-            {
-              "xMeters": -1728.9,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": -1766.8,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1804.7,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1592.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 2012.9
-            },
-            {
-              "xMeters": -1871.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1463.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1444.3,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1396.9,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1406.3,
-              "yMeters": 1977.9
-            },
-            {
-              "xMeters": -1368.4,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1358.9,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1330.5,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1321.0,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1264.0,
-              "yMeters": 1937.9
-            },
-            {
-              "xMeters": -1211.9,
-              "yMeters": 1992.9
-            },
-            {
-              "xMeters": -1254.6,
-              "yMeters": 2007.9
-            },
-            {
-              "xMeters": -1245.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1183.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1240.2,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1420.4,
-              "yMeters": 1927.9
-            },
-            {
-              "xMeters": 1515.3,
-              "yMeters": 1817.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1767.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1722.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1682.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1627.9
-            },
-            {
-              "xMeters": 1572.2,
-              "yMeters": 1637.9
-            },
-            {
-              "xMeters": 1558.0,
-              "yMeters": 1672.9
-            },
-            {
-              "xMeters": 1534.3,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1401.5,
-              "yMeters": 1657.9
-            },
-            {
-              "xMeters": 1392.0,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1301.9,
-              "yMeters": 1712.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1662.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1642.9
-            },
-            {
-              "xMeters": 1411.0,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1496.3,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1676.6,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": 1795.1,
-              "yMeters": 1632.9
-            },
-            {
-              "xMeters": 1804.6,
-              "yMeters": 1732.9
-            },
-            {
-              "xMeters": 1752.4,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1714.5,
-              "yMeters": 1887.9
-            },
-            {
-              "xMeters": 1657.6,
-              "yMeters": 1907.9
-            },
-            {
-              "xMeters": 1619.6,
-              "yMeters": 1897.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1947.9
-            },
-            {
-              "xMeters": 1567.5,
-              "yMeters": 1942.9
-            },
-            {
-              "xMeters": 1543.8,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1482.1,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": 1833.1,
-              "yMeters": 392.9
-            },
-            {
-              "xMeters": 1866.3,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            }
-          ]
-        },
-        {
-          "when": "after Hawksbill Gap",
-          "polygon": [
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1967.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1727.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1707.1
-            },
-            {
-              "xMeters": -1866.4,
-              "yMeters": -1687.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -1677.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -917.1
-            },
-            {
-              "xMeters": -1819.0,
-              "yMeters": -867.1
-            },
-            {
-              "xMeters": -1809.5,
-              "yMeters": -827.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -777.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -647.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -617.1
-            },
-            {
-              "xMeters": -1856.9,
-              "yMeters": -577.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": -547.1
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 252.9
-            },
-            {
-              "xMeters": -1823.7,
-              "yMeters": 237.9
-            },
-            {
-              "xMeters": -1738.3,
-              "yMeters": 287.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 257.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 247.9
-            },
-            {
-              "xMeters": -1543.9,
-              "yMeters": 302.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 362.9
-            },
-            {
-              "xMeters": -1524.9,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1496.5,
-              "yMeters": 472.9
-            },
-            {
-              "xMeters": -1520.2,
-              "yMeters": 497.9
-            },
-            {
-              "xMeters": -1529.7,
-              "yMeters": 487.9
-            },
-            {
-              "xMeters": -1548.6,
-              "yMeters": 527.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 517.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 547.9
-            },
-            {
-              "xMeters": -1629.3,
-              "yMeters": 532.9
-            },
-            {
-              "xMeters": -1562.9,
-              "yMeters": 482.9
-            },
-            {
-              "xMeters": -1591.3,
-              "yMeters": 432.9
-            },
-            {
-              "xMeters": -1581.8,
-              "yMeters": 372.9
-            },
-            {
-              "xMeters": -1596.1,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1643.5,
-              "yMeters": 327.9
-            },
-            {
-              "xMeters": -1709.9,
-              "yMeters": 337.9
-            },
-            {
-              "xMeters": -1747.8,
-              "yMeters": 367.9
-            },
-            {
-              "xMeters": -1814.2,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": -1833.2,
-              "yMeters": 317.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": -1880.6,
-              "yMeters": 397.9
-            },
-            {
-              "xMeters": -1828.5,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 442.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1432.9
-            },
-            {
-              "xMeters": -1785.8,
-              "yMeters": 1367.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1357.9
-            },
-            {
-              "xMeters": -1714.6,
-              "yMeters": 1332.9
-            },
-            {
-              "xMeters": -1681.4,
-              "yMeters": 1317.9
-            },
-            {
-              "xMeters": -1667.2,
-              "yMeters": 1352.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1377.9
-            },
-            {
-              "xMeters": -1515.4,
-              "yMeters": 1402.9
-            },
-            {
-              "xMeters": -1567.6,
-              "yMeters": 1417.9
-            },
-            {
-              "xMeters": -1586.6,
-              "yMeters": 1457.9
-            },
-            {
-              "xMeters": -1624.5,
-              "yMeters": 1447.9
-            },
-            {
-              "xMeters": -1634.0,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1662.5,
-              "yMeters": 1467.9
-            },
-            {
-              "xMeters": -1671.9,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1700.4,
-              "yMeters": 1497.9
-            },
-            {
-              "xMeters": -1719.4,
-              "yMeters": 1517.9
-            },
-            {
-              "xMeters": -1728.9,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": -1766.8,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1804.7,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 1592.9
-            },
-            {
-              "xMeters": -1885.4,
-              "yMeters": 2012.9
-            },
-            {
-              "xMeters": -1871.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1463.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": -1444.3,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1396.9,
-              "yMeters": 1997.9
-            },
-            {
-              "xMeters": -1406.3,
-              "yMeters": 1977.9
-            },
-            {
-              "xMeters": -1368.4,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1358.9,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1330.5,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": -1321.0,
-              "yMeters": 1967.9
-            },
-            {
-              "xMeters": -1264.0,
-              "yMeters": 1937.9
-            },
-            {
-              "xMeters": -1211.9,
-              "yMeters": 1992.9
-            },
-            {
-              "xMeters": -1254.6,
-              "yMeters": 2007.9
-            },
-            {
-              "xMeters": -1245.1,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1183.3,
-              "yMeters": 2027.9
-            },
-            {
-              "xMeters": 1240.2,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1420.4,
-              "yMeters": 1927.9
-            },
-            {
-              "xMeters": 1515.3,
-              "yMeters": 1817.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1767.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1722.9
-            },
-            {
-              "xMeters": 1671.8,
-              "yMeters": 1682.9
-            },
-            {
-              "xMeters": 1629.1,
-              "yMeters": 1627.9
-            },
-            {
-              "xMeters": 1572.2,
-              "yMeters": 1637.9
-            },
-            {
-              "xMeters": 1558.0,
-              "yMeters": 1672.9
-            },
-            {
-              "xMeters": 1534.3,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1401.5,
-              "yMeters": 1657.9
-            },
-            {
-              "xMeters": 1392.0,
-              "yMeters": 1687.9
-            },
-            {
-              "xMeters": 1301.9,
-              "yMeters": 1712.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1662.9
-            },
-            {
-              "xMeters": 1358.8,
-              "yMeters": 1642.9
-            },
-            {
-              "xMeters": 1411.0,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1496.3,
-              "yMeters": 1587.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1676.6,
-              "yMeters": 1507.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1537.9
-            },
-            {
-              "xMeters": 1795.1,
-              "yMeters": 1632.9
-            },
-            {
-              "xMeters": 1804.6,
-              "yMeters": 1732.9
-            },
-            {
-              "xMeters": 1752.4,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1724.0,
-              "yMeters": 1867.9
-            },
-            {
-              "xMeters": 1714.5,
-              "yMeters": 1887.9
-            },
-            {
-              "xMeters": 1657.6,
-              "yMeters": 1907.9
-            },
-            {
-              "xMeters": 1619.6,
-              "yMeters": 1897.9
-            },
-            {
-              "xMeters": 1581.7,
-              "yMeters": 1947.9
-            },
-            {
-              "xMeters": 1567.5,
-              "yMeters": 1942.9
-            },
-            {
-              "xMeters": 1543.8,
-              "yMeters": 1987.9
-            },
-            {
-              "xMeters": 1482.1,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 2022.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 382.9
-            },
-            {
-              "xMeters": 1833.1,
-              "yMeters": 392.9
-            },
-            {
-              "xMeters": 1866.3,
-              "yMeters": 357.9
-            },
-            {
-              "xMeters": 1909.0,
-              "yMeters": 342.9
-            },
-            {
-              "xMeters": 1904.2,
-              "yMeters": -1972.1
-            }
-          ]
-        }
-      ],
-      "explanations": [
-        "Safe return possible at every point; time is the limiting resource with 147 min to spare beyond the 41 min reserve.",
-        "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
-        "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
-      ]
-    },
-    {
-      "id": "safest-1",
-      "mode": "conservative",
-      "status": "feasible",
-      "geometry": [
-        {
-          "xMeters": -2.4,
-          "yMeters": 2.9
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": 12.9
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": 22.9
-        },
-        {
-          "xMeters": -11.9,
-          "yMeters": 32.9
-        },
-        {
-          "xMeters": -21.4,
-          "yMeters": 42.9
-        },
-        {
-          "xMeters": -30.9,
-          "yMeters": 52.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 62.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 72.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 82.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 92.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 102.9
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": 112.9
-        },
-        {
-          "xMeters": -49.9,
-          "yMeters": 122.9
-        },
-        {
-          "xMeters": -49.9,
-          "yMeters": 132.9
-        },
-        {
-          "xMeters": -59.4,
-          "yMeters": 142.9
-        },
-        {
-          "xMeters": -59.4,
-          "yMeters": 152.9
-        },
-        {
-          "xMeters": -68.8,
-          "yMeters": 162.9
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": 172.9
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": 182.9
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": 192.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 202.9
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": 212.9
-        },
-        {
-          "xMeters": -97.3,
-          "yMeters": 222.9
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": 232.9
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": 242.9
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": 252.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 262.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 272.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 282.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 292.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 302.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 312.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 322.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 332.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 352.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 332.9
         },
         {
           "xMeters": -144.7,
-          "yMeters": 332.9
-        },
-        {
-          "xMeters": -154.2,
-          "yMeters": 322.9
-        },
-        {
-          "xMeters": -163.7,
-          "yMeters": 312.9
-        },
-        {
-          "xMeters": -173.2,
-          "yMeters": 302.9
-        },
-        {
-          "xMeters": -182.7,
-          "yMeters": 292.9
-        },
-        {
-          "xMeters": -192.2,
           "yMeters": 282.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -144.7,
           "yMeters": 272.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -154.2,
           "yMeters": 262.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -163.7,
           "yMeters": 252.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -173.2,
           "yMeters": 242.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -182.7,
           "yMeters": 232.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -192.2,
           "yMeters": 222.9
         },
         {
-          "xMeters": -211.1,
+          "xMeters": -201.6,
           "yMeters": 212.9
         },
         {
@@ -3567,7 +226,7 @@
           "yMeters": 172.9
         },
         {
-          "xMeters": -249.1,
+          "xMeters": -239.6,
           "yMeters": 162.9
         },
         {
@@ -3599,15 +258,15 @@
           "yMeters": 92.9
         },
         {
-          "xMeters": -296.5,
+          "xMeters": -306.0,
           "yMeters": 82.9
         },
         {
-          "xMeters": -296.5,
+          "xMeters": -306.0,
           "yMeters": 72.9
         },
         {
-          "xMeters": -296.5,
+          "xMeters": -306.0,
           "yMeters": 62.9
         },
         {
@@ -3615,11 +274,11 @@
           "yMeters": 52.9
         },
         {
-          "xMeters": -306.0,
+          "xMeters": -315.5,
           "yMeters": 42.9
         },
         {
-          "xMeters": -315.5,
+          "xMeters": -325.0,
           "yMeters": 32.9
         },
         {
@@ -3627,11 +286,11 @@
           "yMeters": 22.9
         },
         {
-          "xMeters": -334.4,
+          "xMeters": -325.0,
           "yMeters": 12.9
         },
         {
-          "xMeters": -334.4,
+          "xMeters": -325.0,
           "yMeters": 2.9
         },
         {
@@ -3639,11 +298,11 @@
           "yMeters": -7.1
         },
         {
-          "xMeters": -334.4,
+          "xMeters": -343.9,
           "yMeters": -17.1
         },
         {
-          "xMeters": -343.9,
+          "xMeters": -353.4,
           "yMeters": -27.1
         },
         {
@@ -3659,27 +318,27 @@
           "yMeters": -57.1
         },
         {
-          "xMeters": -381.9,
+          "xMeters": -372.4,
           "yMeters": -67.1
         },
         {
-          "xMeters": -391.4,
+          "xMeters": -372.4,
           "yMeters": -77.1
         },
         {
-          "xMeters": -391.4,
+          "xMeters": -381.9,
           "yMeters": -87.1
         },
         {
-          "xMeters": -391.4,
+          "xMeters": -381.9,
           "yMeters": -97.1
         },
         {
-          "xMeters": -391.4,
+          "xMeters": -381.9,
           "yMeters": -107.1
         },
         {
-          "xMeters": -391.4,
+          "xMeters": -381.9,
           "yMeters": -117.1
         },
         {
@@ -3687,703 +346,627 @@
           "yMeters": -127.1
         },
         {
-          "xMeters": -391.4,
-          "yMeters": -137.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -147.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -157.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -167.1
-        },
-        {
-          "xMeters": -391.4,
-          "yMeters": -177.1
-        },
-        {
           "xMeters": -381.9,
-          "yMeters": -187.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -197.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -207.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -217.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -227.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -237.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -247.1
-        },
-        {
-          "xMeters": -381.9,
-          "yMeters": -257.1
+          "yMeters": -127.1
         },
         {
           "xMeters": -372.4,
-          "yMeters": -267.1
+          "yMeters": -127.1
         },
         {
           "xMeters": -362.9,
-          "yMeters": -277.1
-        },
-        {
-          "xMeters": -362.9,
-          "yMeters": -287.1
-        },
-        {
-          "xMeters": -362.9,
-          "yMeters": -297.1
-        },
-        {
-          "xMeters": -362.9,
-          "yMeters": -307.1
+          "yMeters": -127.1
         },
         {
           "xMeters": -353.4,
-          "yMeters": -317.1
+          "yMeters": -127.1
         },
         {
           "xMeters": -343.9,
-          "yMeters": -327.1
+          "yMeters": -137.1
         },
         {
           "xMeters": -334.4,
-          "yMeters": -337.1
-        },
-        {
-          "xMeters": -325.0,
-          "yMeters": -337.1
-        },
-        {
-          "xMeters": -315.5,
-          "yMeters": -347.1
-        },
-        {
-          "xMeters": -306.0,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": -296.5,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": -287.0,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": -277.5,
-          "yMeters": -367.1
-        },
-        {
-          "xMeters": -268.0,
-          "yMeters": -367.1
-        },
-        {
-          "xMeters": -258.6,
-          "yMeters": -377.1
-        },
-        {
-          "xMeters": -249.1,
-          "yMeters": -387.1
-        },
-        {
-          "xMeters": -239.6,
-          "yMeters": -397.1
-        },
-        {
-          "xMeters": -230.1,
-          "yMeters": -397.1
-        },
-        {
-          "xMeters": -220.6,
-          "yMeters": -407.1
-        },
-        {
-          "xMeters": -211.1,
-          "yMeters": -417.1
-        },
-        {
-          "xMeters": -201.6,
-          "yMeters": -417.1
-        },
-        {
-          "xMeters": -192.2,
-          "yMeters": -427.1
-        },
-        {
-          "xMeters": -182.7,
-          "yMeters": -437.1
-        },
-        {
-          "xMeters": -173.2,
-          "yMeters": -447.1
-        },
-        {
-          "xMeters": -163.7,
-          "yMeters": -457.1
-        },
-        {
-          "xMeters": -154.2,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": -144.7,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": -106.8,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": -97.3,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": -87.8,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": -78.3,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -68.8,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -59.4,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -49.9,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -40.4,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -30.9,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -21.4,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": -11.9,
-          "yMeters": -497.1
-        },
-        {
-          "xMeters": -2.4,
-          "yMeters": -507.1
-        },
-        {
-          "xMeters": 7.0,
-          "yMeters": -517.1
-        },
-        {
-          "xMeters": 16.5,
-          "yMeters": -517.1
-        },
-        {
-          "xMeters": 26.0,
-          "yMeters": -527.1
-        },
-        {
-          "xMeters": 35.5,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 45.0,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 54.5,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 73.5,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 82.9,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 92.4,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 101.9,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 111.4,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 120.9,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 130.4,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -567.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -577.1
-        },
-        {
-          "xMeters": 168.3,
-          "yMeters": -587.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -597.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -607.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -607.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -597.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -587.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -577.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -567.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -557.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -547.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -537.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -527.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -517.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -507.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -497.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -487.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -477.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -467.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -457.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -447.1
-        },
-        {
-          "xMeters": 177.8,
-          "yMeters": -437.1
-        },
-        {
-          "xMeters": 168.3,
-          "yMeters": -427.1
-        },
-        {
-          "xMeters": 168.3,
-          "yMeters": -417.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -407.1
-        },
-        {
-          "xMeters": 158.8,
-          "yMeters": -397.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -387.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -377.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -367.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -357.1
-        },
-        {
-          "xMeters": 149.3,
-          "yMeters": -347.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -337.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -327.1
-        },
-        {
-          "xMeters": 139.9,
-          "yMeters": -317.1
-        },
-        {
-          "xMeters": 130.4,
-          "yMeters": -307.1
-        },
-        {
-          "xMeters": 130.4,
-          "yMeters": -297.1
-        },
-        {
-          "xMeters": 120.9,
-          "yMeters": -287.1
-        },
-        {
-          "xMeters": 111.4,
-          "yMeters": -277.1
-        },
-        {
-          "xMeters": 111.4,
-          "yMeters": -267.1
-        },
-        {
-          "xMeters": 101.9,
-          "yMeters": -257.1
-        },
-        {
-          "xMeters": 92.4,
-          "yMeters": -247.1
-        },
-        {
-          "xMeters": 82.9,
-          "yMeters": -237.1
-        },
-        {
-          "xMeters": 73.5,
-          "yMeters": -227.1
-        },
-        {
-          "xMeters": 73.5,
-          "yMeters": -217.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -207.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -197.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -187.1
-        },
-        {
-          "xMeters": 64.0,
-          "yMeters": -177.1
-        },
-        {
-          "xMeters": 54.5,
-          "yMeters": -167.1
-        },
-        {
-          "xMeters": 54.5,
-          "yMeters": -157.1
-        },
-        {
-          "xMeters": 54.5,
           "yMeters": -147.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -137.1
+          "xMeters": -325.0,
+          "yMeters": -147.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -127.1
+          "xMeters": -315.5,
+          "yMeters": -147.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -117.1
+          "xMeters": -306.0,
+          "yMeters": -157.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -107.1
+          "xMeters": -296.5,
+          "yMeters": -167.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -97.1
+          "xMeters": -287.0,
+          "yMeters": -177.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -87.1
+          "xMeters": -277.5,
+          "yMeters": -187.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -77.1
+          "xMeters": -268.0,
+          "yMeters": -187.1
         },
         {
-          "xMeters": 54.5,
-          "yMeters": -67.1
+          "xMeters": -258.6,
+          "yMeters": -197.1
         },
         {
-          "xMeters": 45.0,
-          "yMeters": -57.1
+          "xMeters": -249.1,
+          "yMeters": -207.1
         },
         {
-          "xMeters": 35.5,
-          "yMeters": -47.1
+          "xMeters": -239.6,
+          "yMeters": -207.1
         },
         {
-          "xMeters": 35.5,
-          "yMeters": -37.1
+          "xMeters": -230.1,
+          "yMeters": -217.1
         },
         {
-          "xMeters": 26.0,
-          "yMeters": -27.1
+          "xMeters": -220.6,
+          "yMeters": -227.1
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": -237.1
+        },
+        {
+          "xMeters": -201.6,
+          "yMeters": -247.1
+        },
+        {
+          "xMeters": -192.2,
+          "yMeters": -257.1
+        },
+        {
+          "xMeters": -182.7,
+          "yMeters": -267.1
+        },
+        {
+          "xMeters": -173.2,
+          "yMeters": -277.1
+        },
+        {
+          "xMeters": -163.7,
+          "yMeters": -287.1
+        },
+        {
+          "xMeters": -154.2,
+          "yMeters": -297.1
+        },
+        {
+          "xMeters": -144.7,
+          "yMeters": -307.1
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": -317.1
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": -327.1
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": -337.1
+        },
+        {
+          "xMeters": -106.8,
+          "yMeters": -347.1
+        },
+        {
+          "xMeters": -97.3,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -87.8,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -78.3,
+          "yMeters": -367.1
+        },
+        {
+          "xMeters": -68.8,
+          "yMeters": -377.1
+        },
+        {
+          "xMeters": -59.4,
+          "yMeters": -387.1
+        },
+        {
+          "xMeters": -49.9,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": -30.9,
+          "yMeters": -407.1
+        },
+        {
+          "xMeters": -21.4,
+          "yMeters": -417.1
+        },
+        {
+          "xMeters": -11.9,
+          "yMeters": -427.1
+        },
+        {
+          "xMeters": -2.4,
+          "yMeters": -437.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -447.1
         },
         {
           "xMeters": 16.5,
+          "yMeters": -457.1
+        },
+        {
+          "xMeters": 26.0,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": 35.5,
+          "yMeters": -477.1
+        },
+        {
+          "xMeters": 45.0,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": 54.5,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -517.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -527.1
+        },
+        {
+          "xMeters": 92.4,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 101.9,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -567.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -577.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -587.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -597.1
+        },
+        {
+          "xMeters": 158.8,
+          "yMeters": -607.1
+        },
+        {
+          "xMeters": 158.8,
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -627.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -767.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -777.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -787.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -797.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -787.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -777.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -767.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -627.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -607.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -597.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -587.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -577.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -567.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -527.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -517.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": 158.8,
+          "yMeters": -477.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -457.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -447.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -437.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -427.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -417.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -407.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -387.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -377.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -367.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -347.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -337.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -327.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -317.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -307.1
+        },
+        {
+          "xMeters": 101.9,
+          "yMeters": -297.1
+        },
+        {
+          "xMeters": 92.4,
+          "yMeters": -287.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -277.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -267.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -257.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -247.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -237.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -227.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -217.1
+        },
+        {
+          "xMeters": 54.5,
+          "yMeters": -207.1
+        },
+        {
+          "xMeters": 45.0,
+          "yMeters": -197.1
+        },
+        {
+          "xMeters": 35.5,
+          "yMeters": -187.1
+        },
+        {
+          "xMeters": 26.0,
+          "yMeters": -177.1
+        },
+        {
+          "xMeters": 16.5,
+          "yMeters": -167.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -157.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -147.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -137.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -127.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -117.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -107.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -97.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -87.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -77.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -67.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -57.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -47.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -37.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -27.1
+        },
+        {
+          "xMeters": 7.0,
           "yMeters": -17.1
         },
         {
@@ -4401,32 +984,41 @@
         "kodiak-butte"
       ],
       "excludedStops": [],
-      "distanceMeters": 3037,
-      "returnDistanceMeters": 923,
-      "walkingTimeSeconds": 3495,
-      "returnWalkingTimeSeconds": 1062,
+      "distanceMeters": 2862,
+      "returnDistanceMeters": 887,
+      "walkingTimeSeconds": 3992,
+      "returnWalkingTimeSeconds": 1237,
       "observationTimeSeconds": 6600,
-      "restTimeSeconds": 300,
+      "restTimeSeconds": 600,
       "restSpots": [
         {
           "position": {
-            "xMeters": -11.9,
-            "yMeters": -497.1
+            "xMeters": -154.2,
+            "yMeters": -297.1
           },
           "durationSeconds": 300,
-          "slopeDegrees": 0.9,
-          "roughnessDegrees": 0.6
+          "slopeDegrees": 5.0,
+          "roughnessDegrees": 0.9
+        },
+        {
+          "position": {
+            "xMeters": 35.5,
+            "yMeters": -187.1
+          },
+          "durationSeconds": 300,
+          "slopeDegrees": 0.7,
+          "roughnessDegrees": 0.3
         }
       ],
-      "reserveSeconds": 2499,
-      "reserveMarginSeconds": 8706,
-      "energyWh": 924,
-      "oxygenKg": 2.84,
+      "reserveSeconds": 2598,
+      "reserveMarginSeconds": 7810,
+      "energyWh": 989,
+      "oxygenKg": 3.04,
       "limitingResource": "time",
       "spareSeconds": {
-        "time": 8706,
-        "energy": 13353,
-        "oxygen": 13353
+        "time": 7810,
+        "energy": 12807,
+        "oxygen": 12807
       },
       "returnBoundary": [
         {
@@ -6753,7 +3345,3437 @@
         }
       ],
       "explanations": [
-        "Safe return possible at every point; time is the limiting resource with 145 min to spare beyond the 42 min reserve.",
+        "Safe return possible at every point; time is the limiting resource with 130 min to spare beyond the 43 min reserve.",
+        "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
+        "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
+      ]
+    },
+    {
+      "id": "safest-1",
+      "mode": "conservative",
+      "status": "feasible",
+      "geometry": [
+        {
+          "xMeters": -2.4,
+          "yMeters": 2.9
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -7.1
+        },
+        {
+          "xMeters": 16.5,
+          "yMeters": -17.1
+        },
+        {
+          "xMeters": 26.0,
+          "yMeters": -27.1
+        },
+        {
+          "xMeters": 26.0,
+          "yMeters": -37.1
+        },
+        {
+          "xMeters": 35.5,
+          "yMeters": -47.1
+        },
+        {
+          "xMeters": 35.5,
+          "yMeters": -57.1
+        },
+        {
+          "xMeters": 45.0,
+          "yMeters": -67.1
+        },
+        {
+          "xMeters": 54.5,
+          "yMeters": -77.1
+        },
+        {
+          "xMeters": 54.5,
+          "yMeters": -87.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -97.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -107.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -117.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -127.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -137.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -147.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -157.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -167.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -177.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -187.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -197.1
+        },
+        {
+          "xMeters": 92.4,
+          "yMeters": -207.1
+        },
+        {
+          "xMeters": 101.9,
+          "yMeters": -217.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -227.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -237.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -247.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -257.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -267.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -277.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -287.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -297.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -307.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -317.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -327.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -337.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -347.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -367.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -377.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -387.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": 158.8,
+          "yMeters": -407.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -417.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -427.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -437.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -447.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -457.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -477.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": 206.3,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": 206.3,
+          "yMeters": -517.1
+        },
+        {
+          "xMeters": 215.7,
+          "yMeters": -527.1
+        },
+        {
+          "xMeters": 225.2,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 225.2,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -567.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -577.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -587.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -597.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -607.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -627.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 225.2,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 215.7,
+          "yMeters": -767.1
+        },
+        {
+          "xMeters": 206.3,
+          "yMeters": -777.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -787.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -797.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -797.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -797.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -787.1
+        },
+        {
+          "xMeters": 206.3,
+          "yMeters": -777.1
+        },
+        {
+          "xMeters": 215.7,
+          "yMeters": -767.1
+        },
+        {
+          "xMeters": 225.2,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 234.7,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 225.2,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 215.7,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 215.7,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 206.3,
+          "yMeters": -627.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -607.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -597.1
+        },
+        {
+          "xMeters": 168.3,
+          "yMeters": -587.1
+        },
+        {
+          "xMeters": 158.8,
+          "yMeters": -577.1
+        },
+        {
+          "xMeters": 149.3,
+          "yMeters": -567.1
+        },
+        {
+          "xMeters": 139.9,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 130.4,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 120.9,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 111.4,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 101.9,
+          "yMeters": -557.1
+        },
+        {
+          "xMeters": 92.4,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 82.9,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 73.5,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": 64.0,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 54.5,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 45.0,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 35.5,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 26.0,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 16.5,
+          "yMeters": -537.1
+        },
+        {
+          "xMeters": 7.0,
+          "yMeters": -527.1
+        },
+        {
+          "xMeters": -2.4,
+          "yMeters": -527.1
+        },
+        {
+          "xMeters": -11.9,
+          "yMeters": -517.1
+        },
+        {
+          "xMeters": -21.4,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": -30.9,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": -507.1
+        },
+        {
+          "xMeters": -49.9,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": -59.4,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": -68.8,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": -78.3,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": -87.8,
+          "yMeters": -497.1
+        },
+        {
+          "xMeters": -97.3,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": -106.8,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": -487.1
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": -477.1
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": -144.7,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": -154.2,
+          "yMeters": -467.1
+        },
+        {
+          "xMeters": -163.7,
+          "yMeters": -457.1
+        },
+        {
+          "xMeters": -173.2,
+          "yMeters": -447.1
+        },
+        {
+          "xMeters": -182.7,
+          "yMeters": -437.1
+        },
+        {
+          "xMeters": -192.2,
+          "yMeters": -427.1
+        },
+        {
+          "xMeters": -201.6,
+          "yMeters": -417.1
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": -417.1
+        },
+        {
+          "xMeters": -220.6,
+          "yMeters": -407.1
+        },
+        {
+          "xMeters": -230.1,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": -239.6,
+          "yMeters": -397.1
+        },
+        {
+          "xMeters": -249.1,
+          "yMeters": -387.1
+        },
+        {
+          "xMeters": -258.6,
+          "yMeters": -377.1
+        },
+        {
+          "xMeters": -268.0,
+          "yMeters": -367.1
+        },
+        {
+          "xMeters": -277.5,
+          "yMeters": -367.1
+        },
+        {
+          "xMeters": -287.0,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -296.5,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -315.5,
+          "yMeters": -357.1
+        },
+        {
+          "xMeters": -325.0,
+          "yMeters": -347.1
+        },
+        {
+          "xMeters": -334.4,
+          "yMeters": -337.1
+        },
+        {
+          "xMeters": -343.9,
+          "yMeters": -327.1
+        },
+        {
+          "xMeters": -353.4,
+          "yMeters": -317.1
+        },
+        {
+          "xMeters": -353.4,
+          "yMeters": -307.1
+        },
+        {
+          "xMeters": -362.9,
+          "yMeters": -297.1
+        },
+        {
+          "xMeters": -362.9,
+          "yMeters": -287.1
+        },
+        {
+          "xMeters": -372.4,
+          "yMeters": -277.1
+        },
+        {
+          "xMeters": -372.4,
+          "yMeters": -267.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -257.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -247.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -237.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -227.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -217.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -207.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -197.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -187.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -177.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -167.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -157.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -147.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -137.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -127.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -117.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -107.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -97.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -87.1
+        },
+        {
+          "xMeters": -391.4,
+          "yMeters": -77.1
+        },
+        {
+          "xMeters": -381.9,
+          "yMeters": -67.1
+        },
+        {
+          "xMeters": -372.4,
+          "yMeters": -57.1
+        },
+        {
+          "xMeters": -362.9,
+          "yMeters": -47.1
+        },
+        {
+          "xMeters": -353.4,
+          "yMeters": -37.1
+        },
+        {
+          "xMeters": -353.4,
+          "yMeters": -27.1
+        },
+        {
+          "xMeters": -343.9,
+          "yMeters": -17.1
+        },
+        {
+          "xMeters": -334.4,
+          "yMeters": -7.1
+        },
+        {
+          "xMeters": -334.4,
+          "yMeters": 2.9
+        },
+        {
+          "xMeters": -334.4,
+          "yMeters": 12.9
+        },
+        {
+          "xMeters": -325.0,
+          "yMeters": 22.9
+        },
+        {
+          "xMeters": -325.0,
+          "yMeters": 32.9
+        },
+        {
+          "xMeters": -315.5,
+          "yMeters": 42.9
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": 52.9
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": 62.9
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": 72.9
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": 82.9
+        },
+        {
+          "xMeters": -306.0,
+          "yMeters": 92.9
+        },
+        {
+          "xMeters": -296.5,
+          "yMeters": 102.9
+        },
+        {
+          "xMeters": -287.0,
+          "yMeters": 112.9
+        },
+        {
+          "xMeters": -277.5,
+          "yMeters": 122.9
+        },
+        {
+          "xMeters": -268.0,
+          "yMeters": 132.9
+        },
+        {
+          "xMeters": -258.6,
+          "yMeters": 142.9
+        },
+        {
+          "xMeters": -249.1,
+          "yMeters": 152.9
+        },
+        {
+          "xMeters": -249.1,
+          "yMeters": 162.9
+        },
+        {
+          "xMeters": -239.6,
+          "yMeters": 172.9
+        },
+        {
+          "xMeters": -230.1,
+          "yMeters": 182.9
+        },
+        {
+          "xMeters": -220.6,
+          "yMeters": 192.9
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": 202.9
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": 212.9
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": 222.9
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": 232.9
+        },
+        {
+          "xMeters": -211.1,
+          "yMeters": 242.9
+        },
+        {
+          "xMeters": -201.6,
+          "yMeters": 252.9
+        },
+        {
+          "xMeters": -201.6,
+          "yMeters": 262.9
+        },
+        {
+          "xMeters": -201.6,
+          "yMeters": 272.9
+        },
+        {
+          "xMeters": -192.2,
+          "yMeters": 282.9
+        },
+        {
+          "xMeters": -182.7,
+          "yMeters": 292.9
+        },
+        {
+          "xMeters": -173.2,
+          "yMeters": 302.9
+        },
+        {
+          "xMeters": -163.7,
+          "yMeters": 312.9
+        },
+        {
+          "xMeters": -154.2,
+          "yMeters": 322.9
+        },
+        {
+          "xMeters": -144.7,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 342.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 352.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 342.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": 322.9
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": 312.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 302.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 292.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 282.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 272.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 262.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 252.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 242.9
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": 232.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 222.9
+        },
+        {
+          "xMeters": -116.3,
+          "yMeters": 212.9
+        },
+        {
+          "xMeters": -106.8,
+          "yMeters": 202.9
+        },
+        {
+          "xMeters": -97.3,
+          "yMeters": 192.9
+        },
+        {
+          "xMeters": -97.3,
+          "yMeters": 182.9
+        },
+        {
+          "xMeters": -97.3,
+          "yMeters": 172.9
+        },
+        {
+          "xMeters": -87.8,
+          "yMeters": 162.9
+        },
+        {
+          "xMeters": -78.3,
+          "yMeters": 152.9
+        },
+        {
+          "xMeters": -78.3,
+          "yMeters": 142.9
+        },
+        {
+          "xMeters": -68.8,
+          "yMeters": 132.9
+        },
+        {
+          "xMeters": -59.4,
+          "yMeters": 122.9
+        },
+        {
+          "xMeters": -49.9,
+          "yMeters": 112.9
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": 102.9
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": 92.9
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": 82.9
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": 72.9
+        },
+        {
+          "xMeters": -40.4,
+          "yMeters": 62.9
+        },
+        {
+          "xMeters": -30.9,
+          "yMeters": 52.9
+        },
+        {
+          "xMeters": -21.4,
+          "yMeters": 42.9
+        },
+        {
+          "xMeters": -11.9,
+          "yMeters": 32.9
+        },
+        {
+          "xMeters": -2.4,
+          "yMeters": 22.9
+        },
+        {
+          "xMeters": -2.4,
+          "yMeters": 12.9
+        },
+        {
+          "xMeters": -2.4,
+          "yMeters": 2.9
+        }
+      ],
+      "visitingOrder": [
+        "kodiak-butte",
+        "cape-nukshak",
+        "hawksbill-gap"
+      ],
+      "excludedStops": [],
+      "distanceMeters": 3042,
+      "returnDistanceMeters": 411,
+      "walkingTimeSeconds": 4148,
+      "returnWalkingTimeSeconds": 560,
+      "observationTimeSeconds": 6600,
+      "restTimeSeconds": 600,
+      "restSpots": [
+        {
+          "position": {
+            "xMeters": -21.4,
+            "yMeters": -507.1
+          },
+          "durationSeconds": 300,
+          "slopeDegrees": 2.3,
+          "roughnessDegrees": 0.4
+        },
+        {
+          "position": {
+            "xMeters": -116.3,
+            "yMeters": 332.9
+          },
+          "durationSeconds": 300,
+          "slopeDegrees": 3.0,
+          "roughnessDegrees": 1.0
+        }
+      ],
+      "reserveSeconds": 2630,
+      "reserveMarginSeconds": 7623,
+      "energyWh": 1004,
+      "oxygenKg": 3.08,
+      "limitingResource": "time",
+      "spareSeconds": {
+        "time": 7623,
+        "energy": 12605,
+        "oxygen": 12605
+      },
+      "returnBoundary": [
+        {
+          "xMeters": 1904.2,
+          "yMeters": -1972.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -1967.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -1727.1
+        },
+        {
+          "xMeters": -1866.4,
+          "yMeters": -1707.1
+        },
+        {
+          "xMeters": -1866.4,
+          "yMeters": -1687.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -1677.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -917.1
+        },
+        {
+          "xMeters": -1819.0,
+          "yMeters": -867.1
+        },
+        {
+          "xMeters": -1809.5,
+          "yMeters": -827.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -777.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": -1856.9,
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": -1856.9,
+          "yMeters": -577.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": -547.1
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 252.9
+        },
+        {
+          "xMeters": -1823.7,
+          "yMeters": 237.9
+        },
+        {
+          "xMeters": -1738.3,
+          "yMeters": 287.9
+        },
+        {
+          "xMeters": -1700.4,
+          "yMeters": 257.9
+        },
+        {
+          "xMeters": -1634.0,
+          "yMeters": 247.9
+        },
+        {
+          "xMeters": -1543.9,
+          "yMeters": 302.9
+        },
+        {
+          "xMeters": -1515.4,
+          "yMeters": 362.9
+        },
+        {
+          "xMeters": -1524.9,
+          "yMeters": 382.9
+        },
+        {
+          "xMeters": -1496.5,
+          "yMeters": 432.9
+        },
+        {
+          "xMeters": -1496.5,
+          "yMeters": 472.9
+        },
+        {
+          "xMeters": -1520.2,
+          "yMeters": 497.9
+        },
+        {
+          "xMeters": -1529.7,
+          "yMeters": 487.9
+        },
+        {
+          "xMeters": -1548.6,
+          "yMeters": 527.9
+        },
+        {
+          "xMeters": -1567.6,
+          "yMeters": 517.9
+        },
+        {
+          "xMeters": -1624.5,
+          "yMeters": 547.9
+        },
+        {
+          "xMeters": -1629.3,
+          "yMeters": 532.9
+        },
+        {
+          "xMeters": -1562.9,
+          "yMeters": 482.9
+        },
+        {
+          "xMeters": -1591.3,
+          "yMeters": 432.9
+        },
+        {
+          "xMeters": -1581.8,
+          "yMeters": 372.9
+        },
+        {
+          "xMeters": -1596.1,
+          "yMeters": 357.9
+        },
+        {
+          "xMeters": -1643.5,
+          "yMeters": 327.9
+        },
+        {
+          "xMeters": -1709.9,
+          "yMeters": 337.9
+        },
+        {
+          "xMeters": -1747.8,
+          "yMeters": 367.9
+        },
+        {
+          "xMeters": -1814.2,
+          "yMeters": 357.9
+        },
+        {
+          "xMeters": -1833.2,
+          "yMeters": 317.9
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 342.9
+        },
+        {
+          "xMeters": -1880.6,
+          "yMeters": 397.9
+        },
+        {
+          "xMeters": -1828.5,
+          "yMeters": 382.9
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 442.9
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 1432.9
+        },
+        {
+          "xMeters": -1785.8,
+          "yMeters": 1367.9
+        },
+        {
+          "xMeters": -1700.4,
+          "yMeters": 1357.9
+        },
+        {
+          "xMeters": -1714.6,
+          "yMeters": 1332.9
+        },
+        {
+          "xMeters": -1681.4,
+          "yMeters": 1317.9
+        },
+        {
+          "xMeters": -1667.2,
+          "yMeters": 1352.9
+        },
+        {
+          "xMeters": -1634.0,
+          "yMeters": 1377.9
+        },
+        {
+          "xMeters": -1515.4,
+          "yMeters": 1402.9
+        },
+        {
+          "xMeters": -1567.6,
+          "yMeters": 1417.9
+        },
+        {
+          "xMeters": -1586.6,
+          "yMeters": 1457.9
+        },
+        {
+          "xMeters": -1624.5,
+          "yMeters": 1447.9
+        },
+        {
+          "xMeters": -1634.0,
+          "yMeters": 1467.9
+        },
+        {
+          "xMeters": -1662.5,
+          "yMeters": 1467.9
+        },
+        {
+          "xMeters": -1671.9,
+          "yMeters": 1497.9
+        },
+        {
+          "xMeters": -1700.4,
+          "yMeters": 1497.9
+        },
+        {
+          "xMeters": -1719.4,
+          "yMeters": 1517.9
+        },
+        {
+          "xMeters": -1728.9,
+          "yMeters": 1507.9
+        },
+        {
+          "xMeters": -1766.8,
+          "yMeters": 1537.9
+        },
+        {
+          "xMeters": -1804.7,
+          "yMeters": 1537.9
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 1592.9
+        },
+        {
+          "xMeters": -1885.4,
+          "yMeters": 2012.9
+        },
+        {
+          "xMeters": -1871.1,
+          "yMeters": 2027.9
+        },
+        {
+          "xMeters": -1463.3,
+          "yMeters": 2027.9
+        },
+        {
+          "xMeters": -1444.3,
+          "yMeters": 1997.9
+        },
+        {
+          "xMeters": -1396.9,
+          "yMeters": 1997.9
+        },
+        {
+          "xMeters": -1406.3,
+          "yMeters": 1977.9
+        },
+        {
+          "xMeters": -1368.4,
+          "yMeters": 1967.9
+        },
+        {
+          "xMeters": -1358.9,
+          "yMeters": 1987.9
+        },
+        {
+          "xMeters": -1330.5,
+          "yMeters": 1987.9
+        },
+        {
+          "xMeters": -1321.0,
+          "yMeters": 1967.9
+        },
+        {
+          "xMeters": -1264.0,
+          "yMeters": 1937.9
+        },
+        {
+          "xMeters": -1211.9,
+          "yMeters": 1992.9
+        },
+        {
+          "xMeters": -1254.6,
+          "yMeters": 2007.9
+        },
+        {
+          "xMeters": -1245.1,
+          "yMeters": 2027.9
+        },
+        {
+          "xMeters": 1183.3,
+          "yMeters": 2027.9
+        },
+        {
+          "xMeters": 1240.2,
+          "yMeters": 1987.9
+        },
+        {
+          "xMeters": 1420.4,
+          "yMeters": 1927.9
+        },
+        {
+          "xMeters": 1515.3,
+          "yMeters": 1817.9
+        },
+        {
+          "xMeters": 1629.1,
+          "yMeters": 1767.9
+        },
+        {
+          "xMeters": 1671.8,
+          "yMeters": 1722.9
+        },
+        {
+          "xMeters": 1671.8,
+          "yMeters": 1682.9
+        },
+        {
+          "xMeters": 1629.1,
+          "yMeters": 1627.9
+        },
+        {
+          "xMeters": 1572.2,
+          "yMeters": 1637.9
+        },
+        {
+          "xMeters": 1558.0,
+          "yMeters": 1672.9
+        },
+        {
+          "xMeters": 1534.3,
+          "yMeters": 1687.9
+        },
+        {
+          "xMeters": 1401.5,
+          "yMeters": 1657.9
+        },
+        {
+          "xMeters": 1392.0,
+          "yMeters": 1687.9
+        },
+        {
+          "xMeters": 1301.9,
+          "yMeters": 1712.9
+        },
+        {
+          "xMeters": 1358.8,
+          "yMeters": 1662.9
+        },
+        {
+          "xMeters": 1358.8,
+          "yMeters": 1642.9
+        },
+        {
+          "xMeters": 1411.0,
+          "yMeters": 1587.9
+        },
+        {
+          "xMeters": 1496.3,
+          "yMeters": 1587.9
+        },
+        {
+          "xMeters": 1581.7,
+          "yMeters": 1507.9
+        },
+        {
+          "xMeters": 1676.6,
+          "yMeters": 1507.9
+        },
+        {
+          "xMeters": 1724.0,
+          "yMeters": 1537.9
+        },
+        {
+          "xMeters": 1795.1,
+          "yMeters": 1632.9
+        },
+        {
+          "xMeters": 1804.6,
+          "yMeters": 1732.9
+        },
+        {
+          "xMeters": 1752.4,
+          "yMeters": 1867.9
+        },
+        {
+          "xMeters": 1724.0,
+          "yMeters": 1867.9
+        },
+        {
+          "xMeters": 1714.5,
+          "yMeters": 1887.9
+        },
+        {
+          "xMeters": 1657.6,
+          "yMeters": 1907.9
+        },
+        {
+          "xMeters": 1619.6,
+          "yMeters": 1897.9
+        },
+        {
+          "xMeters": 1581.7,
+          "yMeters": 1947.9
+        },
+        {
+          "xMeters": 1567.5,
+          "yMeters": 1942.9
+        },
+        {
+          "xMeters": 1543.8,
+          "yMeters": 1987.9
+        },
+        {
+          "xMeters": 1482.1,
+          "yMeters": 2022.9
+        },
+        {
+          "xMeters": 1909.0,
+          "yMeters": 2022.9
+        },
+        {
+          "xMeters": 1909.0,
+          "yMeters": 382.9
+        },
+        {
+          "xMeters": 1833.1,
+          "yMeters": 392.9
+        },
+        {
+          "xMeters": 1866.3,
+          "yMeters": 357.9
+        },
+        {
+          "xMeters": 1909.0,
+          "yMeters": 342.9
+        },
+        {
+          "xMeters": 1904.2,
+          "yMeters": -1972.1
+        }
+      ],
+      "returnBoundaryCheckpoints": [
+        {
+          "when": "at the start",
+          "polygon": [
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1967.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1727.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1707.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1687.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1677.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -917.1
+            },
+            {
+              "xMeters": -1819.0,
+              "yMeters": -867.1
+            },
+            {
+              "xMeters": -1809.5,
+              "yMeters": -827.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -777.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -647.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -617.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -577.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -547.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 252.9
+            },
+            {
+              "xMeters": -1823.7,
+              "yMeters": 237.9
+            },
+            {
+              "xMeters": -1738.3,
+              "yMeters": 287.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 257.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 247.9
+            },
+            {
+              "xMeters": -1543.9,
+              "yMeters": 302.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 362.9
+            },
+            {
+              "xMeters": -1524.9,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 472.9
+            },
+            {
+              "xMeters": -1520.2,
+              "yMeters": 497.9
+            },
+            {
+              "xMeters": -1529.7,
+              "yMeters": 487.9
+            },
+            {
+              "xMeters": -1548.6,
+              "yMeters": 527.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 517.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 547.9
+            },
+            {
+              "xMeters": -1629.3,
+              "yMeters": 532.9
+            },
+            {
+              "xMeters": -1562.9,
+              "yMeters": 482.9
+            },
+            {
+              "xMeters": -1591.3,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1581.8,
+              "yMeters": 372.9
+            },
+            {
+              "xMeters": -1596.1,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1643.5,
+              "yMeters": 327.9
+            },
+            {
+              "xMeters": -1709.9,
+              "yMeters": 337.9
+            },
+            {
+              "xMeters": -1747.8,
+              "yMeters": 367.9
+            },
+            {
+              "xMeters": -1814.2,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1833.2,
+              "yMeters": 317.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": -1880.6,
+              "yMeters": 397.9
+            },
+            {
+              "xMeters": -1828.5,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 442.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1432.9
+            },
+            {
+              "xMeters": -1785.8,
+              "yMeters": 1367.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1357.9
+            },
+            {
+              "xMeters": -1714.6,
+              "yMeters": 1332.9
+            },
+            {
+              "xMeters": -1681.4,
+              "yMeters": 1317.9
+            },
+            {
+              "xMeters": -1667.2,
+              "yMeters": 1352.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1377.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 1402.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 1417.9
+            },
+            {
+              "xMeters": -1586.6,
+              "yMeters": 1457.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 1447.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1662.5,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1671.9,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1719.4,
+              "yMeters": 1517.9
+            },
+            {
+              "xMeters": -1728.9,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": -1766.8,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1804.7,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1592.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 2012.9
+            },
+            {
+              "xMeters": -1871.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1463.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1444.3,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1396.9,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1406.3,
+              "yMeters": 1977.9
+            },
+            {
+              "xMeters": -1368.4,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1358.9,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1330.5,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1321.0,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1264.0,
+              "yMeters": 1937.9
+            },
+            {
+              "xMeters": -1211.9,
+              "yMeters": 1992.9
+            },
+            {
+              "xMeters": -1254.6,
+              "yMeters": 2007.9
+            },
+            {
+              "xMeters": -1245.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1183.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1240.2,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1420.4,
+              "yMeters": 1927.9
+            },
+            {
+              "xMeters": 1515.3,
+              "yMeters": 1817.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1767.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1722.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1682.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1627.9
+            },
+            {
+              "xMeters": 1572.2,
+              "yMeters": 1637.9
+            },
+            {
+              "xMeters": 1558.0,
+              "yMeters": 1672.9
+            },
+            {
+              "xMeters": 1534.3,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1401.5,
+              "yMeters": 1657.9
+            },
+            {
+              "xMeters": 1392.0,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1301.9,
+              "yMeters": 1712.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1662.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1642.9
+            },
+            {
+              "xMeters": 1411.0,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1496.3,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1676.6,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": 1795.1,
+              "yMeters": 1632.9
+            },
+            {
+              "xMeters": 1804.6,
+              "yMeters": 1732.9
+            },
+            {
+              "xMeters": 1752.4,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1714.5,
+              "yMeters": 1887.9
+            },
+            {
+              "xMeters": 1657.6,
+              "yMeters": 1907.9
+            },
+            {
+              "xMeters": 1619.6,
+              "yMeters": 1897.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1947.9
+            },
+            {
+              "xMeters": 1567.5,
+              "yMeters": 1942.9
+            },
+            {
+              "xMeters": 1543.8,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1482.1,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": 1833.1,
+              "yMeters": 392.9
+            },
+            {
+              "xMeters": 1866.3,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            }
+          ]
+        },
+        {
+          "when": "after Kodiak butte",
+          "polygon": [
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1967.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1727.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1707.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1687.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1677.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -917.1
+            },
+            {
+              "xMeters": -1819.0,
+              "yMeters": -867.1
+            },
+            {
+              "xMeters": -1809.5,
+              "yMeters": -827.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -777.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -647.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -617.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -577.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -547.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 252.9
+            },
+            {
+              "xMeters": -1823.7,
+              "yMeters": 237.9
+            },
+            {
+              "xMeters": -1738.3,
+              "yMeters": 287.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 257.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 247.9
+            },
+            {
+              "xMeters": -1543.9,
+              "yMeters": 302.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 362.9
+            },
+            {
+              "xMeters": -1524.9,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 472.9
+            },
+            {
+              "xMeters": -1520.2,
+              "yMeters": 497.9
+            },
+            {
+              "xMeters": -1529.7,
+              "yMeters": 487.9
+            },
+            {
+              "xMeters": -1548.6,
+              "yMeters": 527.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 517.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 547.9
+            },
+            {
+              "xMeters": -1629.3,
+              "yMeters": 532.9
+            },
+            {
+              "xMeters": -1562.9,
+              "yMeters": 482.9
+            },
+            {
+              "xMeters": -1591.3,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1581.8,
+              "yMeters": 372.9
+            },
+            {
+              "xMeters": -1596.1,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1643.5,
+              "yMeters": 327.9
+            },
+            {
+              "xMeters": -1709.9,
+              "yMeters": 337.9
+            },
+            {
+              "xMeters": -1747.8,
+              "yMeters": 367.9
+            },
+            {
+              "xMeters": -1814.2,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1833.2,
+              "yMeters": 317.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": -1880.6,
+              "yMeters": 397.9
+            },
+            {
+              "xMeters": -1828.5,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 442.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1432.9
+            },
+            {
+              "xMeters": -1785.8,
+              "yMeters": 1367.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1357.9
+            },
+            {
+              "xMeters": -1714.6,
+              "yMeters": 1332.9
+            },
+            {
+              "xMeters": -1681.4,
+              "yMeters": 1317.9
+            },
+            {
+              "xMeters": -1667.2,
+              "yMeters": 1352.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1377.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 1402.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 1417.9
+            },
+            {
+              "xMeters": -1586.6,
+              "yMeters": 1457.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 1447.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1662.5,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1671.9,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1719.4,
+              "yMeters": 1517.9
+            },
+            {
+              "xMeters": -1728.9,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": -1766.8,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1804.7,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1592.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 2012.9
+            },
+            {
+              "xMeters": -1871.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1463.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1444.3,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1396.9,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1406.3,
+              "yMeters": 1977.9
+            },
+            {
+              "xMeters": -1368.4,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1358.9,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1330.5,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1321.0,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1264.0,
+              "yMeters": 1937.9
+            },
+            {
+              "xMeters": -1211.9,
+              "yMeters": 1992.9
+            },
+            {
+              "xMeters": -1254.6,
+              "yMeters": 2007.9
+            },
+            {
+              "xMeters": -1245.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1183.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1240.2,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1420.4,
+              "yMeters": 1927.9
+            },
+            {
+              "xMeters": 1515.3,
+              "yMeters": 1817.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1767.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1722.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1682.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1627.9
+            },
+            {
+              "xMeters": 1572.2,
+              "yMeters": 1637.9
+            },
+            {
+              "xMeters": 1558.0,
+              "yMeters": 1672.9
+            },
+            {
+              "xMeters": 1534.3,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1401.5,
+              "yMeters": 1657.9
+            },
+            {
+              "xMeters": 1392.0,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1301.9,
+              "yMeters": 1712.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1662.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1642.9
+            },
+            {
+              "xMeters": 1411.0,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1496.3,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1676.6,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": 1795.1,
+              "yMeters": 1632.9
+            },
+            {
+              "xMeters": 1804.6,
+              "yMeters": 1732.9
+            },
+            {
+              "xMeters": 1752.4,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1714.5,
+              "yMeters": 1887.9
+            },
+            {
+              "xMeters": 1657.6,
+              "yMeters": 1907.9
+            },
+            {
+              "xMeters": 1619.6,
+              "yMeters": 1897.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1947.9
+            },
+            {
+              "xMeters": 1567.5,
+              "yMeters": 1942.9
+            },
+            {
+              "xMeters": 1543.8,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1482.1,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": 1833.1,
+              "yMeters": 392.9
+            },
+            {
+              "xMeters": 1866.3,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            }
+          ]
+        },
+        {
+          "when": "after Cape Nukshak",
+          "polygon": [
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1967.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1727.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1707.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1687.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1677.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -917.1
+            },
+            {
+              "xMeters": -1819.0,
+              "yMeters": -867.1
+            },
+            {
+              "xMeters": -1809.5,
+              "yMeters": -827.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -777.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -647.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -617.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -577.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -547.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 252.9
+            },
+            {
+              "xMeters": -1823.7,
+              "yMeters": 237.9
+            },
+            {
+              "xMeters": -1738.3,
+              "yMeters": 287.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 257.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 247.9
+            },
+            {
+              "xMeters": -1543.9,
+              "yMeters": 302.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 362.9
+            },
+            {
+              "xMeters": -1524.9,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 472.9
+            },
+            {
+              "xMeters": -1520.2,
+              "yMeters": 497.9
+            },
+            {
+              "xMeters": -1529.7,
+              "yMeters": 487.9
+            },
+            {
+              "xMeters": -1548.6,
+              "yMeters": 527.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 517.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 547.9
+            },
+            {
+              "xMeters": -1629.3,
+              "yMeters": 532.9
+            },
+            {
+              "xMeters": -1562.9,
+              "yMeters": 482.9
+            },
+            {
+              "xMeters": -1591.3,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1581.8,
+              "yMeters": 372.9
+            },
+            {
+              "xMeters": -1596.1,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1643.5,
+              "yMeters": 327.9
+            },
+            {
+              "xMeters": -1709.9,
+              "yMeters": 337.9
+            },
+            {
+              "xMeters": -1747.8,
+              "yMeters": 367.9
+            },
+            {
+              "xMeters": -1814.2,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1833.2,
+              "yMeters": 317.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": -1880.6,
+              "yMeters": 397.9
+            },
+            {
+              "xMeters": -1828.5,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 442.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1432.9
+            },
+            {
+              "xMeters": -1785.8,
+              "yMeters": 1367.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1357.9
+            },
+            {
+              "xMeters": -1714.6,
+              "yMeters": 1332.9
+            },
+            {
+              "xMeters": -1681.4,
+              "yMeters": 1317.9
+            },
+            {
+              "xMeters": -1667.2,
+              "yMeters": 1352.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1377.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 1402.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 1417.9
+            },
+            {
+              "xMeters": -1586.6,
+              "yMeters": 1457.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 1447.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1662.5,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1671.9,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1719.4,
+              "yMeters": 1517.9
+            },
+            {
+              "xMeters": -1728.9,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": -1766.8,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1804.7,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1592.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 2012.9
+            },
+            {
+              "xMeters": -1871.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1463.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1444.3,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1396.9,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1406.3,
+              "yMeters": 1977.9
+            },
+            {
+              "xMeters": -1368.4,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1358.9,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1330.5,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1321.0,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1264.0,
+              "yMeters": 1937.9
+            },
+            {
+              "xMeters": -1211.9,
+              "yMeters": 1992.9
+            },
+            {
+              "xMeters": -1254.6,
+              "yMeters": 2007.9
+            },
+            {
+              "xMeters": -1245.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1183.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1240.2,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1420.4,
+              "yMeters": 1927.9
+            },
+            {
+              "xMeters": 1515.3,
+              "yMeters": 1817.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1767.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1722.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1682.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1627.9
+            },
+            {
+              "xMeters": 1572.2,
+              "yMeters": 1637.9
+            },
+            {
+              "xMeters": 1558.0,
+              "yMeters": 1672.9
+            },
+            {
+              "xMeters": 1534.3,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1401.5,
+              "yMeters": 1657.9
+            },
+            {
+              "xMeters": 1392.0,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1301.9,
+              "yMeters": 1712.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1662.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1642.9
+            },
+            {
+              "xMeters": 1411.0,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1496.3,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1676.6,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": 1795.1,
+              "yMeters": 1632.9
+            },
+            {
+              "xMeters": 1804.6,
+              "yMeters": 1732.9
+            },
+            {
+              "xMeters": 1752.4,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1714.5,
+              "yMeters": 1887.9
+            },
+            {
+              "xMeters": 1657.6,
+              "yMeters": 1907.9
+            },
+            {
+              "xMeters": 1619.6,
+              "yMeters": 1897.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1947.9
+            },
+            {
+              "xMeters": 1567.5,
+              "yMeters": 1942.9
+            },
+            {
+              "xMeters": 1543.8,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1482.1,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": 1833.1,
+              "yMeters": 392.9
+            },
+            {
+              "xMeters": 1866.3,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            }
+          ]
+        },
+        {
+          "when": "after Hawksbill Gap",
+          "polygon": [
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1967.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1727.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1707.1
+            },
+            {
+              "xMeters": -1866.4,
+              "yMeters": -1687.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -1677.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -917.1
+            },
+            {
+              "xMeters": -1819.0,
+              "yMeters": -867.1
+            },
+            {
+              "xMeters": -1809.5,
+              "yMeters": -827.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -777.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -647.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -617.1
+            },
+            {
+              "xMeters": -1856.9,
+              "yMeters": -577.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": -547.1
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 252.9
+            },
+            {
+              "xMeters": -1823.7,
+              "yMeters": 237.9
+            },
+            {
+              "xMeters": -1738.3,
+              "yMeters": 287.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 257.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 247.9
+            },
+            {
+              "xMeters": -1543.9,
+              "yMeters": 302.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 362.9
+            },
+            {
+              "xMeters": -1524.9,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1496.5,
+              "yMeters": 472.9
+            },
+            {
+              "xMeters": -1520.2,
+              "yMeters": 497.9
+            },
+            {
+              "xMeters": -1529.7,
+              "yMeters": 487.9
+            },
+            {
+              "xMeters": -1548.6,
+              "yMeters": 527.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 517.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 547.9
+            },
+            {
+              "xMeters": -1629.3,
+              "yMeters": 532.9
+            },
+            {
+              "xMeters": -1562.9,
+              "yMeters": 482.9
+            },
+            {
+              "xMeters": -1591.3,
+              "yMeters": 432.9
+            },
+            {
+              "xMeters": -1581.8,
+              "yMeters": 372.9
+            },
+            {
+              "xMeters": -1596.1,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1643.5,
+              "yMeters": 327.9
+            },
+            {
+              "xMeters": -1709.9,
+              "yMeters": 337.9
+            },
+            {
+              "xMeters": -1747.8,
+              "yMeters": 367.9
+            },
+            {
+              "xMeters": -1814.2,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": -1833.2,
+              "yMeters": 317.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": -1880.6,
+              "yMeters": 397.9
+            },
+            {
+              "xMeters": -1828.5,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 442.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1432.9
+            },
+            {
+              "xMeters": -1785.8,
+              "yMeters": 1367.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1357.9
+            },
+            {
+              "xMeters": -1714.6,
+              "yMeters": 1332.9
+            },
+            {
+              "xMeters": -1681.4,
+              "yMeters": 1317.9
+            },
+            {
+              "xMeters": -1667.2,
+              "yMeters": 1352.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1377.9
+            },
+            {
+              "xMeters": -1515.4,
+              "yMeters": 1402.9
+            },
+            {
+              "xMeters": -1567.6,
+              "yMeters": 1417.9
+            },
+            {
+              "xMeters": -1586.6,
+              "yMeters": 1457.9
+            },
+            {
+              "xMeters": -1624.5,
+              "yMeters": 1447.9
+            },
+            {
+              "xMeters": -1634.0,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1662.5,
+              "yMeters": 1467.9
+            },
+            {
+              "xMeters": -1671.9,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1700.4,
+              "yMeters": 1497.9
+            },
+            {
+              "xMeters": -1719.4,
+              "yMeters": 1517.9
+            },
+            {
+              "xMeters": -1728.9,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": -1766.8,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1804.7,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 1592.9
+            },
+            {
+              "xMeters": -1885.4,
+              "yMeters": 2012.9
+            },
+            {
+              "xMeters": -1871.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1463.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": -1444.3,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1396.9,
+              "yMeters": 1997.9
+            },
+            {
+              "xMeters": -1406.3,
+              "yMeters": 1977.9
+            },
+            {
+              "xMeters": -1368.4,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1358.9,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1330.5,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": -1321.0,
+              "yMeters": 1967.9
+            },
+            {
+              "xMeters": -1264.0,
+              "yMeters": 1937.9
+            },
+            {
+              "xMeters": -1211.9,
+              "yMeters": 1992.9
+            },
+            {
+              "xMeters": -1254.6,
+              "yMeters": 2007.9
+            },
+            {
+              "xMeters": -1245.1,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1183.3,
+              "yMeters": 2027.9
+            },
+            {
+              "xMeters": 1240.2,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1420.4,
+              "yMeters": 1927.9
+            },
+            {
+              "xMeters": 1515.3,
+              "yMeters": 1817.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1767.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1722.9
+            },
+            {
+              "xMeters": 1671.8,
+              "yMeters": 1682.9
+            },
+            {
+              "xMeters": 1629.1,
+              "yMeters": 1627.9
+            },
+            {
+              "xMeters": 1572.2,
+              "yMeters": 1637.9
+            },
+            {
+              "xMeters": 1558.0,
+              "yMeters": 1672.9
+            },
+            {
+              "xMeters": 1534.3,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1401.5,
+              "yMeters": 1657.9
+            },
+            {
+              "xMeters": 1392.0,
+              "yMeters": 1687.9
+            },
+            {
+              "xMeters": 1301.9,
+              "yMeters": 1712.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1662.9
+            },
+            {
+              "xMeters": 1358.8,
+              "yMeters": 1642.9
+            },
+            {
+              "xMeters": 1411.0,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1496.3,
+              "yMeters": 1587.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1676.6,
+              "yMeters": 1507.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1537.9
+            },
+            {
+              "xMeters": 1795.1,
+              "yMeters": 1632.9
+            },
+            {
+              "xMeters": 1804.6,
+              "yMeters": 1732.9
+            },
+            {
+              "xMeters": 1752.4,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1724.0,
+              "yMeters": 1867.9
+            },
+            {
+              "xMeters": 1714.5,
+              "yMeters": 1887.9
+            },
+            {
+              "xMeters": 1657.6,
+              "yMeters": 1907.9
+            },
+            {
+              "xMeters": 1619.6,
+              "yMeters": 1897.9
+            },
+            {
+              "xMeters": 1581.7,
+              "yMeters": 1947.9
+            },
+            {
+              "xMeters": 1567.5,
+              "yMeters": 1942.9
+            },
+            {
+              "xMeters": 1543.8,
+              "yMeters": 1987.9
+            },
+            {
+              "xMeters": 1482.1,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 2022.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 382.9
+            },
+            {
+              "xMeters": 1833.1,
+              "yMeters": 392.9
+            },
+            {
+              "xMeters": 1866.3,
+              "yMeters": 357.9
+            },
+            {
+              "xMeters": 1909.0,
+              "yMeters": 342.9
+            },
+            {
+              "xMeters": 1904.2,
+              "yMeters": -1972.1
+            }
+          ]
+        }
+      ],
+      "explanations": [
+        "Safe return possible at every point; time is the limiting resource with 127 min to spare beyond the 44 min reserve.",
         "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
         "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
       ]
