@@ -123,8 +123,90 @@
       "coordinateSystemId": "three-forks-local-v1",
       "attribution": "Random forest on HiRISE slope, roughness, brightness and texture + THEMIS night IR; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured slope > 15 degrees); opacity = confidence",
       "illustrative": false
+    },
+    {
+      "id": "themis-night-ir",
+      "kind": "thermal",
+      "url": "/data/thermal.png",
+      "bounds": {
+        "min": {
+          "xMeters": -1885.4,
+          "yMeters": -1972.1
+        },
+        "max": {
+          "xMeters": 1909.0,
+          "yMeters": 2027.9
+        }
+      },
+      "coordinateSystemId": "three-forks-local-v1",
+      "attribution": "NASA Mars Odyssey THEMIS Night IR Controlled Mosaic v2 (USGS Astrogeology), 100 m. Relative night-time warmth: brighter = stays warm (rockier), darker = cools fast (sandier)",
+      "illustrative": false
     }
   ],
+  "validation": {
+    "classifier": {
+      "labelledCells": 160,
+      "materialLabelsUsed": 128,
+      "labelCounts": {
+        "sand": 68,
+        "bedrock": 21,
+        "rough": 39
+      },
+      "method": "Random forest, 4-fold spatial cross-validation over 1 km blocks",
+      "spatialAccuracy": 0.672,
+      "terrainOnlyAccuracy": 0.555,
+      "baselineAccuracy": 0.531,
+      "mostConfused": [
+        {
+          "classes": [
+            "sand",
+            "rough"
+          ],
+          "cells": 25
+        },
+        {
+          "classes": [
+            "sand",
+            "bedrock"
+          ],
+          "cells": 10
+        }
+      ],
+      "topFeatures": [
+        {
+          "feature": "thermal",
+          "importance": 0.24
+        },
+        {
+          "feature": "brightness",
+          "importance": 0.23
+        },
+        {
+          "feature": "texture",
+          "importance": 0.17
+        }
+      ],
+      "labelAgreement": {
+        "agreed": 25,
+        "checked": 37
+      },
+      "steepRule": "Steep is measured, not predicted: cell mean slope over 15 degrees",
+      "limits": "Labels come from one AI-assisted labeller on HiRISE image patches, partly re-checked blind by two teammates; sand and rough are often confused. Treat classes as a guide, not ground truth."
+    },
+    "routes": {
+      "source": "NASA Mars 2020 Perseverance traverse (M20_traverse.json)",
+      "trackKilometres": 16.8,
+      "trackWalkableShare": 0.991,
+      "areaWalkableShare": 0.937,
+      "elevationMedianDifferenceMeters": 0.01,
+      "closestSharedLeg": {
+        "from": "Three Forks (sample depot)",
+        "to": "Hawksbill Gap",
+        "medianMeters": 22
+      },
+      "limits": "A rover is not an astronaut, and only legs the rover actually drove are a fair comparison."
+    }
+  },
   "sources": [
     {
       "layer": "elevation_m, slope_mean_deg, slope_p90_deg, roughness_deg, valid_fraction",

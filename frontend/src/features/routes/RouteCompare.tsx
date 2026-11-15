@@ -22,6 +22,8 @@ export function RouteCompare({ mission, plan, selected, onSelect, stale, notes }
           const isSelected = route.mode === selected
           const total = (route.walkingTimeSeconds ?? 0) + (route.observationTimeSeconds ?? 0) + (route.restTimeSeconds ?? 0)
           const [verdict, ...details] = route.explanations
+          const steep = route.status === 'feasible' && Boolean(route.slopeWarning)
+          const unreached = route.stopAccess?.filter(stop => !stop.reached) ?? []
           return (
             <li key={route.id}>
               <button type="button" className={`rc-card rc-card--${route.mode}${isSelected ? ' is-selected' : ''}`}
@@ -29,7 +31,8 @@ export function RouteCompare({ mission, plan, selected, onSelect, stale, notes }
                 <span className="rc-head">
                   <span className="rc-swatch" aria-hidden="true" />
                   <span className="rc-title">{routeModeLabels[route.mode]}</span>
-                  <span className={`rc-status rc-status--${route.status}`}>{route.status === 'feasible' ? 'Safe return' : 'No safe return'}</span>
+                  <span className={`rc-status rc-status--${steep ? 'warning' : route.status}`}>
+                    {route.status !== 'feasible' ? 'No safe return' : steep ? 'Safe return · steep sections' : 'Safe return'}</span>
                 </span>
                 {route.geometry.length > 0 && <dl className="rc-stats">
                   <div><dt>Distance</dt><dd>{kilometres(route.distanceMeters)}</dd></div>
@@ -39,6 +42,10 @@ export function RouteCompare({ mission, plan, selected, onSelect, stale, notes }
                   <div><dt>Energy</dt><dd>{route.energyWh ?? '–'} Wh</dd></div>
                   <div><dt>Oxygen</dt><dd>{route.oxygenKg ?? '–'} kg</dd></div>
                 </dl>}
+                {route.steepestSectionDegrees !== undefined && <span className={steep ? 'rc-steepest is-over' : 'rc-steepest'}>
+                  Steepest section: {route.steepestSectionDegrees.toFixed(1)}° <span>(limit {route.slopeLimitDegrees}°)</span></span>}
+                {unreached.map(stop => <span key={stop.id} className="rc-access">
+                  {stopName(mission, stop.id)}: not safely reachable, {stop.reason}. Viewed from the nearest safe point, {stop.distanceMeters} m away.</span>)}
                 {route.visitingOrder.length > 0 && <span className="rc-order">
                   Base → {route.visitingOrder.map(id => stopName(mission, id)).join(' → ')} → Base
                 </span>}

@@ -24,7 +24,7 @@ export function parseMission(value: unknown): Mission {
     || (value.schemaVersion === '1.1' && !bounds(value.bounds))
     || (value.bounds !== undefined && !bounds(value.bounds))
     || !Array.isArray(value.layers) || !value.layers.every(layer => object(layer)
-      && text(layer.id) && ['imagery', 'slope', 'terrain-classification'].includes(String(layer.kind))
+      && text(layer.id) && ['imagery', 'slope', 'terrain-classification', 'thermal'].includes(String(layer.kind))
       && assetUrl(layer.url) && bounds(layer.bounds) && layer.coordinateSystemId === c.id
       && text(layer.attribution) && typeof layer.illustrative === 'boolean'
       && (!layer.illustrative || layer.kind === 'imagery'))

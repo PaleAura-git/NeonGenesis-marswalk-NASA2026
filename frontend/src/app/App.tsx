@@ -40,6 +40,7 @@ function toMapRoutes(response: PlanResponse, selected: RouteMode, previous?: Pla
       id: route.id, mode: route.mode, geometry: route.geometry,
       emphasis: route.mode === selected ? 'selected' as const : 'muted' as const,
       restSpots: route.restSpots?.map(spot => spot.position),
+      viewingPoints: route.stopAccess?.filter(stop => !stop.reached).map(stop => stop.viewingPoint),
     })),
   ]
 }
@@ -205,7 +206,12 @@ export default function App({ onHome }: { onHome?: () => void }) {
         {load.status === 'ready' && (stage === 'Plan'
           ? <MissionSetupPanel mission={load.mission} selectedId={selectedId} onSelect={inspectLocation}
             settings={load.settings} errors={errors} onSettingChange={changeSetting} onStopChange={changeStop}
-            onBlur={validateField} onReview={reviewMission} />
+            onBlur={validateField} onReview={reviewMission}
+            onPreset={() => {
+              setLoad(previous => previous.status === 'ready' ? { ...previous, settings: createMissionSettings(previous.mission) } : previous)
+              setErrors({})
+              if (plan.status === 'ready') setPlanStale(true)
+            }} />
           : <FloatingPanel title={stage === 'Compare' ? 'Compare routes' : 'Rehearsal'} key={stage}>
             {stage === 'Compare'
               ? planned ? <RouteCompare mission={load.mission} plan={planned} selected={selectedMode} onSelect={setSelectedMode} stale={planStale} />

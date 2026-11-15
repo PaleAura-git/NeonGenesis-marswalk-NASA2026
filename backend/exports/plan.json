@@ -1014,6 +1014,44 @@
       "reserveMarginSeconds": 7889,
       "energyWh": 983,
       "oxygenKg": 3.02,
+      "slopeLimitDegrees": 15.0,
+      "steepestSectionDegrees": 19.3,
+      "slopeWarning": "Passes sections up to 19.3\u00b0, steeper than the 15\u00b0 limit. Time-focused checks each 10 m cell's average slope; Conservative avoids these sections.",
+      "stopAccess": [
+        {
+          "id": "cape-nukshak",
+          "reached": true,
+          "reason": null,
+          "viewingPoint": {
+            "xMeters": -391.4,
+            "yMeters": -127.1
+          },
+          "distanceMeters": 0,
+          "groundSlopeDegrees": 3.1
+        },
+        {
+          "id": "hawksbill-gap",
+          "reached": false,
+          "reason": "the ground at the stop averages 17.6\u00b0 (limit 15\u00b0)",
+          "viewingPoint": {
+            "xMeters": -116.3,
+            "yMeters": 352.9
+          },
+          "distanceMeters": 9,
+          "groundSlopeDegrees": 17.6
+        },
+        {
+          "id": "kodiak-butte",
+          "reached": false,
+          "reason": "the ground at the stop averages 35.6\u00b0 (limit 15\u00b0)",
+          "viewingPoint": {
+            "xMeters": 177.8,
+            "yMeters": -797.1
+          },
+          "distanceMeters": 99,
+          "groundSlopeDegrees": 35.6
+        }
+      ],
       "limitingResource": "time",
       "spareSeconds": {
         "time": 7889,
@@ -3346,8 +3384,10 @@
       ],
       "explanations": [
         "Safe return possible at every point; time is the limiting resource with 131 min to spare beyond the 43 min reserve.",
-        "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
-        "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
+        "Passes sections up to 19.3\u00b0, steeper than the 15\u00b0 limit. Time-focused checks each 10 m cell's average slope; Conservative avoids these sections.",
+        "Hawksbill Gap is not safely reachable: the ground at the stop averages 17.6\u00b0 (limit 15\u00b0). Viewed from the nearest safe point, 9 m away.",
+        "Kodiak butte is not safely reachable: the ground at the stop averages 35.6\u00b0 (limit 15\u00b0). Viewed from the nearest safe point, 99 m away.",
+        "Speed 3.3 km/h. Slope limit 15\u00b0 applied to each 10 m cell's average slope."
       ]
     },
     {
@@ -3592,204 +3632,160 @@
           "yMeters": -577.1
         },
         {
-          "xMeters": 187.3,
+          "xMeters": 177.8,
           "yMeters": -587.1
         },
         {
-          "xMeters": 187.3,
+          "xMeters": 177.8,
           "yMeters": -597.1
         },
         {
-          "xMeters": 187.3,
-          "yMeters": -607.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -797.1
-        },
-        {
           "xMeters": 177.8,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 187.3,
-          "yMeters": -797.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -787.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -777.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -767.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -757.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -747.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -737.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -727.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -717.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -707.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -697.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -687.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -677.1
-        },
-        {
-          "xMeters": 234.7,
-          "yMeters": -667.1
-        },
-        {
-          "xMeters": 225.2,
-          "yMeters": -657.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -647.1
-        },
-        {
-          "xMeters": 215.7,
-          "yMeters": -637.1
-        },
-        {
-          "xMeters": 206.3,
-          "yMeters": -627.1
-        },
-        {
-          "xMeters": 196.8,
-          "yMeters": -617.1
-        },
-        {
-          "xMeters": 187.3,
           "yMeters": -607.1
         },
         {
           "xMeters": 177.8,
-          "yMeters": -597.1
+          "yMeters": -617.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -627.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -767.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -757.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -747.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -737.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -727.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -717.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -707.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -697.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -687.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -677.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -667.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -657.1
+        },
+        {
+          "xMeters": 196.8,
+          "yMeters": -647.1
+        },
+        {
+          "xMeters": 187.3,
+          "yMeters": -637.1
+        },
+        {
+          "xMeters": 177.8,
+          "yMeters": -627.1
         },
         {
           "xMeters": 168.3,
-          "yMeters": -587.1
+          "yMeters": -617.1
         },
         {
           "xMeters": 158.8,
-          "yMeters": -577.1
+          "yMeters": -607.1
         },
         {
           "xMeters": 149.3,
-          "yMeters": -567.1
+          "yMeters": -597.1
         },
         {
           "xMeters": 139.9,
-          "yMeters": -557.1
+          "yMeters": -587.1
         },
         {
           "xMeters": 130.4,
-          "yMeters": -557.1
+          "yMeters": -577.1
         },
         {
           "xMeters": 120.9,
-          "yMeters": -557.1
+          "yMeters": -567.1
         },
         {
           "xMeters": 111.4,
@@ -4220,123 +4216,111 @@
           "yMeters": 252.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -192.2,
           "yMeters": 262.9
         },
         {
-          "xMeters": -201.6,
+          "xMeters": -182.7,
           "yMeters": 272.9
         },
         {
-          "xMeters": -192.2,
+          "xMeters": -173.2,
           "yMeters": 282.9
         },
         {
-          "xMeters": -182.7,
+          "xMeters": -163.7,
           "yMeters": 292.9
         },
         {
-          "xMeters": -173.2,
+          "xMeters": -154.2,
           "yMeters": 302.9
         },
         {
-          "xMeters": -163.7,
+          "xMeters": -144.7,
           "yMeters": 312.9
         },
         {
-          "xMeters": -154.2,
+          "xMeters": -135.2,
+          "yMeters": 322.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -125.8,
+          "yMeters": 342.9
+        },
+        {
+          "xMeters": -135.2,
+          "yMeters": 332.9
+        },
+        {
+          "xMeters": -135.2,
           "yMeters": 322.9
         },
         {
           "xMeters": -144.7,
-          "yMeters": 332.9
-        },
-        {
-          "xMeters": -135.2,
-          "yMeters": 332.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 352.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 342.9
-        },
-        {
-          "xMeters": -116.3,
-          "yMeters": 332.9
-        },
-        {
-          "xMeters": -125.8,
-          "yMeters": 322.9
-        },
-        {
-          "xMeters": -125.8,
           "yMeters": 312.9
         },
         {
-          "xMeters": -135.2,
+          "xMeters": -154.2,
           "yMeters": 302.9
         },
         {
-          "xMeters": -135.2,
+          "xMeters": -154.2,
           "yMeters": 292.9
         },
         {
-          "xMeters": -135.2,
+          "xMeters": -154.2,
           "yMeters": 282.9
         },
         {
-          "xMeters": -125.8,
+          "xMeters": -154.2,
           "yMeters": 272.9
         },
         {
-          "xMeters": -116.3,
+          "xMeters": -154.2,
           "yMeters": 262.9
         },
         {
-          "xMeters": -116.3,
+          "xMeters": -154.2,
           "yMeters": 252.9
         },
         {
-          "xMeters": -106.8,
+          "xMeters": -154.2,
           "yMeters": 242.9
         },
         {
-          "xMeters": -106.8,
+          "xMeters": -144.7,
           "yMeters": 232.9
         },
         {
-          "xMeters": -97.3,
+          "xMeters": -135.2,
           "yMeters": 222.9
         },
         {
-          "xMeters": -87.8,
+          "xMeters": -135.2,
           "yMeters": 212.9
         },
         {
-          "xMeters": -87.8,
+          "xMeters": -125.8,
           "yMeters": 202.9
         },
         {
-          "xMeters": -78.3,
+          "xMeters": -116.3,
           "yMeters": 192.9
         },
         {
-          "xMeters": -78.3,
+          "xMeters": -106.8,
           "yMeters": 182.9
         },
         {
-          "xMeters": -78.3,
+          "xMeters": -97.3,
           "yMeters": 172.9
         },
         {
-          "xMeters": -78.3,
+          "xMeters": -87.8,
           "yMeters": 162.9
         },
         {
@@ -4410,41 +4394,79 @@
         "hawksbill-gap"
       ],
       "excludedStops": [],
-      "distanceMeters": 3037,
-      "returnDistanceMeters": 411,
-      "walkingTimeSeconds": 4082,
-      "returnWalkingTimeSeconds": 552,
+      "distanceMeters": 2862,
+      "returnDistanceMeters": 412,
+      "walkingTimeSeconds": 3873,
+      "returnWalkingTimeSeconds": 557,
       "observationTimeSeconds": 6600,
       "restTimeSeconds": 600,
       "restSpots": [
         {
           "position": {
-            "xMeters": -11.9,
-            "yMeters": -497.1
+            "xMeters": -21.4,
+            "yMeters": -487.1
           },
           "durationSeconds": 300,
-          "slopeDegrees": 0.9,
-          "roughnessDegrees": 0.6
+          "slopeDegrees": 1.7,
+          "roughnessDegrees": 0.4
         },
         {
           "position": {
-            "xMeters": -116.3,
-            "yMeters": 332.9
+            "xMeters": -40.4,
+            "yMeters": 92.9
           },
           "durationSeconds": 300,
-          "slopeDegrees": 3.0,
-          "roughnessDegrees": 1.0
+          "slopeDegrees": 1.0,
+          "roughnessDegrees": 0.4
         }
       ],
-      "reserveSeconds": 2616,
-      "reserveMarginSeconds": 7701,
-      "energyWh": 998,
-      "oxygenKg": 3.07,
+      "reserveSeconds": 2575,
+      "reserveMarginSeconds": 7953,
+      "energyWh": 977,
+      "oxygenKg": 3.0,
+      "slopeLimitDegrees": 15.0,
+      "steepestSectionDegrees": 14.9,
+      "slopeWarning": null,
+      "stopAccess": [
+        {
+          "id": "cape-nukshak",
+          "reached": true,
+          "reason": null,
+          "viewingPoint": {
+            "xMeters": -391.4,
+            "yMeters": -127.1
+          },
+          "distanceMeters": 0,
+          "groundSlopeDegrees": 3.1
+        },
+        {
+          "id": "hawksbill-gap",
+          "reached": false,
+          "reason": "the ground at the stop averages 17.6\u00b0 (limit 15\u00b0)",
+          "viewingPoint": {
+            "xMeters": -125.8,
+            "yMeters": 342.9
+          },
+          "distanceMeters": 10,
+          "groundSlopeDegrees": 17.6
+        },
+        {
+          "id": "kodiak-butte",
+          "reached": false,
+          "reason": "the ground at the stop averages 35.6\u00b0 (limit 15\u00b0)",
+          "viewingPoint": {
+            "xMeters": 187.3,
+            "yMeters": -767.1
+          },
+          "distanceMeters": 104,
+          "groundSlopeDegrees": 35.6
+        }
+      ],
       "limitingResource": "time",
       "spareSeconds": {
-        "time": 7701,
-        "energy": 12671,
-        "oxygen": 12671
+        "time": 7953,
+        "energy": 12953,
+        "oxygen": 12953
       },
       "returnBoundary": [
         {
@@ -6771,9 +6793,10 @@
         }
       ],
       "explanations": [
-        "Safe return possible at every point; time is the limiting resource with 128 min to spare beyond the 44 min reserve.",
-        "Speed 3.3 km/h, cells steeper than 15 degrees blocked.",
-        "Kodiak butte: reached at the nearest walkable point, 104 m from the mapped position."
+        "Safe return possible at every point; time is the limiting resource with 133 min to spare beyond the 43 min reserve.",
+        "Hawksbill Gap is not safely reachable: the ground at the stop averages 17.6\u00b0 (limit 15\u00b0). Viewed from the nearest safe point, 10 m away.",
+        "Kodiak butte is not safely reachable: the ground at the stop averages 35.6\u00b0 (limit 15\u00b0). Viewed from the nearest safe point, 104 m away.",
+        "Speed 3.3 km/h. Slope limit 15\u00b0 applied to the steepest part of each 10 m cell (its steepest 10%)."
       ]
     }
   ]

@@ -12,8 +12,8 @@ export function MissionReview({ mission, request, status }: { mission: Mission; 
         <div><dt>Duration</dt><dd>{request.totalDurationSeconds / 60} min</dd></div>
         <div><dt>Reserve</dt><dd>{request.reserveSeconds / 60} min</dd></div>
         <div><dt>Available after reserve</dt><dd>{(request.totalDurationSeconds - request.reserveSeconds) / 60} min</dd></div>
-        <div><dt>Walking speed</dt><dd>{request.walkingSpeedMetersPerSecond} m/s</dd></div>
-        <div><dt>Max slope (provisional)</dt><dd>{request.maxSlopeDegrees}&deg;</dd></div>
+        <div><dt>Walking speed</dt><dd>{(request.walkingSpeedMetersPerSecond * 3.6).toFixed(1)} km/h</dd></div>
+        <div><dt>Max slope</dt><dd>{request.maxSlopeDegrees}&deg;</dd></div>
         <div><dt>Route modes</dt><dd>{request.requestedRouteModes.map(mode => routeModeLabels[mode]).join(', ')}</dd></div>
       </dl>
       <ul>{request.includedStops.map(stop => <li key={stop.id}>{mission.stops.find(item => item.id === stop.id)?.name} / {priorities[stop.priority - 1]} / {stop.observationSeconds / 60} min</li>)}</ul>

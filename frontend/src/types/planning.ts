@@ -53,6 +53,16 @@ export interface RestSpot {
   roughnessDegrees: number
 }
 
+export interface StopAccess {
+  id: string
+  /** False when the stop's own ground is over the slope limit; the route then goes to viewingPoint. */
+  reached: boolean
+  reason: string | null
+  viewingPoint: Position
+  distanceMeters: number
+  groundSlopeDegrees: number
+}
+
 export interface PlannedRoute {
   id: string
   mode: RouteMode
@@ -71,6 +81,12 @@ export interface PlannedRoute {
   reserveMarginSeconds?: number
   energyWh?: number
   oxygenKg?: number
+  slopeLimitDegrees?: number
+  /** Steepest part (steepest 10% of a 10 m cell) the route passes through. */
+  steepestSectionDegrees?: number
+  /** Set when the route passes sections steeper than the limit. */
+  slopeWarning?: string | null
+  stopAccess?: StopAccess[]
   limitingResource?: LimitingResource
   spareSeconds?: Record<LimitingResource, number>
   returnBoundary?: Position[]

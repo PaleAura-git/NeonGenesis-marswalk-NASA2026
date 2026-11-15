@@ -5,6 +5,7 @@ Usage: python scripts/validate_routes.py <demo_grid.tif> <sites.csv> <M20_traver
 import json
 import math
 import sys
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -67,6 +68,7 @@ if __name__ == "__main__":
     tree = cKDTree(xy)
     result = plan(ctx)
     names = {s["id"]: s["name"] for s in ctx.sites}
+    best_leg = None
     for mode, m in result["routes"].items():
         r, c = np.array(m["path_rc"]).T
         px, py = rasterio.transform.xy(ctx.transform, r, c)
@@ -75,8 +77,20 @@ if __name__ == "__main__":
         print(f"   {mode}: whole route median {np.median(d):.0f} m from the track")
         for (a, b), (s1, s2) in zip(zip(cuts, cuts[1:]), zip(m["order"], m["order"][1:])):
             leg = d[a:b + 1]
+            if best_leg is None or np.median(leg) < best_leg["medianMeters"]:
+                best_leg = {"from": names[s1], "to": names[s2], "medianMeters": round(float(np.median(leg)))}
             print(f"     {names[s1]:>26} -> {names[s2]:<26} median {np.median(leg):>4.0f} m | "
                   f"within 25 m: {np.mean(leg <= 25) * 100:>3.0f}%")
+
+    Path("exports/route_validation.json").write_text(json.dumps({
+        "source": "NASA Mars 2020 Perseverance traverse (M20_traverse.json)",
+        "trackKilometres": round(length_m / 1000, 1),
+        "trackWalkableShare": round(float(np.nanmean(slope <= 15)), 3),
+        "areaWalkableShare": round(float(np.nanmean(ctx.bands["slope_mean_deg"] <= 15)), 3),
+        "elevationMedianDifferenceMeters": round(float(np.nanmedian(diff)), 2),
+        "closestSharedLeg": best_leg,
+        "limits": "A rover is not an astronaut, and only legs the rover actually drove are a fair comparison.",
+    }, indent=2))
 
     n_rows, n_cols = ctx.bands["slope_mean_deg"].shape
     extent = [0, n_cols * ctx.cell_m / 1000, n_rows * ctx.cell_m / 1000, 0]

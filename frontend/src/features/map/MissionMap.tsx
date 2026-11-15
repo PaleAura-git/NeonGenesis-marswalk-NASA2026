@@ -20,13 +20,24 @@ export interface MapRoute {
   geometry: Position[]
   emphasis: 'selected' | 'muted' | 'previous'
   restSpots?: Position[]
+  /** Nearest safe points for stops whose own ground is over the slope limit. */
+  viewingPoints?: Position[]
 }
 
 const layerKinds = [
-  { kind: 'imagery', label: 'Imagery' },
-  { kind: 'slope', label: 'Slope' },
-  { kind: 'terrain-classification', label: 'Terrain classification' },
+  { kind: 'imagery', label: 'Imagery', name: 'HiRISE image (local copy)' },
+  { kind: 'slope', label: 'Slope', name: 'Slope, 10 m cells' },
+  { kind: 'terrain-classification', label: 'Terrain classification', name: 'Terrain classes' },
+  { kind: 'thermal', label: 'Thermal', name: 'THEMIS night IR, 100 m' },
 ] as const
+
+// Colour ramps matching backend/scripts/export_for_map.py (matplotlib magma and inferno).
+const MAGMA = 'linear-gradient(90deg, #000004, #3b0f70, #8c2981, #de4968, #fe9f6d, #fcfdbf)'
+const INFERNO = 'linear-gradient(90deg, #000004, #420a68, #932667, #dd513a, #fca50a, #fcffa4)'
+const TERRAIN_CLASSES = [
+  { name: 'Sand', colour: '#e3c16f' }, { name: 'Bedrock', colour: '#8c8c8c' },
+  { name: 'Rough', colour: '#b5562e' }, { name: 'Steep (> 15°, measured)', colour: '#6a2c70' },
+]
 
 const HOME_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg>'
 const SVG_NS = 'http://www.w3.org/2000/svg'
@@ -462,8 +473,8 @@ export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspe
       const selected = route.emphasis === 'selected'
       L.polyline(line, { className: 'ws-route ws-route--casing', weight: selected ? 7 : 5, interactive: false }).addTo(group)
       L.polyline(line, { className: `ws-route ws-route--${route.mode}${selected ? '' : ' is-muted'}`, weight: selected ? 4 : 2.5, interactive: false }).addTo(group)
-      if (selected) route.restSpots?.forEach(spot => L.circleMarker(toMapPosition(spot), { radius: 5, className: 'ws-rest', interactive: false })
-        .bindTooltip('Rest spot', { direction: 'top' }).addTo(group))
+      if (selected) route.restSpots?.forEach(spot => L.circleMarker(toMapPosition(spot), { radius: 5, className: 'ws-rest', interactive: false }).addTo(group))
+      if (selected) route.viewingPoints?.forEach(point => L.circleMarker(toMapPosition(point), { radius: 7, className: 'ws-viewing', interactive: false }).addTo(group))
     })
     return () => { group.remove() }
   }, [routes, returnBoundary, blockedArea])
@@ -490,42 +501,106 @@ export function MissionMap({ layoutKey, mission, stopSettings, selectedId, inspe
     <fieldset>
       <legend className="ws-label">Base map</legend>
       <label className="ws-check"><input type="radio" name="base-map" checked={imagery === 'nasa'} onChange={() => chooseImagery('nasa')} />
-        NASA imagery<span className="ws-check-note">{nasaStatus === 'failed' && imagery === 'nasa' ? 'Unavailable · showing illustrative terrain' : 'HiRISE 25 cm + CTX 6 m · Mars Trek'}</span></label>
+        NASA imagery<span className="ws-check-note">{nasaStatus === 'failed' && imagery === 'nasa' ? 'Unavailable · showing placeholder backdrop' : 'HiRISE 25 cm + CTX 6 m · Mars Trek'}</span></label>
       <label className="ws-check"><input type="radio" name="base-map" checked={imagery === 'illustrative'} onChange={() => chooseImagery('illustrative')} />
-        Illustrative terrain{terrainFailed && <span className="ws-check-note">Image unavailable</span>}</label>
+        Placeholder backdrop<span className="ws-check-note">{terrainFailed ? 'Image unavailable' : 'Artwork, not real data'}</span></label>
     </fieldset>
     <fieldset>
       <legend className="ws-label">Overlays</legend>
       <label className="ws-check"><input type="checkbox" checked={showGrid} onChange={() => setShowGrid(value => !value)} />Coordinate grid<span className="ws-check-note">Metres from Three Forks Base</span></label>
     </fieldset>
-    {layerKinds.map(({ kind, label }) => {
+    {layerKinds.map(({ kind, label, name }) => {
       const assets = mission.layers.filter(layer => layer.kind === kind)
       return <fieldset key={kind}><legend className="ws-label">{label}</legend>
         {assets.length === 0 ? <label className="ws-check is-unavailable"><input type="checkbox" disabled />Unavailable — no registered asset</label> : assets.map(layer => (
-          <label key={layer.id} className="ws-check"><input type="checkbox" checked={enabledLayers.includes(layer.id)} onChange={() => toggleLayer(layer.id)} />{layer.illustrative ? 'Illustrative terrain' : label}<span className="ws-check-note">{layer.attribution}</span></label>
+          <label key={layer.id} className="ws-check"><input type="checkbox" checked={enabledLayers.includes(layer.id)} onChange={() => toggleLayer(layer.id)} />{layer.illustrative ? 'Placeholder (not real data)' : name}<span className="ws-check-note">{layer.attribution}</span></label>
         ))}
       </fieldset>
     })}
   </>
 
+  const classifier = mission.validation?.classifier
+  const routeCheck = mission.validation?.routes
+  const percent = (share: number, digits = 0) => `${(share * 100).toFixed(digits)}%`
+  const featureNames: Record<string, string> = {
+    thermal: 'THEMIS night IR', brightness: 'image brightness', texture: 'image texture',
+    slope_mean_deg: 'mean slope', slope_p90_deg: 'steepest slope in cell', roughness_deg: 'roughness',
+  }
   const notes = <>
     <h2 className="ws-label">Coordinate & data notes</h2>
     <p>{mission.notice}</p>
     <p>Positions are local metres east (x) and north (y) of Three Forks Base at {origin.latitude}&deg; N, {origin.longitude}&deg; E, placed on Mars with a local tangent plane on the Mars 2000 sphere. Positions are provisional, from the rover position file and HiRISE.</p>
     <p>Imagery: NASA Mars Trek, HiRISE 25 cm orthomosaic and CTX 6 m mosaic of Jezero, colourised for display. {marsTrek.attribution}.</p>
     <p>{mission.dataMode === 'real' ? 'Routes, rest spots and the return boundary come from the backend planner (HiRISE 10 m grid).' : 'Observation durations are synthetic. Route calculations pending.'}</p>
+    {classifier && <>
+      <h2 className="ws-label">Terrain classifier check</h2>
+      <dl className="ws-validation">
+        <div><dt>Labelled cells</dt><dd>{classifier.labelledCells} ({classifier.materialLabelsUsed} used for sand / bedrock / rough)</dd></div>
+        <div><dt>Accuracy on unseen areas</dt><dd>{percent(classifier.spatialAccuracy)} (always guessing the commonest class: {percent(classifier.baselineAccuracy)})</dd></div>
+        <div><dt>Most confused</dt><dd>{classifier.mostConfused.map(pair => `${pair.classes.join(' and ')} (${pair.cells} cells)`).join('; ') || 'none'}</dd></div>
+        <div><dt>Most important input</dt><dd>{classifier.topFeatures[0] ? `${featureNames[classifier.topFeatures[0].feature] ?? classifier.topFeatures[0].feature} (${classifier.topFeatures[0].importance.toFixed(2)})` : '–'}</dd></div>
+        {classifier.labelAgreement && <div><dt>Blind label re-check</dt><dd>{classifier.labelAgreement.agreed} of {classifier.labelAgreement.checked} agree ({percent(classifier.labelAgreement.agreed / classifier.labelAgreement.checked)})</dd></div>}
+      </dl>
+      <p>{classifier.method}. {classifier.steepRule}.</p>
+      <p><strong>Limits:</strong> {classifier.limits}</p>
+    </>}
+    {routeCheck && <>
+      <h2 className="ws-label">Route check against Perseverance</h2>
+      <dl className="ws-validation">
+        <div><dt>Rover track on walkable ground</dt><dd>{percent(routeCheck.trackWalkableShare, 1)} of {routeCheck.trackKilometres} km (whole area: {percent(routeCheck.areaWalkableShare, 1)})</dd></div>
+        <div><dt>Elevation vs rover readings</dt><dd>median {routeCheck.elevationMedianDifferenceMeters.toFixed(2)} m difference</dd></div>
+        {routeCheck.closestSharedLeg && <div><dt>Our route vs rover path</dt><dd>median {routeCheck.closestSharedLeg.medianMeters} m apart, {routeCheck.closestSharedLeg.from} to {routeCheck.closestSharedLeg.to}</dd></div>}
+      </dl>
+      <p><strong>Limits:</strong> {routeCheck.limits}</p>
+    </>}
   </>
+
+  const activeKinds = new Set(mission.layers.filter(layer => enabledLayers.includes(layer.id) && !failedLayers.includes(layer.id)).map(layer => layer.kind))
+  const selectedRoute = routes?.find(route => route.emphasis === 'selected')
+  const legends = (activeKinds.has('slope') || activeKinds.has('terrain-classification') || activeKinds.has('thermal') || routes?.length || blockedArea?.length) ? (
+    <div className="ws-legends" aria-label="Map legend">
+      {activeKinds.has('slope') && <div className="ws-legend">
+        <p className="ws-label">Slope · HiRISE, 10 m cells</p>
+        <div className="ws-ramp" style={{ background: MAGMA }}><span className="ws-ramp-mark" style={{ left: '50%' }} /></div>
+        <div className="ws-ramp-ticks"><span>0°</span><span>10°</span><span className="is-limit">15°</span><span>20°</span><span>30°+</span></div>
+      </div>}
+      {activeKinds.has('terrain-classification') && <div className="ws-legend">
+        <p className="ws-label">Terrain classes</p>
+        <ul className="ws-swatches">{TERRAIN_CLASSES.map(item => <li key={item.name}><span style={{ background: item.colour }} />{item.name}</li>)}</ul>
+        <p className="ws-legend-note">Fainter = the model is less confident</p>
+      </div>}
+      {activeKinds.has('thermal') && <div className="ws-legend">
+        <p className="ws-label">THEMIS night IR · Mars Odyssey, 100 m</p>
+        <div className="ws-ramp" style={{ background: INFERNO }} />
+        <div className="ws-ramp-ticks"><span>Cools fast (sandier)</span><span>Stays warm (rockier)</span></div>
+        <p className="ws-legend-note">Relative brightness, not calibrated temperature</p>
+      </div>}
+      {Boolean(routes?.length || blockedArea?.length) && <div className="ws-legend">
+        <p className="ws-label">Routes</p>
+        <ul className="ws-keys">
+          {routes?.some(route => route.mode === 'time-focused' && route.emphasis !== 'previous') && <li><span className="ws-key ws-key--line" style={{ background: 'var(--route-time)' }} />Time-focused</li>}
+          {routes?.some(route => route.mode === 'conservative' && route.emphasis !== 'previous') && <li><span className="ws-key ws-key--line" style={{ background: 'var(--route-conservative)' }} />Conservative</li>}
+          {routes?.some(route => route.emphasis === 'previous') && <li><span className="ws-key ws-key--dash" />Route before the block</li>}
+          {Boolean(returnBoundary?.length) && <li><span className="ws-key ws-key--dots" />Return boundary: you can still walk home from inside</li>}
+          {Boolean(selectedRoute?.restSpots?.length) && <li><span className="ws-key ws-key--dot" />Rest spot</li>}
+          {Boolean(selectedRoute?.viewingPoints?.length) && <li><span className="ws-key ws-key--ring" />Safe viewing point (stop too steep)</li>}
+          {Boolean(blockedArea?.length) && <li><span className="ws-key ws-key--block" />Blocked area</li>}
+        </ul>
+      </div>}
+    </div>
+  ) : null
 
   const imageryNote = showNasa
     ? `NASA ${detailZoom ? 'HiRISE' : 'CTX'} · colourised for display`
-    : terrainFailed ? 'Terrain image unavailable'
-      : imagery === 'nasa' ? 'Offline · illustrative terrain' : 'Illustrative terrain'
+    : terrainFailed ? 'Backdrop image unavailable'
+      : imagery === 'nasa' ? 'Offline · placeholder backdrop, not real data' : 'Placeholder backdrop, not real data'
 
   return (
     <section ref={rootRef} className={['mission-map', showNasa && 'has-nasa-imagery', onMapClick && 'is-drawing'].filter(Boolean).join(' ')} aria-label="Expedition map of Jezero Crater">
       <div ref={containerRef} className="leaflet-workspace" role="region" aria-label="Interactive map. Arrow keys pan. Plus and minus zoom." />
       <MapControls onZoomIn={() => mapRef.current?.zoomIn()} onZoomOut={() => mapRef.current?.zoomOut()} onReset={() => resetRef.current()}
         layers={layerMenu} notes={notes} />
+      {legends}
       <div className="ws-map-foot">
         {failedLayers.length > 0 && <div className="ws-map-alerts">
           {failedLayers.map(id => <p role="alert" key={id}>Could not load {mission.layers.find(layer => layer.id === id)?.kind} layer. Markers remain available. Toggle the layer to retry.</p>)}

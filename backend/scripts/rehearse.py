@@ -41,7 +41,7 @@ def compare(before, after, names):
         old = before["approach_rc"].get(sid)
         if old and old != cell:
             d = 10 * math.hypot(cell[0] - old[0], cell[1] - old[1])
-            notes.append(f"{names[sid]} is now reached at a different point, about {d:.0f} m from before.")
+            notes.append(f"{names[sid]} is now approached at a different point, about {d:.0f} m from before.")
     d_m = after["distance_m"] - before["distance_m"]
     d_s = after["total_s"] - before["total_s"]
     d_wh = after["energy_wh"] - before["energy_wh"]

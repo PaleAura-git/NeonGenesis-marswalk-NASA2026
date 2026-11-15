@@ -79,7 +79,7 @@ def cost_surfaces(bands, cell_m, speed_kmh, max_slope, terrain=None):
             speed[terrain["class"] == i] = CLASS_SPEED[name]
         seconds = seconds / speed
         penalty = penalty * (1 + UNCERTAINTY_PENALTY * (1 - np.nan_to_num(terrain["confidence"], nan=0.0)))
-    safest = np.where(p90 <= max_slope + 5, seconds * penalty, np.nan)
+    safest = np.where(p90 <= max_slope, seconds * penalty, np.nan)
     return {"fastest": seconds, "safest": safest}, seconds
 
 
@@ -142,7 +142,25 @@ def rest_spots(path, seconds, bands, x_scale, stop_at):
     return rests
 
 
-def path_metrics(path, seconds, bands, cell_m, x_scale):
+def stop_access(ctx, mode, sid, moved, max_slope, blocked):
+    """Whether a stop's own ground is walkable in this mode, and if not, why."""
+    cell = ctx.site_cells[sid]
+    mean, p90 = float(ctx.bands["slope_mean_deg"][cell]), float(ctx.bands["slope_p90_deg"][cell])
+    if not moved:
+        reason = None
+    elif blocked is not None and blocked[cell]:
+        reason = "the stop is inside the blocked area"
+    elif mean > max_slope:
+        reason = f"the ground at the stop averages {mean:.1f}° (limit {max_slope:g}°)"
+    elif mode == "safest" and p90 > max_slope:
+        reason = f"the steepest part of the stop's 10 m cell is {p90:.1f}° (limit {max_slope:g}°)"
+    else:
+        reason = "the stop is cut off from the base by ground over the limit"
+    return {"reached": not moved, "moved_m": float(moved or 0), "reason": reason,
+            "ground_slope_deg": mean, "ground_p90_deg": p90}
+
+
+def path_metrics(path, seconds, bands, cell_m, x_scale, max_slope):
     dist = walk_s = 0.0
     for (r1, c1), (r2, c2) in zip(path, path[1:]):
         step = cell_m * math.hypot(r2 - r1, (c2 - c1) * x_scale)
@@ -153,7 +171,8 @@ def path_metrics(path, seconds, bands, cell_m, x_scale):
         "distance_m": dist,
         "walk_s": walk_s,
         "max_slope_deg": float(np.max(bands["slope_mean_deg"][rows, cols])),
-        "steep_spot_cells": int(np.sum(bands["slope_p90_deg"][rows, cols] > DEFAULT_MAX_SLOPE)),
+        "steepest_section_deg": float(np.max(bands["slope_p90_deg"][rows, cols])),
+        "steep_spot_cells": int(np.sum(bands["slope_p90_deg"][rows, cols] > max_slope)),
         "mean_roughness_deg": float(np.mean(bands["roughness_deg"][rows, cols])),
     }
 
@@ -169,7 +188,7 @@ def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEF
     wanted = [s for s in ctx.stops if s in stop_seconds]
     results = {}
     for mode, cost in costs.items():
-        log, excluded, points, reachable = [], {}, {}, None
+        log, excluded, points, access, reachable = [], {}, {}, {}, None
         for sid in [ctx.base, *wanted]:
             allowed = np.isfinite(cost) if reachable is None else reachable
             cell, moved = snap_to(allowed, *ctx.site_cells[sid], ctx.cell_m, ctx.x_scale)
@@ -184,8 +203,11 @@ def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEF
             if reachable is None:
                 reachable = np.isfinite(mcp(cost, ctx.x_scale).find_costs([cell])[0])
                 home_map = mcp(seconds, ctx.x_scale).find_costs([cell])[0]
-            if moved:
-                log.append(f"{sid}: moved {moved:.0f} m to the nearest cell reachable on foot")
+            if sid != ctx.base:
+                access[sid] = stop_access(ctx, mode, sid, moved, max_slope, blocked)
+                if moved:
+                    log.append(f"{sid}: not safely reachable ({access[sid]['reason']}); "
+                               f"nearest safe viewing point {moved:.0f} m away")
         if mode in results:
             continue
 
@@ -198,13 +220,14 @@ def plan(ctx, speed_kmh=MAX_SPEED_KMH, max_slope=DEFAULT_MAX_SLOPE, budget_s=DEF
                 stop_at[len(path) - 1] = stop_seconds[b]
 
         rest_at = rest_spots(path, seconds, ctx.bands, ctx.x_scale, stop_at)
-        m = path_metrics(path, seconds, ctx.bands, ctx.cell_m, ctx.x_scale)
+        m = path_metrics(path, seconds, ctx.bands, ctx.cell_m, ctx.x_scale, max_slope)
         stop_s, rest_s = sum(stop_at.values()), sum(rest_at.values())
         energy_wh = (POWER_W["walking"] * m["walk_s"] + POWER_W["stop"] * stop_s
                      + POWER_W["rest"] * rest_s) / 3600
         m |= {
             "order": seq,
             "excluded": excluded,
+            "access": access,
             "stop_s": stop_s,
             "rest_s": rest_s,
             "rest_spots": [{"index": i, "rc": list(map(int, path[i])), "seconds": s,
@@ -235,7 +258,7 @@ def describe(mode, m):
              *(f"Rest spot {k + 1}: route point {r['index']}, slope {r['slope_deg']:.1f}°, "
                f"roughness {r['roughness_deg']:.1f}°" for k, r in enumerate(m["rest_spots"])),
              f"Energy {m['energy_wh']:.0f} Wh | oxygen {m['oxygen_kg']:.2f} kg | "
-             f"max cell slope {m['max_slope_deg']:.1f}° | steep-spot cells {m['steep_spot_cells']} | "
+             f"steepest section {m['steepest_section_deg']:.1f}° | cells with parts over the limit {m['steep_spot_cells']} | "
              f"mean roughness {m['mean_roughness_deg']:.2f}°",
              f"Reserve {sa['reserve_s'] / 60:.0f} min | spare at the tightest point: "
              + ", ".join(f"{k} {v / 60:.0f} min" for k, v in sa["worst_margin_s"].items())]

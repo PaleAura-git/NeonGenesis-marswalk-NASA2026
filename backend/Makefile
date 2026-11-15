@@ -16,7 +16,7 @@ GRID := data/processed/demo_grid.tif
 
 .PHONY: all download grid ortho classify routes exports validate serve
 
-all: exports validate
+all: exports
 
 download:
 	mkdir -p data/raw/hirise data/raw/hirise_ortho data/raw/m2020
@@ -35,15 +35,14 @@ data/processed/ortho_25cm.tif: $(ORTHO) $(GRID) scripts/make_ortho.py
 
 classify: data/processed/terrain.tif
 data/processed/terrain.tif: $(GRID) data/processed/ortho_25cm.tif labels/labels.csv scripts/train_classifier.py
-	$(PY) scripts/train_classifier.py $(GRID) data/processed/ortho_25cm.tif labels/labels.csv labels/check_labels.csv
-	$(PY) scripts/train_classifier.py $(GRID) data/processed/ortho_25cm.tif labels/labels.csv labels/check_labels_round2.csv | grep "Blind check"
+	$(PY) scripts/train_classifier.py $(GRID) data/processed/ortho_25cm.tif labels/labels.csv labels/check_labels.csv labels/check_labels_round2.csv
 
 routes: classify
 	$(PY) scripts/plan_routes.py $(GRID) sites.csv
 
-exports: routes
+exports: routes validate
 	$(PY) scripts/export_for_map.py $(GRID) sites.csv
-	cp exports/optical.png exports/slope.png exports/terrain.png ../frontend/public/data/
+	cp exports/optical.png exports/slope.png exports/terrain.png exports/thermal.png ../frontend/public/data/
 
 validate: classify
 	$(PY) scripts/validate_routes.py $(GRID) sites.csv $(TRAVERSE)

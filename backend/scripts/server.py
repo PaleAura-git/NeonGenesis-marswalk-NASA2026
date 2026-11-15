@@ -33,7 +33,7 @@ def number(body, key, low, high):
 
 
 def handle_plan(body):
-    speed_kmh = number(body, "walkingSpeedMetersPerSecond", 0.01, MAX_SPEED_KMH / 3.6) * 3.6
+    speed_kmh = min(number(body, "walkingSpeedMetersPerSecond", 0.01, MAX_SPEED_KMH / 3.6 + 1e-6) * 3.6, MAX_SPEED_KMH)
     max_slope = number(body, "maxSlopeDegrees", 0.1, SLOPE_LIMIT_CAP)
     total_s = number(body, "totalDurationSeconds", 60, 24 * 3600)
     elapsed_s = number(body, "elapsedSeconds", 0, total_s) if "elapsedSeconds" in body else 0.0
@@ -83,7 +83,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/api/mission":
             self.send(200, MISSION)
-        elif self.path in ("/data/slope.png", "/data/optical.png", "/data/terrain.png") \
+        elif self.path in ("/data/slope.png", "/data/optical.png", "/data/terrain.png", "/data/thermal.png") \
                 and (OUT / self.path.split("/")[-1]).exists():
             self.send(200, (OUT / self.path.split("/")[-1]).read_bytes(), "image/png")
         else:

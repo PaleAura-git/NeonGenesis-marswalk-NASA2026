@@ -1,0 +1,49 @@
+{
+  "labelledCells": 160,
+  "materialLabelsUsed": 128,
+  "labelCounts": {
+    "sand": 68,
+    "bedrock": 21,
+    "rough": 39
+  },
+  "method": "Random forest, 4-fold spatial cross-validation over 1 km blocks",
+  "spatialAccuracy": 0.672,
+  "terrainOnlyAccuracy": 0.555,
+  "baselineAccuracy": 0.531,
+  "mostConfused": [
+    {
+      "classes": [
+        "sand",
+        "rough"
+      ],
+      "cells": 25
+    },
+    {
+      "classes": [
+        "sand",
+        "bedrock"
+      ],
+      "cells": 10
+    }
+  ],
+  "topFeatures": [
+    {
+      "feature": "thermal",
+      "importance": 0.24
+    },
+    {
+      "feature": "brightness",
+      "importance": 0.23
+    },
+    {
+      "feature": "texture",
+      "importance": 0.17
+    }
+  ],
+  "labelAgreement": {
+    "agreed": 25,
+    "checked": 37
+  },
+  "steepRule": "Steep is measured, not predicted: cell mean slope over 15 degrees",
+  "limits": "Labels come from one AI-assisted labeller on HiRISE image patches, partly re-checked blind by two teammates; sand and rough are often confused. Treat classes as a guide, not ground truth."
+}

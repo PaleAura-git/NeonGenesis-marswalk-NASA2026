@@ -29,7 +29,7 @@ make serve      # planner API on http://127.0.0.1:8000
 |---|---|---|
 | Terrain grid | `build_grid.py` | `data/processed/demo_grid.tif`: 400 × 400 cells of 10 m (elevation, slope mean and p90, roughness, thermal, valid fraction) + feature table + sources |
 | Optical layer | `make_ortho.py` | `data/processed/ortho_25cm.tif`, `exports/optical.png` |
-| Terrain classes | `train_classifier.py` | `data/processed/terrain.tif` (class + confidence), `exports/terrain.png` |
+| Terrain classes | `train_classifier.py` | `data/processed/terrain.tif` (class + confidence), `exports/terrain.png`, `exports/classifier_metrics.json` |
 | Routes | `plan_routes.py` | `data/processed/routes.json`, `figures/routes.png` |
 | Map exports | `export_for_map.py` | `exports/mission.json`, `exports/plan.json`, `exports/slope.png` |
 | Validation | `validate_routes.py` | Comparison with Perseverance's track, `figures/validation.png` |
@@ -58,7 +58,11 @@ cos 18.45° = 0.9486 to get ground metres (slope, routing and exports all apply 
 - **Walking cost:** slope sets speed (< 5° ×1.0, 5–10° ×0.8, 10–15° ×0.6, over the limit blocked; default limit 15°,
   up to 20°); terrain class slows sand ×0.85 and rough ×0.8. Power 352 W walking, 308 W at stops, 205 W resting.
 - **Routes:** minimum-cost paths (`skimage.graph.MCP_Geometric`) between base and stops, all stop orders tried.
-  Time-focused = fastest; conservative = also penalises steep spots, roughness and low classifier confidence.
+  Time-focused = fastest, blocking cells whose *average* slope is over the limit. Conservative also blocks any cell
+  whose steepest part (steepest 10% of its 1 m slopes) is over the limit, and penalises roughness and low
+  classifier confidence. Each route reports its steepest section and is flagged when that exceeds the limit.
+- **Stops:** a stop counts as reached only if its own 10 m cell is walkable. Otherwise it is reported as not safely
+  reachable, with the reason, and the route goes to the nearest safe viewing point (within 150 m).
 - **Rest:** 5 min after every 30 min of walking, at the flattest, smoothest route cell nearby.
 - **Safety:** at every route point, time, energy (2.8 kWh) and oxygen (8.6 kg) left must each cover the walk home
   at 422 W plus a reserve (30 min + 20% of walking, max 60 min). Otherwise the plan is reported as infeasible,
@@ -76,7 +80,8 @@ cos 18.45° = 0.9486 to get ground metres (slope, routing and exports all apply 
 | Our route vs rover track, Three Forks ↔ Hawksbill Gap | median 22 m apart |
 | Classifier, spatial cross-validation (1 km blocks) | 67% (always "sand": 53%) |
 | Label agreement, two blind checks by team members | 74% and 57%, 68% combined (25/37) |
-| Routes | 2.9 / 3.0 km, 185 / 188 min, safe; time is the limiting resource (~130 min spare) |
+| Routes | Both 2.9 km and 185 min on different lines (up to 128 m apart); steepest section 19.3° (time-focused, flagged) vs 14.9° (conservative); time is the limiting resource (~130 min spare) |
+| Stops at the 15° limit | Hawksbill Gap (17.6° at the stop) and Kodiak butte (35.6°) are not safely reachable; viewed from 9 m and 99 m away. At 20° the time-focused route reaches Hawksbill Gap with a 27.3° section |
 
 ## Assumptions and limits
 
@@ -84,6 +89,7 @@ cos 18.45° = 0.9486 to get ground metres (slope, routing and exports all apply 
   are assumptions based on Apollo and suit-study figures; they are constants at the top of `walk_cost.py`,
   `plan_routes.py` and `resources.py`.
 - Slope has no direction: uphill and downhill cost the same.
-- Kodiak butte's position was read off a map by the team; routes reach its foot ~100 m away.
+- Kodiak butte's position was read off a map by the team; it sits on the butte's flank, so it is a viewing stop from ~100 m away.
+- "Steepest section" is the steepest 10% of a 10 m cell, not a single 1 m pixel, to avoid DEM artifacts.
 - Training labels were made from HiRISE image patches with AI assistance and checked blind by two team members.
 - THEMIS night IR is 8-bit relative brightness at 100 m: regional context, not a per-cell measurement.

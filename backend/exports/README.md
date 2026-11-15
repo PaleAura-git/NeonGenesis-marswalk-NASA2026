@@ -32,6 +32,8 @@ Serves on `http://127.0.0.1:8000`, which matches the Vite dev proxy:
 | `slope.png` | 400 × 400 slope overlay (0–30°, transparent where no data), north-up, registered to `bounds` |
 | `optical.png` | HiRISE orthomosaic of the demo box, 2000 × 2000 (2 m; source is 25 cm), north-up, same `bounds`: the optical base layer |
 | `terrain.png` | Terrain classes, 400 × 400: sand (yellow), bedrock (grey), rough (rust), steep (purple); opacity = confidence |
+| `thermal.png` | THEMIS night IR, 400 × 400 (source 100 m), inferno ramp: brighter = stays warm at night (rockier) |
+| `classifier_metrics.json`, `route_validation.json` | Real validation numbers from the pipeline; also embedded in `mission.json` as `validation` and shown in the map's info panel |
 
 Coordinates: local metres, x east, y north, origin (0, 0) at the Three Forks sample depot (18.4529° N, 77.4083° E).
 East-west distances are corrected for latitude, so these are true ground metres. The PNGs are expected at `/data/<name>.png` (copy them to `frontend/public/data/`, or let the API serve them).
@@ -57,6 +59,8 @@ also penalises low-confidence cells.
 
 - `observationTimeSeconds`, `reserveSeconds`, `energyWh`, `oxygenKg`
 - `restTimeSeconds`, `restSpots`: a 5 min rest after every 30 min of walking, each with `position`, `durationSeconds`, `slopeDegrees`, `roughnessDegrees`
+- `slopeLimitDegrees`, `steepestSectionDegrees` (steepest 10% of any 10 m cell on the route), `slopeWarning` (text when that exceeds the limit, else null)
+- `stopAccess`: per stop `reached`, `reason`, `viewingPoint`, `distanceMeters`, `groundSlopeDegrees`. A stop whose own cell is over the limit is not reached; the route goes to `viewingPoint`
 - `limitingResource`: `time`, `energy` or `oxygen`, whichever has the least spare at the tightest point
 - `spareSeconds`: spare walk-back time per resource beyond its reserve (negative = no safe return)
 - `reserveMarginSeconds`: the spare of the limiting resource

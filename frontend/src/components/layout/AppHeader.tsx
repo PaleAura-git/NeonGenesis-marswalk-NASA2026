@@ -14,7 +14,7 @@ interface Props {
 
 export function AppHeader({ stage, onChange, synthetic, onHome, setupOpen, onToggleSetup }: Props) {
   const mode = import.meta.env.VITE_DATA_MODE
-  const source = mode === 'mock' ? 'Demo data' : mode === 'api' ? 'API mode' : 'Data mode unset'
+  const source = mode === 'mock' ? 'Demo data' : mode === 'api' ? (synthetic ? 'Live planner' : 'NASA data · live planner') : 'Data mode unset'
   return (
     <header className="app-header" data-map-edge="top">
       <div className="identity">

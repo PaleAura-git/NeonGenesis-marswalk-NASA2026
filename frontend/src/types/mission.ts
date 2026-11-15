@@ -2,7 +2,7 @@ export interface Position { xMeters: number; yMeters: number }
 export interface MapBounds { min: Position; max: Position }
 export interface MapLayer {
   id: string
-  kind: 'imagery' | 'slope' | 'terrain-classification'
+  kind: 'imagery' | 'slope' | 'terrain-classification' | 'thermal'
   url: string
   bounds: MapBounds
   coordinateSystemId: string
@@ -27,6 +27,31 @@ export interface DataSource {
   source: string
   note?: string
 }
+/** Real numbers written by the backend pipeline (train_classifier.py, validate_routes.py). */
+export interface MissionValidation {
+  classifier?: {
+    labelledCells: number
+    materialLabelsUsed: number
+    method: string
+    spatialAccuracy: number
+    terrainOnlyAccuracy: number
+    baselineAccuracy: number
+    mostConfused: { classes: string[]; cells: number }[]
+    topFeatures: { feature: string; importance: number }[]
+    labelAgreement: { agreed: number; checked: number } | null
+    steepRule: string
+    limits: string
+  }
+  routes?: {
+    source: string
+    trackKilometres: number
+    trackWalkableShare: number
+    areaWalkableShare: number
+    elevationMedianDifferenceMeters: number
+    closestSharedLeg: { from: string; to: string; medianMeters: number } | null
+    limits: string
+  }
+}
 export interface Mission {
   schemaVersion: '1.0' | '1.1'
   datasetId: string
@@ -45,4 +70,5 @@ export interface Mission {
   bounds?: MapBounds
   layers: MapLayer[]
   sources: DataSource[]
+  validation?: MissionValidation
 }

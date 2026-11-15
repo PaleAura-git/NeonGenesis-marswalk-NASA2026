@@ -1,0 +1,13 @@
+{
+  "source": "NASA Mars 2020 Perseverance traverse (M20_traverse.json)",
+  "trackKilometres": 16.8,
+  "trackWalkableShare": 0.991,
+  "areaWalkableShare": 0.937,
+  "elevationMedianDifferenceMeters": 0.01,
+  "closestSharedLeg": {
+    "from": "Three Forks (sample depot)",
+    "to": "Hawksbill Gap",
+    "medianMeters": 22
+  },
+  "limits": "A rover is not an astronaut, and only legs the rover actually drove are a fair comparison."
+}

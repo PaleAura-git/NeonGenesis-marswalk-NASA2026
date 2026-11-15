@@ -6,7 +6,7 @@ import { RangeField } from '../../components/ui/RangeField'
 import { Stepper } from '../../components/ui/Stepper'
 import { Switch } from '../../components/ui/Switch'
 import { useMediaQuery } from '../../components/ui/useMediaQuery'
-import { observationBudgetWarning, observationField } from './settings'
+import { observationBudgetWarning, observationField, SLOPE_DEG, SPEED_KMH } from './settings'
 import { formatDuration, formatMinutes, parseSetting as parse, priorityNames, stopNumber } from './format'
 import './mission.css'
 
@@ -22,11 +22,12 @@ interface Props {
   onStopChange: (id: string, patch: Partial<StopSettings>) => void
   onBlur: (field: string) => void
   onReview: (form: HTMLFormElement) => void
+  onPreset: () => void
 }
 
-// Slider ranges sit inside the validation limits in settings.ts (speed > 0, 0 < slope < 90).
-const SPEED = { min: 0.1, max: 2, step: 0.05 }
-const SLOPE = { min: 1, max: 89, step: 1 }
+// Slider ranges are the validation limits in settings.ts, so a slider can never produce an invalid value.
+const SPEED = SPEED_KMH
+const SLOPE = SLOPE_DEG
 const DURATION_STEP = 15
 const RESERVE_STEP = 5
 
@@ -75,7 +76,7 @@ function SetupSection({ id, title, summary, aside, compact, open, onToggle, chil
   )
 }
 
-export function MissionSetupPanel({ mission, selectedId, onSelect, settings, errors, onSettingChange, onStopChange, onBlur, onReview }: Props) {
+export function MissionSetupPanel({ mission, selectedId, onSelect, settings, errors, onSettingChange, onStopChange, onBlur, onReview, onPreset }: Props) {
   const durationMinutes = parse(settings.durationHours) * 60 + parse(settings.durationMinutes)
   const reserve = parse(settings.reserveMinutes)
   const includedCount = mission.stops.filter(stop => settings.stops[stop.id]?.included).length
@@ -104,7 +105,7 @@ export function MissionSetupPanel({ mission, selectedId, onSelect, settings, err
       onSubmit={event => { event.preventDefault(); onReview(event.currentTarget) }}>
       <header className="ws-panel-head">
         <h2 id="setup-title">Mission setup</h2>
-        <p className="ws-panel-note">Simulation assumptions</p>
+        <button type="button" className="ws-preset" onClick={onPreset} title="6 h, 3.3 km/h, 15° limit, all stops">Demo preset</button>
       </header>
 
       <div className="ws-setup-body">
@@ -132,16 +133,18 @@ export function MissionSetupPanel({ mission, selectedId, onSelect, settings, err
               onStep={direction => onSettingChange('reserveMinutes', String(Math.max(0, stepFrom(reserve) + direction * RESERVE_STEP)))}
               onFieldChange={(field, value) => onSettingChange(field as SettingField, value)} onBlur={onBlur} errors={errors} />
           </div>
+          <p className="ws-panel-note">Reserve is a minimum. The planner keeps 30 min + 20% of walking time (up to 60 min), or this value if larger.</p>
         </SetupSection>
 
         <SetupSection {...sectionProps('movement')} title="Movement"
-          summary={`${Number.isFinite(speed) ? speed.toFixed(2) : '—'} m/s · max ${Number.isFinite(slope) ? slope : '—'}°`}>
+          summary={`${Number.isFinite(speed) ? speed.toFixed(1) : '—'} km/h · max ${Number.isFinite(slope) ? slope : '—'}°`}>
           <RangeField id="setup-speed" field="walkingSpeed" label="Walking speed" value={settings.walkingSpeed} {...SPEED}
-            format={value => `${value.toFixed(2)} m/s`} error={errors.walkingSpeed}
+            format={value => `${value.toFixed(1)} km/h`} error={errors.walkingSpeed}
             onChange={value => onSettingChange('walkingSpeed', value)} onBlur={() => onBlur('walkingSpeed')} />
-          <RangeField id="setup-slope" field="maxSlopeDegrees" label="Max slope · provisional" value={settings.maxSlopeDegrees} {...SLOPE}
+          <RangeField id="setup-slope" field="maxSlopeDegrees" label="Max slope" value={settings.maxSlopeDegrees} {...SLOPE}
             format={value => `${value}°`} error={errors.maxSlopeDegrees}
             onChange={value => onSettingChange('maxSlopeDegrees', value)} onBlur={() => onBlur('maxSlopeDegrees')} />
+          <p className="ws-panel-note">Time-focused blocks cells whose average slope is over this limit; Conservative also blocks cells with any part over it. The terrain layer's “steep” class is fixed at 15°.</p>
         </SetupSection>
 
         <SetupSection {...sectionProps('stops')} title="Science stops" summary={`${includedCount} of ${mission.stops.length} included`}

@@ -123,7 +123,19 @@ def mission_json(ctx, frame):
                            "IR; sand (yellow), bedrock (grey), rough (rust), steep (purple, measured "
                            "slope > 15 degrees); opacity = confidence",
             "illustrative": False,
-        }] if ctx.terrain is not None and (OUT / "terrain.png").exists() else [])],
+        }] if ctx.terrain is not None and (OUT / "terrain.png").exists() else []), {
+            "id": "themis-night-ir",
+            "kind": "thermal",
+            "url": "/data/thermal.png",
+            "bounds": bounds,
+            "coordinateSystemId": FRAME_ID,
+            "attribution": "NASA Mars Odyssey THEMIS Night IR Controlled Mosaic v2 (USGS Astrogeology), 100 m. "
+                           "Relative night-time warmth: brighter = stays warm (rockier), darker = cools fast (sandier)",
+            "illustrative": False,
+        }],
+        "validation": {name: json.loads((OUT / f"{file}.json").read_text())
+                       for name, file in (("classifier", "classifier_metrics"), ("routes", "route_validation"))
+                       if (OUT / f"{file}.json").exists()},
         "sources": [{"layer": k, **v} for k, v in ctx.sources.get("layers", {}).items()],
     }
 
@@ -147,13 +159,20 @@ def route_json(ctx, frame, mode, r, result):
     else:
         verdict = (f"No safe return: {safety['limiting_resource']} runs short by {-margin / 60:.0f} min "
                    f"part-way through. Drop a stop or extend the budget; the reserve is never relaxed.")
-    moved = []
-    for sid, cell in r["approach_rc"].items():
-        site = next(s for s in ctx.sites if s["id"] == sid)
-        exact, near = frame.site(site), frame.cell(*cell)
-        d = math.hypot(near["xMeters"] - exact["xMeters"], near["yMeters"] - exact["yMeters"])
-        if d > 15:
-            moved.append(f"{names[sid]}: reached at the nearest walkable point, {d:.0f} m from the mapped position.")
+    limit, steepest = result["max_slope_deg"], r["steepest_section_deg"]
+    access, moved = [], []
+    for sid, a in r["access"].items():
+        access.append({"id": sid, "reached": a["reached"], "reason": a["reason"],
+                       "viewingPoint": frame.cell(*r["approach_rc"][sid]), "distanceMeters": round(a["moved_m"]),
+                       "groundSlopeDegrees": round(a["ground_slope_deg"], 1)})
+        if not a["reached"]:
+            moved.append(f"{names[sid]} is not safely reachable: {a['reason']}. "
+                         f"Viewed from the nearest safe point, {a['moved_m']:.0f} m away.")
+    warning = (f"Passes sections up to {steepest:.1f}°, steeper than the {limit:g}° limit. "
+               f"Time-focused checks each 10 m cell's average slope; Conservative avoids these sections."
+               if steepest > limit else None)
+    rule = ("each 10 m cell's average slope" if mode == "fastest"
+            else "the steepest part of each 10 m cell (its steepest 10%)")
     return {
         "id": f"{mode}-1",
         "mode": MODE_NAMES[mode],
@@ -174,6 +193,10 @@ def route_json(ctx, frame, mode, r, result):
         "reserveMarginSeconds": round(margin),
         "energyWh": round(r["energy_wh"]),
         "oxygenKg": round(r["oxygen_kg"], 2),
+        "slopeLimitDegrees": limit,
+        "steepestSectionDegrees": round(steepest, 1),
+        "slopeWarning": warning,
+        "stopAccess": access,
         "limitingResource": safety["limiting_resource"],
         "spareSeconds": {k: round(v) for k, v in safety["worst_margin_s"].items()},
         "returnBoundary": frame.ring(safety["boundaries"]["start"]),
@@ -181,8 +204,9 @@ def route_json(ctx, frame, mode, r, result):
                                       for k, v in safety["boundaries"].items()],
         "explanations": [
             verdict,
-            f"Speed {result['speed_kmh']:g} km/h, cells steeper than {result['max_slope_deg']:g} degrees blocked.",
+            *([warning] if warning else []),
             *moved,
+            f"Speed {result['speed_kmh']:g} km/h. Slope limit {limit:g}° applied to {rule}.",
             *(f"{names[k]} excluded: {v}." for k, v in r["excluded"].items()),
         ],
     }
@@ -192,6 +216,14 @@ def plan_json(ctx, frame, result):
     return {"schemaVersion": "1.0", "datasetId": DATASET_ID, "coordinateSystemId": FRAME_ID,
             "totalDurationSeconds": result["budget_s"],
             "routes": [route_json(ctx, frame, mode, r, result) for mode, r in result["routes"].items()]}
+
+
+def save_thermal_png(ctx, path):
+    thermal = ctx.bands["thermal"]
+    lo, hi = np.nanpercentile(thermal, [2, 98])
+    rgba = plt.get_cmap("inferno")(np.clip((np.nan_to_num(thermal, nan=lo) - lo) / (hi - lo), 0, 1))
+    rgba[..., 3] = np.where(np.isfinite(thermal), 0.8, 0)
+    plt.imsave(path, rgba)
 
 
 def save_slope_png(ctx, path):
@@ -214,6 +246,7 @@ if __name__ == "__main__":
     (OUT / "mission.json").write_text(json.dumps(mission, indent=2))
     (OUT / "plan.json").write_text(json.dumps(plan_out, indent=2))
     save_slope_png(ctx, OUT / "slope.png")
+    save_thermal_png(ctx, OUT / "thermal.png")
 
     print("Local frame: origin = Three Forks, x east, y north (ground metres)")
     for loc in [mission["base"], *mission["stops"]]:
