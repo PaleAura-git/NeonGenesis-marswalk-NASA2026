@@ -1,80 +1,141 @@
 # Marswalk
 
-NASA Space Apps hackathon foundation: plan a science expedition in Jezero Crater, compare routes, then rehearse a blockage. Marswalk is a working title. This step contains a runnable frontend shell and a reserved backend workspace, not a routing or terrain engine.
+**Plan safe walks on Mars from real NASA data, and know before you leave that you can get home.**
 
-## Setup
+Neon Genesis · NASA Space Apps Challenge 2026 · UTAS Ibra, Oman
+Challenge: *Interplanetary Survival Guide: Martian Map*
 
-Use Node **22.12+ on the 22.x line, or 24+** and npm. Verified with Node 22.18.0 / npm 10.9.3; `frontend/.nvmrc` records the tested version. Vite's [Node requirements](https://vite.dev/guide/) were checked before installation. Use the checked-in `package-lock.json` with `npm ci` for reproducible installs.
+| Optical (HiRISE 25 cm) | Slope (HiRISE 1 m DTM) | Terrain classes | Night thermal (THEMIS) |
+|---|---|---|---|
+| ![HiRISE optical](backend/exports/optical.png) | ![Slope](backend/exports/slope.png) | ![Terrain classes](backend/exports/terrain.png) | ![THEMIS night IR](backend/exports/thermal.png) |
 
-Windows PowerShell, from this folder:
+## The problem
 
-```powershell
-cd frontend
-npm ci
-Copy-Item .env.example .env.local
-npm run dev
+The first crew on Mars will step out onto ground nobody has walked on. Their suits carry a fixed supply of power and
+oxygen. Steep slopes and soft sand slow them down, and Earth can't help in real time: a radio message takes up to
+22 minutes each way. Every walk outside comes down to one question: **can we get there and still get home?**
+
+## Our solution
+
+Marswalk is a walk planner for a crewed base at **Three Forks, Jezero Crater** (18.4529° N, 77.4083° E), where
+Perseverance left its first sample depot. A crew picks science stops, and Marswalk:
+
+- maps the ground from four NASA datasets into a 10 m grid: slope, roughness, night-time thermal and material type;
+- plans two routes: **time-focused** (fastest) and **conservative** (avoids the steepest patches and uncertain ground);
+- checks at every point of the route that **time, energy and oxygen, each minus a reserve, still cover the walk home**;
+- **says no when a stop is unsafe**, explains why, and offers the nearest safe place to view it from;
+- lets the crew **rehearse** surprises: block a passage, replan, and see what changed.
+
+## NASA data
+
+All data comes from NASA missions, through NASA and USGS Astrogeology.
+
+| Layer | Mission and product | Resolution | Used for |
+|---|---|---|---|
+| Elevation | MRO HiRISE DTM `JEZ_hirise_soc_006` | 1 m | Slope, roughness |
+| Image | MRO HiRISE orthomosaic `JEZ_hirise_soc_006` | 25 cm | Base map, brightness, texture |
+| Thermal | Mars Odyssey THEMIS Night IR Controlled Mosaic v2 | 100 m | Sand vs rock (stand-in for thermal inertia) |
+| Ground truth | Mars 2020 Perseverance traverse (`M20_traverse.json`) | – | Validation |
+
+Stops: **Cape Nukshak** and **Hawksbill Gap** (rover sampling sites, located from Perseverance's position records)
+and **Kodiak butte** (photographed by the rover from a distance, located on the HiRISE map).
+
+## How it works
+
+1. **Grid.** The 4 × 4 km box around the base becomes 400 × 400 cells of 10 m. Each cell stores its average slope,
+   the slope of its steepest 10%, roughness, thermal value and image brightness and texture. East–west distances are
+   corrected for latitude (×0.9486 at 18.45° N).
+2. **Ground type.** A random forest classifies material (sand, bedrock, rough). Steepness is never predicted: it is
+   measured from elevation, because slope can't be judged from a photo.
+3. **Walking cost.** Slope and ground type set walking speed from a 3.3 km/h base (Apollo). Ground over the slope
+   limit (15° default, up to 20°) is blocked.
+4. **Routes.** A cost-distance search finds the fastest path between base and every stop; every stop order is tried.
+5. **Safety.** A stop counts as reached only if its own cell is walkable. At every route point the get-home rule
+   checks time, energy (2.8 kWh) and oxygen (8.6 kg), with a reserve of 30 min + 20% of walking time (max 60 min)
+   that is never spent. If a check fails, the plan is refused and the planner names the resource that ran short.
+
+Full method: [`backend/README.md`](backend/README.md).
+
+## Results
+
+Default plan: 3.3 km/h, 15° limit, 6 h budget.
+
+| Check | Result |
+|---|---|
+| Stop distances vs research brief | 409 / 373 / 769 m, exact |
+| Rover track on ground we call walkable | **99.1%** (whole area: 93.7%) |
+| Our route vs Perseverance's path, Three Forks ↔ Hawksbill Gap | **median 22 m** apart |
+| HiRISE elevation vs rover's own elevation | median +0.01 m, 90% within ±0.5 m |
+| Terrain classifier, tested on 1 km areas it never saw | **67%** (always guessing sand: 53%) |
+| Most useful classifier input | THEMIS night thermal (importance 0.24) |
+| Both routes | 2.9 km, 185 min, about 130 min spare; time is the limiting resource |
+| Steepest section | 19.3° time-focused (flagged) vs 14.9° conservative |
+| Unsafe stops at 15° | Hawksbill Gap (17.6°) and Kodiak butte (35.6°) viewed from 9 m and 99 m away |
+| Rehearsal: 200 m blockage near Hawksbill Gap | +1.8 km and +45 min, still safe; a 400 m blockage drops the stop |
+| Full rebuild from raw NASA files, network off | ~30 s, identical output |
+
+## Run it
+
+**Backend** (Python 3.14 from python.org; macOS shown):
+
+```sh
+cd backend
+python3.14 -m venv venv && source venv/bin/activate
+python -m pip install -r requirements.txt
+make download   # once: ~3.3 GB of NASA data
+make all        # rebuild everything from the raw data, offline
+make serve      # planner API on http://127.0.0.1:8000
 ```
 
-macOS, from this folder:
+**Frontend** (Node 22.12+ or 24+):
 
 ```sh
 cd frontend
 npm ci
-cp .env.example .env.local
+cp .env.example .env.local   # then set VITE_DATA_MODE=api to use the live planner
 npm run dev
 ```
 
-Open the Local URL printed by Vite. Plan is the initial stage; Compare and Rehearse show their upcoming functionality.
+With `VITE_DATA_MODE=mock` the frontend runs on the bundled example data without a backend.
 
-The shared visual shell uses Barlow (Google Fonts, `display=swap`) with system sans-serif fallbacks. Leaflet 1.9.4 displays a synthetic local-metre grid and four labeled markers in `CRS.Simple`. No terrain image was present locally; the supplied screenshot is a design reference only. Side panels use native, keyboard-accessible disclosures, including on tablets. Narrow screens stack the map and panels. Select a stop in the map or list to review its fixture objective and duration in minutes. Select the home marker or base name for provisional base details. Clear selection with the labeled close button. Compare and Rehearse require future calculated planning state and currently offer return-to-Plan actions. Disabled planning actions explain their prerequisites.
+## Limits we know about
 
-Pan with mouse, touch, or focused-map arrow keys. Zoom with the controls, wheel, pinch gesture, or plus/minus keys. Reset view fits the dataset bounds around floating panels. Marker Enter or Space selects a location. Layer checkboxes are disabled with explanations until corresponding assets and local bounds exist. Image failures retain usable grid/markers and show an error. Dataset bounds and markers come from the shared fixture. The map persists across stage changes, observes container/panel resizing, and cleans up Leaflet and observers on unmount. Route cards, mission budget calculations, elevation samples, and playback remain dependent on the backend contract. See `shared/api.md` for imagery registration and backend handoff requirements.
+- **Walking and power figures come from Apollo,** a Moon stand-in. No Mars-suit walking data exists yet. Each figure
+  is one constant in the code.
+- **Speed slowdowns for slope and ground type are our own cautious assumptions.** They change timing, not safety;
+  safety comes from the measured slope limit and the reserve.
+- **The classifier is modest (67%).** It was trained on 128 labelled cells. It only affects walking speed.
+- **Training labels were made with AI assistance** and checked blind by two team members: 25 of 37 cells agreed (68%).
+- **THEMIS night IR is 100 m per pixel,** so it describes the area around a cell, not the cell itself.
+- **Uphill and downhill cost the same.**
+- **A rover is not an astronaut.** Perseverance's track is the best ground truth available, used to check the map,
+  not to set the rules.
 
-See `frontend/DEPENDENCY_REVIEW.md` for the audit review. Manual browser verification: check all stages and return actions; select/clear each stop; collapse/reopen panels with keyboard; check visible focus and no horizontal overflow at 390px, 900px, and desktop widths. Throttle the network to inspect loading; temporarily select API mode without a backend to check the visible error and retry, then restore mock mode. Check the browser console for errors. Barlow failure should retain readable fallback text.
+## Future work
 
-```sh
-npm run typecheck
-npm run lint
-npm run build
-npm run preview
-```
+- **Live suit telemetry** (heart rate, oxygen use) feeding the get-home rule, so a tired astronaut is told to turn
+  back sooner. We chose not to model health from already-assumed suit data.
+- Mars-suit walking and power data in place of Apollo's, as NASA tests them.
+- More labels, checked by geologists, to improve the classifier.
+- Direction-aware walking cost (uphill vs downhill), an elevation profile per route, and a conditions panel (light,
+  dust, temperature).
+- Other sites: the pipeline takes any box with HiRISE elevation coverage.
 
-## Data modes
+## Team
 
-Set `VITE_DATA_MODE=mock` in `frontend/.env.local` to load the single `shared/examples/mission.json` fixture. It is dynamically imported and bundled for production; TypeScript includes the JSON and Vite permits the parent workspace for development. No duplicate fixture is maintained. Copying `.env.example` explicitly selects mock mode. Missing or unsupported mode is a visible configuration error.
+| Member | Role |
+|---|---|
+| Afan | Team lead; data pipeline, terrain classifier, routing and planner API |
+| Alaa | Science research: site selection, mission parameters, sources, pitch deck |
+| Omair | Frontend: React, TypeScript, Vite and Leaflet map interface |
 
-Set `VITE_DATA_MODE=api` and `VITE_API_BASE_URL=/api` to call `GET /api/mission`. The development proxy forwards `/api` to `http://127.0.0.1:8000`. Run your teammate's server there when available, or change `vite.config.ts`. For deployed builds, provide a same-origin `/api` reverse proxy or a public API URL with appropriate CORS. Vite's development proxy is not included in production or preview. Restart Vite after changing environment values; rebuild production assets for changes to take effect. Frontend environment values are public and must contain no secrets.
+## Use of AI
 
-HTTP, network, invalid JSON, and schema failures show an error with Try again; API mode never silently substitutes demo data. The current contract accepts synthetic schemas 1.0 and 1.1. Version 1.1 adds explicit map bounds and image-overlay metadata. Legacy 1.0 responses derive bounds from positions. Extend the validator and shared types together when real resources arrive.
+- **Labels:** the 160 training labels were made with AI assistance from HiRISE image patches, then checked blind by
+  two team members (agreement reported above).
 
-## Ownership and structure
+## Credits
 
-```text
-frontend/                 Frontend owner: React, TypeScript, Vite, plain CSS
-  public/images/          Future terrain imagery
-  src/
-    app/                  State and application shell
-    components/layout/    Stage navigation
-    components/ui/        Shared error UI
-    features/             map, mission, science, routes, rehearsal
-    services/api/         Native fetch client and runtime validation
-    types/                Shared frontend mission types
-    styles/               Design tokens and responsive CSS
-backend/                  Backend owner: Python API, terrain, routing, ML
-  app/ data/raw/ data/processed/ figures/ scripts/ models/
-shared/                   Joint ownership: align API fields before integration
-  api.md                  Draft mission/planning endpoint contract
-  examples/mission.json   Single synthetic sample data source
-```
-
-Backend scripts, dependency declarations, real terrain files, and models will come from the backend developer. See `backend/README.md` for per-developer environments and running scripts from `backend/`. Raw/processed datasets, local environments, and common model binaries are ignored; small shared fixtures remain eligible for version control.
-
-All positions and observation durations are synthetic UI examples. The user-provided 18.4446° N, 77.4509° E base reference is an **unverified placeholder**. Exact placement, the production coordinate frame, and imagery mapping remain pending. Route computation, time calculations, elevation charts, and rehearsal simulation remain planned features.
-
-Map verification checklist at desktop, tablet, and 390px widths
-
-- Confirm four named markers and north-positive coordinate orientation.
-- Select each marker and each list item, including reselection after panning away. Check marker highlight, matching list state, base status, and opening of a collapsed details panel.
-- Clear selection and check the ring disappears. Check marker Enter/Space, map arrow keys, zoom buttons, wheel, touch/pinch, and Reset view.
-- Collapse/reopen panels and resize. Selected markers should stay within the uncovered area. Switch stages repeatedly and confirm viewport preservation and a single map instance.
-- Check unavailable layer explanations and the console. When registered imagery becomes available, check the overlay bounds, attribution, and visible failure handling by using a broken asset URL.
+HiRISE data: NASA/JPL-Caltech/University of Arizona. THEMIS data: NASA/JPL-Caltech/Arizona State University.
+Mars 2020 traverse: NASA/JPL-Caltech. Data products distributed by USGS Astrogeology Science Center.
+Apollo traverse and suit figures: NASA.
