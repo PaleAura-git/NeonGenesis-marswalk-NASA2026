@@ -125,7 +125,7 @@ With `VITE_DATA_MODE=mock` the frontend runs on the bundled example data without
 
 | Member | Role |
 |---|---|
-| Afan | Team lead; data pipeline, terrain classifier, routing and planner API |
+| Afan | Team lead; data pipeline, terrain classifier, routing and planner API; frontend–backend integration, frontend bug fixes and additional UI features |
 | Alaa | Science research: site selection, mission parameters, sources, pitch deck |
 | Omair | Frontend: React, TypeScript, Vite and Leaflet map interface |
 
