@@ -2,6 +2,8 @@
 
 **Plan safe walks on Mars from real NASA data, and know before you leave that you can get home.**
 
+> 🏆 **Winner: Best Mission Application**, NASA Space Apps Challenge 2026, UTAS Ibra, Oman
+
 Neon Genesis · NASA Space Apps Challenge 2026 · UTAS Ibra, Oman
 Challenge: *Interplanetary Survival Guide: Martian Map*
 
