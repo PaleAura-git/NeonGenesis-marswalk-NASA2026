@@ -3,18 +3,27 @@
 Turns NASA data for the base of the western delta in Jezero Crater into a 10 m terrain grid, plans safe
 Marswalks from the Three Forks sample depot to three science stops, and serves them to the frontend.
 
-## Setup (macOS)
+## Setup
 
-Use Python 3.14 from python.org (Homebrew's Python has a broken `pyexpat` on macOS 26).
+Python 3.12–3.14 (on macOS, use python.org's Python: Homebrew's has a broken `pyexpat` on macOS 26).
 
 ```sh
 cd backend
-/Library/Frameworks/Python.framework/Versions/3.14/bin/python3.14 -m venv venv
-source venv/bin/activate
-python -m pip install -r requirements.txt
+python3 -m venv venv                               # Windows: py -m venv venv
+venv/bin/python -m pip install -r requirements.txt  # Windows: venv\Scripts\python -m pip install -r requirements.txt
 ```
 
-## Run
+## Quick start: planner API only
+
+```sh
+venv/bin/python scripts/server.py                   # Windows: venv\Scripts\python scripts\server.py
+```
+
+This needs no downloads. The server uses `data/processed/` if `make all` has run, otherwise the bundled snapshot in
+`data/demo/` (the 10 m grid and terrain classes from the same build, 5 MB). Then run the app with
+`npm run dev:api` in `frontend/`.
+
+## Full rebuild (macOS/Linux, needs `make` and `curl`)
 
 ```sh
 make download   # once, needs internet: ~3.3 GB of NASA data into data/raw/

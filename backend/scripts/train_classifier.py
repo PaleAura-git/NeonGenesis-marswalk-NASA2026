@@ -65,7 +65,7 @@ if __name__ == "__main__":
         profile = g.profile
     bands |= optical_features(ortho_path, bands["slope_mean_deg"].shape)
 
-    with open(labels_path, newline="") as f:
+    with open(labels_path, newline="", encoding="utf-8") as f:
         labels = [r for r in csv.DictReader(f) if r["label"] in MATERIALS]
     rows = np.array([int(r["row"]) for r in labels])
     cols = np.array([int(r["col"]) for r in labels])
@@ -74,10 +74,10 @@ if __name__ == "__main__":
     print(f"Material labels used: {len(y)} | " + ", ".join(f"{c} {np.sum(y == c)}" for c in MATERIALS)
           + f" | spatial blocks: {len(set(groups))} of {BLOCK_CELLS * 10} m")
 
-    mine = {r["cell_id"]: r["label"] for r in csv.DictReader(open(labels_path))}
+    mine = {r["cell_id"]: r["label"] for r in csv.DictReader(open(labels_path, encoding="utf-8"))}
     checked = agreed = 0
     for check_path in check_paths:
-        theirs = {r["cell_id"]: r["label"] for r in csv.DictReader(open(check_path)) if r["label"]}
+        theirs = {r["cell_id"]: r["label"] for r in csv.DictReader(open(check_path, encoding="utf-8")) if r["label"]}
         both = [k for k in theirs if k in mine and mine[k] in MATERIALS and theirs[k] in MATERIALS]
         same = sum(mine[k] == theirs[k] for k in both)
         checked, agreed = checked + len(both), agreed + same

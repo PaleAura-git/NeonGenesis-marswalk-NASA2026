@@ -1,6 +1,7 @@
 """Planner API for the frontend (shared/api.md): GET /api/mission, POST /api/plan.
 
 Usage: python scripts/server.py [demo_grid.tif] [sites.csv] [port=8000]
+Without a grid argument it uses data/processed/ if `make all` has run, else the bundled snapshot in data/demo/.
 """
 import json
 import sys
@@ -12,7 +13,8 @@ from plan_routes import STOP_SECONDS, load_context, plan
 from rehearse import rehearse
 from walk_cost import MAX_SPEED_KMH, SLOPE_LIMIT_CAP
 
-GRID = sys.argv[1] if len(sys.argv) > 1 else "data/processed/demo_grid.tif"
+BUILT_GRID = Path("data/processed/demo_grid.tif")
+GRID = sys.argv[1] if len(sys.argv) > 1 else str(BUILT_GRID if BUILT_GRID.exists() else Path("data/demo/demo_grid.tif"))
 SITES = sys.argv[2] if len(sys.argv) > 2 else "sites.csv"
 PORT = int(sys.argv[3]) if len(sys.argv) > 3 else 8000
 

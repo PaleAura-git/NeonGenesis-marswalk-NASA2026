@@ -25,7 +25,6 @@ ROUGHNESS_SCALE_DEG = 5
 REST_EVERY_S = 30 * 60
 REST_S = 5 * 60
 REST_SEARCH_POINTS = 10
-TERRAIN_PATH = "data/processed/terrain.tif"
 CLASS_SPEED = {"sand": 0.85, "bedrock": 1.0, "rough": 0.8, "steep": 1.0}
 UNCERTAINTY_PENALTY = 0.5
 
@@ -56,8 +55,9 @@ def load_context(grid_path, sites_path):
     with open(sites_path, newline="") as f:
         sites = [s for s in csv.DictReader(f) if s["role"] in ("habitat", "stop")]
     terrain = None
-    if Path(TERRAIN_PATH).exists():
-        with rasterio.open(TERRAIN_PATH) as t:
+    terrain_path = Path(grid_path).with_name("terrain.tif")
+    if terrain_path.exists():
+        with rasterio.open(terrain_path) as t:
             terrain = {"class": t.read(1), "confidence": t.read(2), "names": t.tags()["classes"].split(",")}
     site_cells = {s["id"]: rasterio.transform.rowcol(
         transform, *lonlat_to_map(float(s["lon_deg"]), float(s["lat_deg"]))) for s in sites}

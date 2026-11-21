@@ -78,27 +78,54 @@ Default plan: 3.3 km/h, 15° limit, 6 h budget.
 
 ## Run it
 
-**Backend** (Python 3.14 from python.org; macOS shown):
+You need **Python 3.12–3.14** ([python.org](https://www.python.org/downloads/)) and **Node.js 22.12+ or 24+**.
+No data download is needed: the repository includes the processed 10 m terrain grid (`backend/data/demo/`, 5 MB).
+Use two terminals, both starting in the repository folder.
 
-```sh
+**Windows (PowerShell)**
+
+```powershell
+# Terminal 1: planner API
 cd backend
-python3.14 -m venv venv && source venv/bin/activate
-python -m pip install -r requirements.txt
-make download   # once: ~3.3 GB of NASA data
-make all        # rebuild everything from the raw data, offline
-make serve      # planner API on http://127.0.0.1:8000
+py -m venv venv
+venv\Scripts\python -m pip install -r requirements.txt
+venv\Scripts\python scripts\server.py
 ```
 
-**Frontend** (Node 22.12+ or 24+):
-
-```sh
+```powershell
+# Terminal 2: app
 cd frontend
 npm ci
-cp .env.example .env.local   # then set VITE_DATA_MODE=api to use the live planner
-npm run dev
+npm run dev:api
 ```
 
-With `VITE_DATA_MODE=mock` the frontend runs on the bundled example data without a backend.
+**macOS / Linux**
+
+```sh
+# Terminal 1: planner API
+cd backend
+python3 -m venv venv
+venv/bin/python -m pip install -r requirements.txt
+venv/bin/python scripts/server.py
+```
+
+```sh
+# Terminal 2: app
+cd frontend
+npm ci
+npm run dev:api
+```
+
+Open **http://localhost:5173**. Terminal 1 should show `Planner API on http://127.0.0.1:8000`; keep both running.
+
+If Windows says *"running scripts is disabled on this system"*, use `npm.cmd ci` and `npm.cmd run dev:api`
+instead, or run the same commands in Command Prompt. If `py` is not found, use `python`.
+Without the backend, `npm run dev` with `VITE_DATA_MODE=mock` in `frontend/.env.local` shows the bundled example
+data (route planning needs the backend).
+
+**Rebuild from raw NASA data (optional, macOS/Linux, needs `make` and `curl`):** in `backend/`,
+`make download` (once, ~3.3 GB) then `make all` (~30 s, offline). The server then uses the rebuilt
+`data/processed/` instead of the bundled grid. See [`backend/README.md`](backend/README.md).
 
 ## Limits we know about
 
