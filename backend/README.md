@@ -5,18 +5,19 @@ Marswalks from the Three Forks sample depot to three science stops, and serves t
 
 ## Setup
 
-Python 3.12–3.14 (on macOS, use python.org's Python: Homebrew's has a broken `pyexpat` on macOS 26).
+Python 3.12–3.14; not 3.15 yet (scikit-image has no 3.15 release). On macOS, use python.org's Python: Homebrew's
+has a broken `pyexpat` on macOS 26.
 
 ```sh
 cd backend
-python3 -m venv venv                               # Windows: py -m venv venv
-venv/bin/python -m pip install -r requirements.txt  # Windows: venv\Scripts\python -m pip install -r requirements.txt
+python3 -m venv venv                               # Windows: py -3.14 -m venv venv
+venv/bin/python -m pip install -r requirements.txt  # Windows: .\venv\Scripts\python -m pip install -r requirements.txt
 ```
 
 ## Quick start: planner API only
 
 ```sh
-venv/bin/python scripts/server.py                   # Windows: venv\Scripts\python scripts\server.py
+venv/bin/python scripts/server.py                   # Windows: .\venv\Scripts\python scripts\server.py
 ```
 
 This needs no downloads. The server uses `data/processed/` if `make all` has run, otherwise the bundled snapshot in

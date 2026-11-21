@@ -78,18 +78,21 @@ Default plan: 3.3 km/h, 15° limit, 6 h budget.
 
 ## Run it
 
-You need **Python 3.12–3.14** ([python.org](https://www.python.org/downloads/)) and **Node.js 22.12+ or 24+**.
+You need **Python 3.12, 3.13 or 3.14** and **Node.js 22.12+ or 24+**. Python 3.15 does not work yet: one library
+(scikit-image) has no 3.15 release. On Windows, install
+[Python 3.14](https://www.python.org/downloads/release/python-3140/) alongside any other version; the commands
+below select it with `py -3.14`.
 No data download is needed: the repository includes the processed 10 m terrain grid (`backend/data/demo/`, 5 MB).
 Use two terminals, both starting in the repository folder.
 
-**Windows (PowerShell)**
+**Windows (PowerShell or Command Prompt)**
 
 ```powershell
 # Terminal 1: planner API
 cd backend
-py -m venv venv
-venv\Scripts\python -m pip install -r requirements.txt
-venv\Scripts\python scripts\server.py
+py -3.14 -m venv venv
+.\venv\Scripts\python -m pip install -r requirements.txt
+.\venv\Scripts\python scripts\server.py
 ```
 
 ```powershell
@@ -104,7 +107,7 @@ npm run dev:api
 ```sh
 # Terminal 1: planner API
 cd backend
-python3 -m venv venv
+python3.14 -m venv venv   # or python3.12 / python3.13
 venv/bin/python -m pip install -r requirements.txt
 venv/bin/python scripts/server.py
 ```
@@ -119,7 +122,10 @@ npm run dev:api
 Open **http://localhost:5173**. Terminal 1 should show `Planner API on http://127.0.0.1:8000`; keep both running.
 
 If Windows says *"running scripts is disabled on this system"*, use `npm.cmd ci` and `npm.cmd run dev:api`
-instead, or run the same commands in Command Prompt. If `py` is not found, use `python`.
+instead, or run the same commands in Command Prompt. If `py -3.14` says no such runtime is found, install Python 3.14
+from the link above. If `pip install` fails, check `.\venv\Scripts\python --version` shows 3.12–3.14; if not, delete
+the `venv` folder and create it again with `py -3.14`.
+
 Without the backend, `npm run dev` with `VITE_DATA_MODE=mock` in `frontend/.env.local` shows the bundled example
 data (route planning needs the backend).
 
