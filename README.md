@@ -4,6 +4,9 @@
 
 > 🏆 **Winner: Best Mission Application**, NASA Space Apps Challenge 2026, UTAS Ibra, Oman
 
+**▶ Try it live: [marswalk-neongenesis.vercel.app](https://marswalk-neongenesis.vercel.app/)** (no installation needed; the
+first load can take up to a minute while the planning server wakes up, and each plan takes a few seconds)
+
 Neon Genesis · NASA Space Apps Challenge 2026 · UTAS Ibra, Oman
 Challenge: *Interplanetary Survival Guide: Martian Map*
 
